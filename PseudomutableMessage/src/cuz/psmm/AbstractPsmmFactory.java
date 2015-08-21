@@ -7,7 +7,7 @@ import cuz.psmm.exceptions.PsmmFactoryNotClosedException;
 import cuz.psmm.exceptions.PsmmFactoryNotOpenException;
 import cuz.psmm.exceptions.PsmmUnsupportedOperationException;
 
-abstract class  AbstractPsmmFactory implements PsmmFactory {
+abstract class  AbstractPsmmFactory implements PsmmFactory, RawMessage {
 
 	private Map<String,Object> data;
 	private Message messageBeingWrapped;
@@ -43,7 +43,7 @@ abstract class  AbstractPsmmFactory implements PsmmFactory {
 		data.put(valueName, datum);
 	}
 	@Override
-	public PsmmFactory set(String valueName, String datum)  {
+	public RawMessage set(String valueName, String datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
@@ -51,49 +51,49 @@ abstract class  AbstractPsmmFactory implements PsmmFactory {
 
 
 	@Override
-	public PsmmFactory set(String valueName, int datum)  {
+	public RawMessage set(String valueName, int datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, short datum)  {
+	public RawMessage set(String valueName, short datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, long datum)  {
+	public RawMessage set(String valueName, long datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, byte datum)  {
+	public RawMessage set(String valueName, byte datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, float datum)  {
+	public RawMessage set(String valueName, float datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, double datum)  {
+	public RawMessage set(String valueName, double datum)  {
 		// TODO Auto-generated method stub
 		checkedSet(valueName, datum);
 		return this;
 	}
 
 	@Override
-	public PsmmFactory setObject(String valueName, Object object)   {
+	public RawMessage setObject(String valueName, Object object)   {
 		// TODO Auto-generated method stub
 		throw new PsmmUnsupportedOperationException();
 	}

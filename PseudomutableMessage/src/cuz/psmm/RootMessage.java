@@ -43,51 +43,53 @@ public class RootMessage implements Message {
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, String datum) {
+	public RawMessage set(String valueName, String datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, int datum) {
+	public RawMessage set(String valueName, int datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, short datum) {
+	public RawMessage set(String valueName, short datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, long datum) {
+	public RawMessage set(String valueName, long datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, byte datum) {
+	public RawMessage set(String valueName, byte datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, float datum) {
+	public RawMessage set(String valueName, float datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory set(String valueName, double datum) {
+	public RawMessage set(String valueName, double datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PsmmFactory setObject(String valueName, Object object) {
+	public RawMessage setObject(String valueName, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

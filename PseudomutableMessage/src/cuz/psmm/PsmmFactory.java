@@ -1,7 +1,7 @@
 package cuz.psmm;
 
 
-public interface PsmmFactory extends SetInterface{
+interface PsmmFactory extends SetInterface{
 	
 	PsmmFactory wrap(Message message) ;
 	
@@ -12,9 +12,9 @@ public interface PsmmFactory extends SetInterface{
 		return new CommonPsmmFactory();
 	}
 	
-	static PsmmFactory seekFactory(Message.Type type,Message messageBeingWrapped){
+	static RawMessage seekFactory(Message.Type type,Message messageBeingWrapped){
 		//DEBUG:
-		PsmmFactory psmmFactory=new CommonPsmmFactory();
+		RawMessage psmmFactory=new CommonPsmmFactory();
 		
 		
 		psmmFactory.wrap(messageBeingWrapped);
