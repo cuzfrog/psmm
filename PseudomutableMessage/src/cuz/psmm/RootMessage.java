@@ -2,16 +2,18 @@ package cuz.psmm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 
+@SuppressWarnings("rawtypes")
 public class RootMessage implements Message {
 	
 	private static RootMessage instance=new RootMessage();
 	private static volatile AtomicLong messageCount=new AtomicLong(0);
 	private static volatile AtomicInteger factoryCount=new AtomicInteger(0);
-	private static volatile List<PsmmFactory> factoryEntries=new ArrayList<>();
+	private static volatile List<PsmmFactory<?>> factoryEntries=new ArrayList<>();
 	
 	private RootMessage(){}
 	
@@ -20,12 +22,12 @@ public class RootMessage implements Message {
 		return instance;
 	}
 
-	static Integer storeFactory(PsmmFactory psmmFactory){
+	static Integer storeFactory(PsmmFactory<?> psmmFactory){
 		factoryEntries.add(psmmFactory);
 		return factoryCount.incrementAndGet();
 	}
 	
-	static PsmmFactory seekFactory(Integer id){
+	static PsmmFactory<?> seekFactory(Integer id){
 		return factoryEntries.get(id);
 	}
 	
@@ -42,54 +44,38 @@ public class RootMessage implements Message {
 		return 0;
 	}
 
+
 	@Override
-	public RawMessage set(String valueName, String datum) {
+	public byte[] getSignature() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public RawMessage set(String valueName, int datum) {
+	public Object get() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public RawMessage set(String valueName, short datum) {
+	public Map<String,Object> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	//factory behaviors:
+
+	@Override
+	public RawMessage<Object> set(String key, Object datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public RawMessage set(String valueName, long datum) {
+	public RawMessage<Object> set(Object datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public RawMessage set(String valueName, byte datum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public RawMessage set(String valueName, float datum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public RawMessage set(String valueName, double datum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public RawMessage setObject(String valueName, Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 }

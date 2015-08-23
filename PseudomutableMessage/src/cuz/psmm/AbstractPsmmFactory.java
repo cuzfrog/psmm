@@ -1,114 +1,38 @@
 package cuz.psmm;
 
-import java.util.HashMap;
-import java.util.Map;
+public abstract class  AbstractPsmmFactory<T,V> implements PsmmFactory<T> {
 
-import cuz.psmm.exceptions.PsmmFactoryNotClosedException;
-import cuz.psmm.exceptions.PsmmFactoryNotOpenException;
-import cuz.psmm.exceptions.PsmmUnsupportedOperationException;
+	
 
-abstract class  AbstractPsmmFactory implements PsmmFactory, RawMessage {
+	protected V data;
+	protected Message<T> messageBeingWrapped;
+	
 
-	private Map<String,Object> data;
-	private Message messageBeingWrapped;
-	private State state=State.CLOSED;
-	
-	private enum State{
-		CLOSED,OPEN;
-	}
-	private void checkClosed() {
-		if(state!=State.CLOSED) throw new PsmmFactoryNotClosedException();
-	}
-	private void checkOpen() {
-		if(state!=State.OPEN) throw new PsmmFactoryNotOpenException();
-	}
-	
-	
+	abstract protected V designateData();
 	@Override
-	public PsmmFactory wrap(Message message)  {
-		// TODO Auto-generated method stub
-		checkClosed();
-		this.state=State.OPEN;
+	public PsmmFactory<T> wrap(Message<T> message)  {
 		messageBeingWrapped=message;
-		data=new HashMap<>();
-		return this;
-	}
-	public PsmmFactory wrap(){
-		return wrap(RootMessage.getInstance());
-	}
-
-	private void checkedSet(String valueName, Object datum) {
-		checkOpen();
-		
-		data.put(valueName, datum);
-	}
-	@Override
-	public RawMessage set(String valueName, String datum)  {
-		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
-		return this;
-	}
-
-
-	@Override
-	public RawMessage set(String valueName, int datum)  {
-		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
+		data=designateData();
 		return this;
 	}
 
 	@Override
-	public RawMessage set(String valueName, short datum)  {
+	public RawMessage<T> set(T datum) {
 		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
-		return this;
+		return set(null,datum);
 	}
-
-	@Override
-	public RawMessage set(String valueName, long datum)  {
-		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
-		return this;
-	}
-
-	@Override
-	public RawMessage set(String valueName, byte datum)  {
-		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
-		return this;
-	}
-
-	@Override
-	public RawMessage set(String valueName, float datum)  {
-		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
-		return this;
-	}
-
-	@Override
-	public RawMessage set(String valueName, double datum)  {
-		// TODO Auto-generated method stub
-		checkedSet(valueName, datum);
-		return this;
-	}
-
-	@Override
-	public RawMessage setObject(String valueName, Object object)   {
-		// TODO Auto-generated method stub
-		throw new PsmmUnsupportedOperationException();
-	}
-
-	abstract protected Message createMessage(Message messageBeingModified,Map<String,Object> data);
+	abstract protected Message<T> createMessage(Message<T> messageBeingModified,V data);
 	
 	@Override
-	public Message done()  {
+	public Message<T> done()  {
 		// TODO Auto-generated method stub
-		checkOpen();
-		Message newMessage=this.createMessage(messageBeingWrapped, data);
+
+		Message<T> newMessage=this.createMessage(messageBeingWrapped, data);
 		data=null;
 		messageBeingWrapped=null;
-		state=State.CLOSED;
+
 		return newMessage;
 	}
 
+	
 }

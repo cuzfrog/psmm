@@ -1,20 +1,15 @@
 package cuz.psmm;
 
+import cuz.psmm.impl.LinkedPsmmFactory;
 
-interface PsmmFactory extends SetInterface{
+interface PsmmFactory<T> extends RawMessage<T>{
 	
-	PsmmFactory wrap(Message message) ;
-	
-	Message done() ;
+	PsmmFactory<T> wrap(Message<T> message);
 	
 	
-	static PsmmFactory newCommonPsmmFactory(){
-		return new CommonPsmmFactory();
-	}
-	
-	static RawMessage seekFactory(Message.Type type,Message messageBeingWrapped){
+	static <W> PsmmFactory<W> seekFactory(Message.Type type,Message<W> messageBeingWrapped){
 		//DEBUG:
-		RawMessage psmmFactory=new CommonPsmmFactory();
+		PsmmFactory<W> psmmFactory=new LinkedPsmmFactory<W>();
 		
 		
 		psmmFactory.wrap(messageBeingWrapped);
