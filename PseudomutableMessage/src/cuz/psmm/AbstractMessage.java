@@ -32,9 +32,9 @@ public abstract class AbstractMessage<T,V> implements Message<T> {
 	}
 
 	// ------------factory behaviors:
-	private PsmmFactory<T> getFactory(Messages.Type type) {
+	private RawMessage<T> getFactory(Messages.Type type) {
 
-		return PsmmFactory.seekFactory(type, this);
+		return Messages.fetch(type, this);
 	}
 	@Override
 	public RawMessage<T> set(String key, T datum) {

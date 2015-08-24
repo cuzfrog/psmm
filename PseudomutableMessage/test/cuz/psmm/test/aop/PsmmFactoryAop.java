@@ -1,6 +1,5 @@
 package cuz.psmm.test.aop;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,7 +28,7 @@ public class PsmmFactoryAop {
     }
 
 	@AfterReturning(pointcut="done()" ,returning="result")
-	public void checkDoneReturn(Message result){
+	public void checkDoneReturn(Message<?> result){
         logger.debug("Message Name:{},depth:{}",result,result.depth());
     }
 }

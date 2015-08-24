@@ -9,7 +9,7 @@
 	<aop:aspectj-autoproxy />
 	<context:component-scan base-package="cuz.psmm.test"></context:component-scan>
 	
-	<bean id="rawMessage" class="cuz.psmm.Message" factory-method="create">
+	<bean id="rawMessage" class="cuz.psmm.Messages" factory-method="create">
 		<constructor-arg value="LINKED" />
 		<constructor-arg value="Integer.class" />
 	</bean>

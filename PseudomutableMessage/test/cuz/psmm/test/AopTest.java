@@ -2,9 +2,6 @@ package cuz.psmm.test;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cuz.psmm.Message;
-import cuz.psmm.RawMessage;
-
 public class AopTest {
 
 	public static void main(String[] args) {
@@ -13,7 +10,6 @@ public class AopTest {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 
 		ctx.close();
-		
 		
 		
 	}
