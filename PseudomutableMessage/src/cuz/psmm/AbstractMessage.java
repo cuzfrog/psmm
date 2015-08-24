@@ -1,5 +1,6 @@
 package cuz.psmm;
 
+
 public abstract class AbstractMessage<T,V> implements Message<T> {
 
 
@@ -7,11 +8,11 @@ public abstract class AbstractMessage<T,V> implements Message<T> {
 	protected final Message<T> parent;
 	protected final V data;
 	protected final Integer depth;
-	protected final Message.Type type;
+	protected final Messages.Type type;
 
 
 
-	protected AbstractMessage(Message.Type type, Message<T> parent, V data) {
+	protected AbstractMessage(Messages.Type type, Message<T> parent, V data) {
 		super();
 		this.parent = parent;
 		this.data = data;
@@ -27,11 +28,11 @@ public abstract class AbstractMessage<T,V> implements Message<T> {
 	}
 	@Override
 	public byte[] getSignature(){
-		return null;
+		return new byte[]{Integer.valueOf(0).byteValue()};
 	}
 
 	// ------------factory behaviors:
-	private PsmmFactory<T> getFactory(Message.Type type) {
+	private PsmmFactory<T> getFactory(Messages.Type type) {
 
 		return PsmmFactory.seekFactory(type, this);
 	}
@@ -39,12 +40,6 @@ public abstract class AbstractMessage<T,V> implements Message<T> {
 	public RawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
 		return getFactory(this.type).set(key, datum);
-	}
-
-	@Override
-	public RawMessage<T> set(T datum) {
-		return set(null,datum);
-		
 	}
 
 }

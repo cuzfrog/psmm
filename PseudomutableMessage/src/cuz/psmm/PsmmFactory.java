@@ -1,17 +1,30 @@
 package cuz.psmm;
 
+import cuz.psmm.impl.FlatPsmmFactory;
 import cuz.psmm.impl.LinkedPsmmFactory;
 
-interface PsmmFactory<T> extends RawMessage<T>{
+abstract class PsmmFactory<T> implements RawMessage<T>{
 	
-	PsmmFactory<T> wrap(Message<T> message);
+	public abstract PsmmFactory<T> wrap(Message<T> message);
 	
 	
-	static <W> PsmmFactory<W> seekFactory(Message.Type type,Message<W> messageBeingWrapped){
-		//DEBUG:
-		PsmmFactory<W> psmmFactory=new LinkedPsmmFactory<W>();
-		
-		
+	public static <W> PsmmFactory<W> seekFactory(Messages.Type type,Message<W> messageBeingWrapped){
+		PsmmFactory<W> psmmFactory=null;
+		switch(type){
+		case FLAT_MAP:
+			psmmFactory=new FlatPsmmFactory<W>();
+			break;
+		case FLAT_SINGLE:
+			break;
+		case LINKED_MAP:
+			psmmFactory=new LinkedPsmmFactory<W>();
+			break;
+		case LINKED_SINGLE:
+			break;
+		default:
+			break;
+		}
+				
 		psmmFactory.wrap(messageBeingWrapped);
 		return psmmFactory;
 		

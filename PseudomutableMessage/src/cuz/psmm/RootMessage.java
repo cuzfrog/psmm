@@ -18,7 +18,8 @@ public class RootMessage implements Message {
 	private RootMessage(){}
 	
 	//-------------------utility behavior:
-	static RootMessage getInstance(){
+	public static RootMessage getInstance(){
+		messageCount.incrementAndGet();
 		return instance;
 	}
 
@@ -52,12 +53,6 @@ public class RootMessage implements Message {
 	}
 
 	@Override
-	public Object get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Map<String,Object> getAll() {
 		// TODO Auto-generated method stub
 		return null;
@@ -72,10 +67,5 @@ public class RootMessage implements Message {
 		return null;
 	}
 
-	@Override
-	public RawMessage<Object> set(Object datum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

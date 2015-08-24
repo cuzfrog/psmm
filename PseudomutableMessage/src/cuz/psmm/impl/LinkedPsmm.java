@@ -5,12 +5,12 @@ import java.util.Map;
 
 import cuz.psmm.AbstractMessage;
 import cuz.psmm.Message;
-import cuz.psmm.exceptions.PsmmUnsupportedOperationException;
+import cuz.psmm.Messages;
 
-public class LinkedMessage<T> extends AbstractMessage<T,Map<String, T>> {
+public class LinkedPsmm<T> extends AbstractMessage<T,Map<String, T>> {
 
-	LinkedMessage(Message<T> parent, Map<String, T> data) {
-		super(Message.Type.LINKED, parent, data);
+	LinkedPsmm(Message<T> parent, Map<String, T> data) {
+		super(Messages.Type.LINKED_MAP, parent, data);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,12 +22,6 @@ public class LinkedMessage<T> extends AbstractMessage<T,Map<String, T>> {
 			result = parent.get(key);
 		}
 		return result;
-	}
-
-	@Override
-	public T get() {
-		// TODO Auto-generated method stub
-		throw new PsmmUnsupportedOperationException();
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package cuz.psmm;
 
-public abstract class  AbstractPsmmFactory<T,V> implements PsmmFactory<T> {
+public abstract class  AbstractPsmmFactory<T,V> extends PsmmFactory<T> {
 
 	
 
@@ -16,15 +16,10 @@ public abstract class  AbstractPsmmFactory<T,V> implements PsmmFactory<T> {
 		return this;
 	}
 
-	@Override
-	public RawMessage<T> set(T datum) {
-		// TODO Auto-generated method stub
-		return set(null,datum);
-	}
 	abstract protected Message<T> createMessage(Message<T> messageBeingModified,V data);
 	
 	@Override
-	public Message<T> done()  {
+	public Message<T> cook()  {
 		// TODO Auto-generated method stub
 
 		Message<T> newMessage=this.createMessage(messageBeingWrapped, data);
