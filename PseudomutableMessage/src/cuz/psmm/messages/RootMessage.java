@@ -4,11 +4,12 @@ import java.util.Map;
 
 import cuz.psmm.Message;
 import cuz.psmm.RawMessage;
+import cuz.psmm.accessoaries.StateLess;
 
 
 
-
-public class RootMessage implements Message<Object> {
+@StateLess
+public final class RootMessage implements Message<Object> {
 	
 	private static RootMessage instance=new RootMessage();
 	

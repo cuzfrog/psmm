@@ -3,8 +3,14 @@ package cuz.psmm;
 import java.util.HashMap;
 import java.util.Map;
 
+import cuz.psmm.Messages.Type;
 import cuz.psmm.factoryModules.DataStructure;
-
+/**
+ * In this abstract message, only signature has not been implemented.
+ * @author cuzfrog
+ *
+ * @param <T> The Message<T> it contains.
+ */
 public abstract class AbstractMessage<T> implements Message<T> {
 
 	protected final Message<T> parent;

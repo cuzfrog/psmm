@@ -3,6 +3,7 @@ package cuz.psmm;
 import java.util.Map;
 
 import cuz.psmm.Messages.Type;
+import cuz.psmm.accessoaries.ThreadSafe;
 import cuz.psmm.extension.SimpleMessage;
 import cuz.psmm.extension.UntypedMessage;
 
@@ -14,7 +15,7 @@ import cuz.psmm.extension.UntypedMessage;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations: <br>
- * {@link cuz.psmm.messages.UnbufferedMessage} <br>
+ * {@link cuz.psmm.messages.CommonMessage} <br>
  * However, you can only create them via static method {@link Messages#create}.
  * <br>
  * Type of a message is stored inside a message as an enum {@link Messages.Type}
@@ -37,6 +38,7 @@ import cuz.psmm.extension.UntypedMessage;
  * 
  * 
  */
+@ThreadSafe
 public interface Message<T> extends Psmm {
 
 	/**
@@ -96,7 +98,7 @@ public interface Message<T> extends Psmm {
 
 	/**
 	 * Return wrapped depth of the message.<br>
-	 * see {@link cuz.psmm.messages.UnbufferedMessage} for details of message
+	 * see {@link cuz.psmm.messages.CommonMessage} for details of message
 	 * structure.
 	 * 
 	 * @return position of the message in the linked structure.

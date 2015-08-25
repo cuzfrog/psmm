@@ -3,7 +3,7 @@ package cuz.psmm.factoryModules;
 import cuz.psmm.Message;
 import cuz.psmm.Messages;
 import cuz.psmm.accessoaries.StateLess;
-import cuz.psmm.messages.UnbufferedMessage;
+import cuz.psmm.messages.CommonMessage;
 
 @StateLess
 class LinkedMapModule implements Module {
@@ -12,7 +12,7 @@ class LinkedMapModule implements Module {
 	public <T> Message<T> createMessage(Message<T> messageBeingWrapped,
 			DataStructure data) {
 		// TODO Auto-generated method stub
-		return new UnbufferedMessage<T>(Messages.Type.LINKED_MAP, messageBeingWrapped,  data);
+		return new CommonMessage<>(Messages.Type.LINKED_MAP, messageBeingWrapped,  data);
 	}
 
 
