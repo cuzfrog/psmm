@@ -3,6 +3,8 @@ package cuz.psmm;
 import java.util.Map;
 
 import cuz.psmm.Messages.Type;
+import cuz.psmm.extension.SimpleMessage;
+import cuz.psmm.extension.UntypedMessage;
 
 /**
  * This is the interface for psmm(PSeudoMutableMessage). It provides
@@ -12,11 +14,11 @@ import cuz.psmm.Messages.Type;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations: <br>
- * {@link cuz.psmm.impl.FlatPsmm} <br>
- * {@link cuz.psmm.impl.LinkedPsmm} <br>
- * However, you can only create them via static method {@link Messages#create}. <br>
- * Type of a message is stored inside a message as an enum {@link Messages.Type},
- * in order to get factory of the same type conveniently.
+ * {@link cuz.psmm.messages.UnbufferedMessage} <br>
+ * However, you can only create them via static method {@link Messages#create}.
+ * <br>
+ * Type of a message is stored inside a message as an enum {@link Messages.Type}
+ * , in order to get factory of the same type conveniently.
  * 
  * <p>
  * When you want to store variant types of data, use {@code Object} as
@@ -44,7 +46,7 @@ public interface Message<T> extends Psmm {
 	 * @param key
 	 * @return T value set by key.
 	 */
-	abstract T get(String key);
+	T get(String key);
 
 	/**
 	 * Return message's whole data as a Map. The Map is newly created and not
@@ -56,7 +58,7 @@ public interface Message<T> extends Psmm {
 	 * 
 	 * @return data stored in this message as a {@code Map<String, T>}.
 	 */
-	abstract Map<String, T> getAll();
+	Map<String, T> getAll();
 
 	/**
 	 * Set a value into the message by an associated key, and return a reference
@@ -65,7 +67,7 @@ public interface Message<T> extends Psmm {
 	 * 
 	 * <p>
 	 * The method in Message actually does nothing. It first invokes the static
-	 * method {@link PsmmFactory#seekFactory(Type, Message)} to bind a
+	 * method {@link ThreadFactoryPool#seekFactory(Type)} to bind a
 	 * {@link PsmmFactory} to the original message (wrap the message), which is
 	 * the same object of RawMessage, but presents to you as a RawMessage. Then
 	 * it invokes the homonymous method {@link PsmmFactory#set(String, Object)}
@@ -77,7 +79,7 @@ public interface Message<T> extends Psmm {
 	 *            value to be associated with the specified key
 	 * @return outer PsmmFactory object by which this message is wrapped.
 	 */
-	abstract RawMessage<T> set(String key, T datum);
+	RawMessage<T> set(String key, T datum);
 
 	/**
 	 * Return a signature of this message.<br>
@@ -90,15 +92,15 @@ public interface Message<T> extends Psmm {
 	 * 
 	 * @return signature of this message.
 	 */
-	abstract byte[] getSignature();
+	byte[] getSignature();
 
 	/**
 	 * Return wrapped depth of the message.<br>
-	 * see {@link cuz.psmm.impl.LinkedPsmm} for details of message structure.
+	 * see {@link cuz.psmm.messages.UnbufferedMessage} for details of message
+	 * structure.
+	 * 
 	 * @return position of the message in the linked structure.
 	 */
-	abstract Integer depth();
-
-
+	Integer depth();
 
 }

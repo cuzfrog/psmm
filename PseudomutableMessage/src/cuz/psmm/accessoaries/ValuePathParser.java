@@ -1,4 +1,4 @@
-package cuz.psmm.utility;
+package cuz.psmm.accessoaries;
 
 import cuz.psmm.exceptions.PsmmInvalidValuePathException;
 

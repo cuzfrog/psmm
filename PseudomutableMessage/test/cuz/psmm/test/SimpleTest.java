@@ -16,7 +16,8 @@ public class SimpleTest {
 				.set(key2, 122)
 				.cook();
 		System.out.println(rm.get(key2));
-
+		System.out.println(rm.get(key1));
+		
 	}
 
 }

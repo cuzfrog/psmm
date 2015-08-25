@@ -1,7 +1,9 @@
 package cuz.psmm;
 
-interface PsmmFactory<T> extends RawMessage<T>{
-	
-	 PsmmFactory<T> wrap(Message<T> message);
-	
+import cuz.psmm.factoryModules.Module;
+
+interface PsmmFactory{
+	<T> PsmmFactory assemble(Module module);
+	<T> Message<T> commit(Message<T> messageBeingWrapped);
+	<T> void set(String key,T datum);
 }

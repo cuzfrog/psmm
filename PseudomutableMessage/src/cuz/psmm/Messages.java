@@ -1,27 +1,34 @@
 package cuz.psmm;
 
+import cuz.psmm.accessoaries.Configuration;
+import cuz.psmm.messages.RootMessage;
+
 public final class Messages {
-	private static FactoryPool factoryPool=new FactoryPool(null);
-	private Messages(){}
+	private static FactoryPool factoryPool = new ThreadFactoryPool(
+			new Configuration());
+
+	private Messages() {
+	}
+
 	/**
 	 * 
 	 * @param type
 	 * @param c
 	 * @return PsmmFactory as RawMessage.
 	 */
-	@SuppressWarnings("unchecked")
+
 	public static <T> RawMessage<T> create(Type type, Class<T> c) {
-		return factoryPool.seekFactory(type, RootMessage.getInstance());
+
+		Message<T> rootMessage = RootMessage.getInstance();
+		return new RawMessageImpl<T>(factoryPool.seekFactory(type), rootMessage);
 	}
 
-	static <T> RawMessage<T> fetch(Type type, Message<T> messageBeingWrapped){
-		return factoryPool.seekFactory(type, messageBeingWrapped);
+	static <T> RawMessage<T> fetch(Type type, Message<T> messageBeingWrapped) {
+		return new RawMessageImpl<T>(factoryPool.seekFactory(type),
+				messageBeingWrapped);
 	}
-	
-	static void release(Integer position){
-		
-	}
+
 	public static enum Type {
-		LINKED_MAP, FLAT_MAP, LINKED_SINGLE, FLAT_SINGLE
+		LINKED_MAP, FLAT_MAP
 	}
 }
