@@ -1,4 +1,4 @@
-package cuz.psmm.extension;
+package cuz.psmm.message.extension;
 
 import cuz.psmm.Psmm;
 

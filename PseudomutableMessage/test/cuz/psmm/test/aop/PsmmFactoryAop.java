@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cuz.psmm.Message;
+import cuz.psmm.message.Message;
 
 @Aspect
 public class PsmmFactoryAop {

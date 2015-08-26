@@ -1,24 +1,23 @@
-package cuz.psmm;
+package cuz.psmm.message;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cuz.psmm.Messages.Type;
-import cuz.psmm.factoryModules.DataStructure;
+import cuz.psmm.factory.datastructure.DataStructure;
 /**
  * In this abstract message, only signature has not been implemented.
  * @author cuzfrog
  *
  * @param <T> The Message<T> it contains.
  */
-public abstract class AbstractMessage<T> implements Message<T> {
+abstract class AbstractMessage<T> extends Message<T> {
 
 	protected final Message<T> parent;
 	protected final DataStructure data;
 	protected final Integer depth;
-	protected final Messages.Type type;
+	protected final Message.Type type;
 
-	protected AbstractMessage(Messages.Type type, Message<T> parent,
+	protected AbstractMessage(Message.Type type, Message<T> parent,
 			DataStructure data) {
 		super();
 		this.parent = parent;
@@ -68,7 +67,7 @@ public abstract class AbstractMessage<T> implements Message<T> {
 	@Override
 	public RawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
-		return Messages.fetch(this.type, this).set(key, datum);
+		return MessageHelper.fetch(this.type, this).set(key, datum);
 	}
 
 }

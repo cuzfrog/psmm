@@ -1,17 +1,15 @@
-package cuz.psmm.messages;
+package cuz.psmm.message;
 
 import java.util.Map;
 
-import cuz.psmm.Message;
-import cuz.psmm.RawMessage;
-import cuz.psmm.accessoaries.StateLess;
+import cuz.psmm.accessories.StateLess;
 
 
 
 @StateLess
-public final class RootMessage implements Message<Object> {
+final class RootMessage extends Message<Object> {
 	
-	private static RootMessage instance=new RootMessage();
+	private static final RootMessage instance=new RootMessage();
 	
 	private RootMessage(){}
 	
@@ -37,7 +35,7 @@ public final class RootMessage implements Message<Object> {
 	@Override
 	public byte[] getSignature() {
 		// TODO Auto-generated method stub
-		return null;
+		return new byte[]{Integer.valueOf(0).byteValue()};
 	}
 
 	@Override

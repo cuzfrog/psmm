@@ -1,4 +1,4 @@
-package cuz.psmm.accessoaries;
+package cuz.psmm.accessories;
 
 public class Configuration {
 

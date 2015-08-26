@@ -6,8 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import cuz.psmm.Message;
-import cuz.psmm.Messages;
+import cuz.psmm.message.Message;
 
 public class SimpleTest {
 
@@ -16,14 +15,15 @@ public class SimpleTest {
 
 		String key1 = "int1";
 		String key2 = "int2";
-		Message<Integer> rm = Messages
-				.create(Messages.Type.FLAT_MAP, Integer.class)
+		Message<Integer> rm = Message
+				.create(Message.Type.CACHED_FLAT_MAP, Integer.class)
 				.set(key1, 315)
 				.set(key2, 122)
 				.cook();
 		
 		System.out.println(rm.get(key2));
 		System.out.println(rm.get(key1));
+		System.out.println(rm.getSignature());
 		rm=rm.set(key1, 678).cook();
 		System.out.println(rm.get(key1));
 		rm.getAll().get(key2);
@@ -38,6 +38,7 @@ public class SimpleTest {
 		
 		Number n=Double.valueOf(42342345345546756245.999d);
 		System.out.println(n.doubleValue());
+
 	}
 
 }

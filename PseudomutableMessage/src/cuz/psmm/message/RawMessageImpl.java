@@ -1,4 +1,6 @@
-package cuz.psmm;
+package cuz.psmm.message;
+
+import cuz.psmm.factory.PsmmFactory;
 
 final class RawMessageImpl<T> implements RawMessage<T> {
 

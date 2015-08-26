@@ -1,11 +1,13 @@
-package cuz.psmm;
+package cuz.psmm.message;
 
 import java.util.Map;
 
-import cuz.psmm.Messages.Type;
-import cuz.psmm.accessoaries.ThreadSafe;
-import cuz.psmm.extension.SimpleMessage;
-import cuz.psmm.extension.UntypedMessage;
+import cuz.psmm.Psmm;
+import cuz.psmm.accessories.ThreadSafe;
+import cuz.psmm.factory.PsmmFactory;
+import cuz.psmm.message.Message.Type;
+import cuz.psmm.message.extension.SimpleMessage;
+import cuz.psmm.message.extension.UntypedMessage;
 
 /**
  * This is the interface for psmm(PSeudoMutableMessage). It provides
@@ -15,10 +17,10 @@ import cuz.psmm.extension.UntypedMessage;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations: <br>
- * {@link cuz.psmm.messages.CommonMessage} <br>
- * However, you can only create them via static method {@link Messages#create}.
+ * {@link cuz.psmm.message.CommonMessage} <br>
+ * However, you can only create them via static method {@link #create}.
  * <br>
- * Type of a message is stored inside a message as an enum {@link Messages.Type}
+ * Type of a message is stored inside a message as an enum {@link Message.Type}
  * , in order to get factory of the same type conveniently.
  * 
  * <p>
@@ -39,7 +41,37 @@ import cuz.psmm.extension.UntypedMessage;
  * 
  */
 @ThreadSafe
-public interface Message<T> extends Psmm {
+public abstract class Message<T> implements Psmm {
+
+	public static enum Type {
+		LINKED_MAP {
+			@Override
+			public Type basicType() {
+				// TODO Auto-generated method stub
+				return this;
+			}
+		}, FLAT_MAP {
+			@Override
+			public Type basicType() {
+				// TODO Auto-generated method stub
+				return this;
+			}
+		}, CACHED_LINKED_MAP {
+			@Override
+			public Type basicType() {
+				// TODO Auto-generated method stub
+				return LINKED_MAP;
+			}
+		}, CACHED_FLAT_MAP {
+			@Override
+			public Type basicType() {
+				// TODO Auto-generated method stub
+				return FLAT_MAP;
+			}
+		};
+		
+		abstract public Type basicType();
+	}
 
 	/**
 	 * Return a single value by a specified key. If the value cannot be found by
@@ -48,7 +80,7 @@ public interface Message<T> extends Psmm {
 	 * @param key
 	 * @return T value set by key.
 	 */
-	T get(String key);
+	public abstract T get(String key);
 
 	/**
 	 * Return message's whole data as a Map. The Map is newly created and not
@@ -60,7 +92,7 @@ public interface Message<T> extends Psmm {
 	 * 
 	 * @return data stored in this message as a {@code Map<String, T>}.
 	 */
-	Map<String, T> getAll();
+	public abstract Map<String, T> getAll();
 
 	/**
 	 * Set a value into the message by an associated key, and return a reference
@@ -69,7 +101,7 @@ public interface Message<T> extends Psmm {
 	 * 
 	 * <p>
 	 * The method in Message actually does nothing. It first invokes the static
-	 * method {@link ThreadFactoryPool#seekFactory(Type)} to bind a
+	 * method {@link PsmmFactory#seekFactory(Type)} to bind a
 	 * {@link PsmmFactory} to the original message (wrap the message), which is
 	 * the same object of RawMessage, but presents to you as a RawMessage. Then
 	 * it invokes the homonymous method {@link PsmmFactory#set(String, Object)}
@@ -81,7 +113,7 @@ public interface Message<T> extends Psmm {
 	 *            value to be associated with the specified key
 	 * @return outer PsmmFactory object by which this message is wrapped.
 	 */
-	RawMessage<T> set(String key, T datum);
+	public abstract RawMessage<T> set(String key, T datum);
 
 	/**
 	 * Return a signature of this message.<br>
@@ -94,15 +126,27 @@ public interface Message<T> extends Psmm {
 	 * 
 	 * @return signature of this message.
 	 */
-	byte[] getSignature();
+	public abstract byte[] getSignature();
 
 	/**
 	 * Return wrapped depth of the message.<br>
-	 * see {@link cuz.psmm.messages.CommonMessage} for details of message
+	 * see {@link cuz.psmm.message.CommonMessage} for details of message
 	 * structure.
 	 * 
 	 * @return position of the message in the linked structure.
 	 */
-	Integer depth();
+	public abstract Integer depth();
+
+	/**
+	 * 
+	 * @param type
+	 * @param c
+	 * @return PsmmFactory as RawMessage.
+	 */
+	public static <T> RawMessage<T> create(Message.Type type, Class<T> c) {
+	
+		Message<T> rootMessage = RootMessage.getInstance();
+		return new RawMessageImpl<>(PsmmFactory.seekFactory(type), rootMessage);
+	}
 
 }

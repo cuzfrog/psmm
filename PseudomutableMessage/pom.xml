@@ -28,6 +28,7 @@
 
 	<dependencies>
 
+        <!-- Debug and Testing -->
 		<dependency>
 			<groupId>nl.jqno.equalsverifier</groupId>
 			<artifactId>equalsverifier</artifactId>
@@ -46,6 +47,11 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.puppycrawl.tools</groupId>
+			<artifactId>checkstyle</artifactId>
+			<version>6.9</version>
 		</dependency>
 
 		<!-- Logging with SLF4J -->
@@ -76,7 +82,7 @@
 			<scope>test</scope>
 		</dependency>
 
-        <!-- Required dependencies -->
+		<!-- Required dependencies -->
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>

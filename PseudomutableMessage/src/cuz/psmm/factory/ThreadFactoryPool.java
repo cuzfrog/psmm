@@ -1,12 +1,11 @@
-package cuz.psmm;
+package cuz.psmm.factory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cuz.psmm.Messages.Type;
-import cuz.psmm.accessoaries.Configuration;
-import cuz.psmm.factoryModules.Module;
-import cuz.psmm.factoryModules.Modules;
+import cuz.psmm.accessories.Configuration;
+import cuz.psmm.factory.modules.Module;
+import cuz.psmm.message.Message;
 
 /**
  * 
@@ -16,11 +15,11 @@ import cuz.psmm.factoryModules.Modules;
 class ThreadFactoryPool implements FactoryPool  {
 
 	private Map<Long, PsmmFactory> pool;
-	private Map<Messages.Type, Module> modules;
+	private Map<Message.Type, Module> modules;
 
 	ThreadFactoryPool(Configuration config) {
 		pool = new ConcurrentHashMap<>();
-		modules = Modules.createModuleMap();
+		modules = Module.createModuleMap();
 
 	}
 
@@ -29,7 +28,7 @@ class ThreadFactoryPool implements FactoryPool  {
 	 * @see cuz.psmm.FactoryPool#seekFactory(cuz.psmm.Messages.Type)
 	 */
 	@Override
-	public PsmmFactory seekFactory(Type type) {
+	public PsmmFactory seekFactory(Message.Type type) {
 		// TODO Auto-generated method stub
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;

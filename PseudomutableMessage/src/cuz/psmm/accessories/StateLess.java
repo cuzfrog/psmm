@@ -1,10 +1,10 @@
 /**
  * 
  */
-package cuz.psmm.accessoaries;
+package cuz.psmm.accessories;
 
 /**
- * Class with this annotation is surely thread safe.
+ * Thread safe in common situation.
  * @author cuzfrog
  *
  */
