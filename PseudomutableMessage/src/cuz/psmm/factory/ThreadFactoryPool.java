@@ -38,7 +38,7 @@ class ThreadFactoryPool implements FactoryPool  {
 			psmmFactory = new GeneralPsmmFactory();
 			pool.put(threadId, psmmFactory);
 		}
-		psmmFactory.assemble( modules.get(type));
+		psmmFactory.assemble( modules.get(type),type);
 		//DEBUG:
 		//System.out.println(modules.get(type));
 		return psmmFactory;

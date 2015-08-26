@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import cuz.psmm.exceptions.PsmmException;
 import cuz.psmm.exceptions.PsmmMessageConstructionFailedException;
 import cuz.psmm.factory.PsmmFactory;
-import cuz.psmm.factory.datastructure.DataStructure;
+import cuz.psmm.factory.data.Data;
 
 public final class MessageHelper {
 	
@@ -33,21 +33,19 @@ public final class MessageHelper {
 		messagePool.put(signature, message);
 	}
 
-	public static byte[] calculateSignature(Message.Type type, Message<?> parent,
-			DataStructure data) throws PsmmException {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA1");
-			md.update(Integer.valueOf(type.ordinal()).byteValue());
-			md.update(data.getSignature());
-			md.update(parent.getSignature());
-			return  md.digest();
-		} catch (NoSuchAlgorithmException | IOException e) {
-			// TODO Auto-generated catch block
-			throw new PsmmMessageConstructionFailedException();
-		}
+	public static <T> Message<T> getRootMessage(){
+		return RootMessage.getInstance();
 	}
 	
-	public static <T> Message<T> getConcretMessage(Message.Type type){
-		swich
+	
+	
+	public static <T> Message<T> getConcretMessage(Message.Type type,Message<T> messageBeingWrapped, Data data,byte[] signature){
+		if(type.isCached()){
+			Message<T> message= new CachedMessage<>(type, messageBeingWrapped, data, signature);
+			putMessage(signature, message);
+			return message;
+		}else{
+			return new UncachedMessage<>(type, messageBeingWrapped, data);
+		}
 	}
 }

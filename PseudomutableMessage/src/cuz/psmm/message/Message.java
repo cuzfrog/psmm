@@ -17,9 +17,8 @@ import cuz.psmm.message.extension.UntypedMessage;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations: <br>
- * {@link cuz.psmm.message.CommonMessage} <br>
- * However, you can only create them via static method {@link #create}.
- * <br>
+ * {@link cuz.psmm.message.UncachedMessage} <br>
+ * However, you can only create them via static method {@link #create}. <br>
  * Type of a message is stored inside a message as an enum {@link Message.Type}
  * , in order to get factory of the same type conveniently.
  * 
@@ -50,27 +49,34 @@ public abstract class Message<T> implements Psmm {
 				// TODO Auto-generated method stub
 				return this;
 			}
-		}, FLAT_MAP {
+		},
+		FLAT_MAP {
 			@Override
 			public Type basicType() {
 				// TODO Auto-generated method stub
 				return this;
 			}
-		}, CACHED_LINKED_MAP {
+		},
+		CACHED_LINKED_MAP {
 			@Override
 			public Type basicType() {
 				// TODO Auto-generated method stub
 				return LINKED_MAP;
 			}
-		}, CACHED_FLAT_MAP {
+		},
+		CACHED_FLAT_MAP {
 			@Override
 			public Type basicType() {
 				// TODO Auto-generated method stub
 				return FLAT_MAP;
 			}
 		};
-		
+
 		abstract public Type basicType();
+
+		public boolean isCached() {
+			return this.toString().contains("CACHED");
+		}
 	}
 
 	/**
@@ -130,7 +136,7 @@ public abstract class Message<T> implements Psmm {
 
 	/**
 	 * Return wrapped depth of the message.<br>
-	 * see {@link cuz.psmm.message.CommonMessage} for details of message
+	 * see {@link cuz.psmm.message.UncachedMessage} for details of message
 	 * structure.
 	 * 
 	 * @return position of the message in the linked structure.
@@ -144,7 +150,7 @@ public abstract class Message<T> implements Psmm {
 	 * @return PsmmFactory as RawMessage.
 	 */
 	public static <T> RawMessage<T> create(Message.Type type, Class<T> c) {
-	
+
 		Message<T> rootMessage = RootMessage.getInstance();
 		return new RawMessageImpl<>(PsmmFactory.seekFactory(type), rootMessage);
 	}

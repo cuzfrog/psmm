@@ -1,4 +1,4 @@
-package cuz.psmm.factory.datastructure;
+package cuz.psmm.factory.data;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import cuz.psmm.message.Message;
 
-final class MapDataStructure extends DataStructure {
+final class MapDataStructure extends Data {
 
 	private Map<String, Object> data = new HashMap<>();
 

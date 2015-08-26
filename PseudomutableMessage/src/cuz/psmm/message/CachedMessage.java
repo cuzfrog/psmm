@@ -1,15 +1,13 @@
 package cuz.psmm.message;
 
-import cuz.psmm.exceptions.PsmmException;
-import cuz.psmm.factory.datastructure.DataStructure;
-import cuz.psmm.message.Message.Type;
+import cuz.psmm.factory.data.Data;
 
 final class CachedMessage<T> extends AbstractMessage<T>{
 
 
 	private byte[] signature;
 	
-	public CachedMessage(Message.Type type, Message<T> parent, DataStructure data,byte[] signature) throws PsmmException {
+	public CachedMessage(Message.Type type, Message<T> parent, Data data,byte[] signature) {
 		super(type, parent, data);
 		// TODO Auto-generated constructor stub
 		this.signature=signature;
@@ -17,7 +15,6 @@ final class CachedMessage<T> extends AbstractMessage<T>{
 
 	@Override
 	public byte[] getSignature() {
-		// TODO Auto-generated method stub
 		return this.signature;
 	}
 }

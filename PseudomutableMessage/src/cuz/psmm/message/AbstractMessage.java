@@ -3,7 +3,7 @@ package cuz.psmm.message;
 import java.util.HashMap;
 import java.util.Map;
 
-import cuz.psmm.factory.datastructure.DataStructure;
+import cuz.psmm.factory.data.Data;
 /**
  * In this abstract message, only signature has not been implemented.
  * @author cuzfrog
@@ -13,12 +13,12 @@ import cuz.psmm.factory.datastructure.DataStructure;
 abstract class AbstractMessage<T> extends Message<T> {
 
 	protected final Message<T> parent;
-	protected final DataStructure data;
+	protected final Data data;
 	protected final Integer depth;
 	protected final Message.Type type;
 
 	protected AbstractMessage(Message.Type type, Message<T> parent,
-			DataStructure data) {
+			Data data) {
 		super();
 		this.parent = parent;
 		this.data = data;
