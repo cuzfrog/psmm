@@ -15,7 +15,7 @@ public class CreationModuleUncached extends Module {
 	@Override
 	public <T> Message<T> createMessage(Message.Type type,Message<T> messageBeingWrapped, Data data) {
 		// TODO Auto-generated method stub
-		return MessageHelper.getConcretMessage(type, messageBeingWrapped, data, null);
+		return MessageHelper.getConcretMessage(type, messageBeingWrapped, data);
 	}
 
 	@Override

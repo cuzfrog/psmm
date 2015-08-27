@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import cuz.psmm.factory.modules.Module;
 import cuz.psmm.message.Message;
 
 public class SimpleTest {
@@ -38,7 +39,6 @@ public class SimpleTest {
 		
 		Number n=Double.valueOf(42342345345546756245.999d);
 		System.out.println(n.doubleValue());
-
 	}
 
 }

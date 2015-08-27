@@ -5,9 +5,6 @@ import java.util.Map;
 import cuz.psmm.Psmm;
 import cuz.psmm.accessories.ThreadSafe;
 import cuz.psmm.factory.PsmmFactory;
-import cuz.psmm.message.Message.Type;
-import cuz.psmm.message.extension.SimpleMessage;
-import cuz.psmm.message.extension.UntypedMessage;
 
 /**
  * This is the interface for psmm(PSeudoMutableMessage). It provides
@@ -45,38 +42,30 @@ public abstract class Message<T> implements Psmm {
 	public static enum Type {
 		LINKED_MAP {
 			@Override
-			public Type basicType() {
-				// TODO Auto-generated method stub
-				return this;
+			public String toString() {		
+				return "UncachedLinkedMap";
 			}
 		},
 		FLAT_MAP {
 			@Override
-			public Type basicType() {
-				// TODO Auto-generated method stub
-				return this;
+			public String toString() {		
+				return "UncachedFlatMap";
 			}
 		},
 		CACHED_LINKED_MAP {
 			@Override
-			public Type basicType() {
-				// TODO Auto-generated method stub
-				return LINKED_MAP;
+			public String toString() {		
+				return "CachedLinkedMap";
 			}
 		},
 		CACHED_FLAT_MAP {
 			@Override
-			public Type basicType() {
-				// TODO Auto-generated method stub
-				return FLAT_MAP;
+			public String toString() {		
+				return "CachedFlatMap";
 			}
 		};
 
-		abstract public Type basicType();
-
-		public boolean isCached() {
-			return this.toString().contains("CACHED");
-		}
+		
 	}
 
 	/**

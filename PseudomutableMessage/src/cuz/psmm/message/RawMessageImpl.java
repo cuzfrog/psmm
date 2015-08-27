@@ -2,7 +2,7 @@ package cuz.psmm.message;
 
 import cuz.psmm.factory.PsmmFactory;
 
-final class RawMessageImpl<T> implements RawMessage<T> {
+final class RawMessageImpl<T> implements RawMessage<T>,UntypedRawMessage {
 
 	private PsmmFactory psmmFactory;
 	private Message<T> messageBeingWrapped;
@@ -15,15 +15,88 @@ final class RawMessageImpl<T> implements RawMessage<T> {
 
 
 	@Override
-	public Message<T> cook() {
+	public AbstractMessage<T> cook() {
 		// TODO Auto-generated method stub
-		return   psmmFactory.commit(messageBeingWrapped);
+		return   (AbstractMessage<T>) psmmFactory.commit(messageBeingWrapped);
 	}
 
 	@Override
 	public RawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, datum);
+		return this;
+	}
+
+
+	//UntypeRawMessage behaviors:
+	@Override
+	public UntypedRawMessage set(String key, int value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, short value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, long value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, boolean value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, float value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, double value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, char value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, byte value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
+		return this;
+	}
+
+
+	@Override
+	public UntypedRawMessage set(String key, String value) {
+		// TODO Auto-generated method stub
+		psmmFactory.set(key, value);
 		return this;
 	}
 

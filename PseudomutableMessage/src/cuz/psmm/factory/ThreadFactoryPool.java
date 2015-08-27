@@ -15,7 +15,7 @@ import cuz.psmm.message.Message;
 class ThreadFactoryPool implements FactoryPool  {
 
 	private Map<Long, PsmmFactory> pool;
-	private Map<Message.Type, Module> modules;
+	private Map<String, Module> modules;
 
 	ThreadFactoryPool(Configuration config) {
 		pool = new ConcurrentHashMap<>();
@@ -32,13 +32,14 @@ class ThreadFactoryPool implements FactoryPool  {
 		// TODO Auto-generated method stub
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;
-		if (pool.containsKey(type)) {
+		String name=type.toString();
+		if (pool.containsKey(threadId)) {
 			psmmFactory = pool.get(threadId);
 		} else {
 			psmmFactory = new GeneralPsmmFactory();
 			pool.put(threadId, psmmFactory);
 		}
-		psmmFactory.assemble( modules.get(type),type);
+		psmmFactory.assemble( modules.get(name),type);
 		//DEBUG:
 		//System.out.println(modules.get(type));
 		return psmmFactory;

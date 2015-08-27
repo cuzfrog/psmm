@@ -10,7 +10,7 @@ import cuz.psmm.factory.data.Data;
  *
  * @param <T> The Message<T> it contains.
  */
-abstract class AbstractMessage<T> extends Message<T> {
+abstract class AbstractMessage<T> extends Message<T> implements UntypedMessage {
 
 	protected final Message<T> parent;
 	protected final Data data;
@@ -69,5 +69,7 @@ abstract class AbstractMessage<T> extends Message<T> {
 		// TODO Auto-generated method stub
 		return MessageHelper.fetch(this.type, this).set(key, datum);
 	}
+	// ------------UntypedMessage behaviors:
 
+	
 }
