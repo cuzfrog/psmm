@@ -28,7 +28,7 @@
 
 	<dependencies>
 
-        <!-- Debug and Testing -->
+		<!-- Debug and Testing -->
 		<dependency>
 			<groupId>nl.jqno.equalsverifier</groupId>
 			<artifactId>equalsverifier</artifactId>
@@ -98,8 +98,12 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<excludes>
+						<exclude>**/deprecated/**/*.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
+
 	</build>
 </project>
