@@ -1,6 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.accessories.NotThreadSafe;
 import cuz.my.psmm.data.Data;
 
 //assume Factory is run by single thread.
@@ -10,16 +9,10 @@ final class GeneralPsmmFactory implements PsmmFactory {
 	private Data data;
 	private Module module;
 	private Messages.Type type;
-
-	@Override
-	public void setData(Data data) {
-		this.data = data;
-	}
-
-	@Override
-	public void setModule(Module module) {
-		this.module = module;
-	}
+	/**
+	 * Raw message binded with this factory.
+	 */
+	private final AbstractRawMessage<?> rawMessageRefr=new RawMessageImpl<>(this);
 
 	@Override
 	public <T> TMessage<T> commit(TMessage<T> messageBeingWrapped) {
@@ -42,10 +35,26 @@ final class GeneralPsmmFactory implements PsmmFactory {
 	}
 
 	@Override
-	public <T> PsmmFactory assemble(Module module, Messages.Type type) {
+	public void assemble(Module module, Messages.Type type) {
 		this.type = type;
 		module.setup(this);
-		return this;
 	}
 
+	// module functions:
+	@Override
+	public void setData(Data data) {
+		this.data = data;
+	}
+
+	@Override
+	public void setModule(Module module) {
+		this.module = module;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> AbstractRawMessage<T> getRawMessage() {
+		// TODO Auto-generated method stub
+		return (AbstractRawMessage<T>) rawMessageRefr;
+	}
 }

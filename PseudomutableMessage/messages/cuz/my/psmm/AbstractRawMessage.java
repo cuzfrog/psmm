@@ -4,7 +4,12 @@ import cuz.my.psmm.PsmmFactory;
 
 abstract class AbstractRawMessage<T> implements TypedRawMessage<T>,UntypedRawMessage {
 
-	protected PsmmFactory psmmFactory;
+	protected final PsmmFactory psmmFactory;
+	protected AbstractRawMessage(PsmmFactory psmmFactory) {
+		super();
+		this.psmmFactory = psmmFactory;
+	}
+
 	protected TMessage<T> messageBeingWrapped;
 
 	@Override
@@ -13,6 +18,10 @@ abstract class AbstractRawMessage<T> implements TypedRawMessage<T>,UntypedRawMes
 		return   (AbstractMessage<T>) psmmFactory.commit(messageBeingWrapped);
 	}
 
+	void setMessageBeingWrapped(TMessage<T> messageBeingWrapped) {
+		this.messageBeingWrapped = messageBeingWrapped;
+	}
+	
 	@Override
 	public TypedRawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
@@ -82,5 +91,9 @@ abstract class AbstractRawMessage<T> implements TypedRawMessage<T>,UntypedRawMes
 		psmmFactory.set(key, value);
 		return this;
 	}
+
+
+
+	
 
 }

@@ -4,9 +4,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * A {@code ConcurrentHashMap} is used for cache PsmmFactory.
+ * FactoryPool that uses a {@code ConcurrentHashMap} for caching PsmmFactory.
  * 
- * <p>
+ * <p>{@code Map<Long, PsmmFactory>} {@link #pool} is the pool member. Notice that key type is Long, which is
+ * actually every thread's Id. Because JVM assures that no duplicate thread IDs at one time, after each thread grabs
+ * its factory's reference through this {@code ConcurrentHashMap}, they're free of worrying about concurrency. Plus
+ * there's no key conflicting, thus seeking and fetching factory concurrently only affects very little performance.
  * 
  * @author cuzfrog
  *

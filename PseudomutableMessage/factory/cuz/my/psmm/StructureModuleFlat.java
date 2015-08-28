@@ -2,7 +2,6 @@ package cuz.my.psmm;
 
 import java.util.Map;
 
-import cuz.my.psmm.accessories.StateLess;
 import cuz.my.psmm.data.Data;
 
 @StateLess

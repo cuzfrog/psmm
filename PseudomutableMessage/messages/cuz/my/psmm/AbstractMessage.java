@@ -67,62 +67,62 @@ abstract class AbstractMessage<T>  implements TMessage<T>,UMessage {
 	@Override
 	public TypedRawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, datum);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, datum);
 	}
 	// ------------UntypedMessage behaviors:
 
 	@Override
 	public UntypedRawMessage set(String key, int value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, short value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, long value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, boolean value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, float value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, double value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, char value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, byte value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, String value) {
 		// TODO Auto-generated method stub
-		return PsmmSystem.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	

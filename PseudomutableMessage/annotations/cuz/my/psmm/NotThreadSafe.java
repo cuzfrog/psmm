@@ -1,10 +1,10 @@
-package cuz.my.psmm.accessories;
+package cuz.my.psmm;
 
 /**
  * Obviously NOT thread safe.
  * @author cuzfrog
  *
  */
-public @interface NotThreadSafe {
+@interface NotThreadSafe {
 
 }

@@ -30,8 +30,9 @@ class SimpleTest {
 		System.out.println(rm+"|"+rm.get(key1));
 		System.out.println(rmnew+"|"+rmnew.get(key1));
 		System.out.println(rmnew2+"|"+rmnew2.get(key1));
-		System.out.println(rm.equals(rmnew));
+		System.out.println(rmnew2.equals(rmnew));
 		System.out.println(Arrays.equals(rm.getSignature(), rmnew.getSignature()));
+		
 	}
     
 }

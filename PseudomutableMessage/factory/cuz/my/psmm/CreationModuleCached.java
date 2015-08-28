@@ -39,11 +39,12 @@ final class CreationModuleCached extends Module {
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 			
 			Map<String,T> parentMap=parent.getAll();
-			Map<String,T> dataMap=data.getAll();
+			
 			
 			if(parentMap==null){
 				md.update(data.getDataStream());
 			}else{
+				Map<String,T> dataMap=data.getAll();
 				parentMap.putAll(dataMap);
 				md.update(Data.getDataStream(parentMap));
 			}

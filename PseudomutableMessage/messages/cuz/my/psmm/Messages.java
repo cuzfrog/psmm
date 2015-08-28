@@ -6,11 +6,12 @@ import cuz.my.psmm.data.Data;
  * An abstract class that has message creation methods and the definition of
  * message type.
  * <p>
- * There are several message interfaces锛�<br> {@link UMessage} only accept
- * primitives and Strings, which ensures its data's immutability. However bad
- * {@link Data} implementation could violate it.<br>{@link TMessage} gives
- * flexibility to data carried, but you have to be very careful designing your
- * message, since TypedMessage doesn't check the mutability of the datum you set in.
+ * There are several message interfaces锛�<br>
+ * {@link UMessage} only accept primitives and Strings, which ensures its data's
+ * immutability. However bad {@link Data} implementation could violate it.<br>
+ * {@link TMessage} gives flexibility to data carried, but you have to be very
+ * careful designing your message, since TypedMessage doesn't check the
+ * mutability of the datum you set in.
  * 
  * @author cuzfrog
  *
@@ -19,6 +20,7 @@ public abstract class Messages implements Psmm {
 
 	/**
 	 * Message types indicating the structures of messages.
+	 * 
 	 * @author cuzfrog
 	 *
 	 */
@@ -62,7 +64,8 @@ public abstract class Messages implements Psmm {
 	 */
 	public static UntypedRawMessage create(Messages.Type messageType) {
 		TMessage<Object> rootMessage = RootMessage.getInstance();
-		return new RawMessageImpl<>(PsmmSystem.seekFactory(messageType), rootMessage);
+		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);	
+		return rawMessage;
 	}
 
 	/**
@@ -74,8 +77,7 @@ public abstract class Messages implements Psmm {
 	 * @return RawMessage.
 	 */
 	public static UntypedRawMessage create() {
-		TMessage<Object> rootMessage = RootMessage.getInstance();
-		return new RawMessageImpl<>(PsmmSystem.seekFactory(Type.LINKED_MAP), rootMessage);
+		return create(Type.LINKED_MAP);
 	}
 
 	/**
@@ -94,7 +96,8 @@ public abstract class Messages implements Psmm {
 	public static <T> TypedRawMessage<T> create(Messages.Type messageType, Class<T> c) {
 
 		TMessage<T> rootMessage = RootMessage.getInstance();
-		return new RawMessageImpl<>(PsmmSystem.seekFactory(messageType), rootMessage);
+		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);	
+		return rawMessage;
 	}
 
 	/**
@@ -109,7 +112,6 @@ public abstract class Messages implements Psmm {
 	 */
 	public static <T> TypedRawMessage<T> create(Class<T> c) {
 
-		TMessage<T> rootMessage = RootMessage.getInstance();
-		return new RawMessageImpl<>(PsmmSystem.seekFactory(Type.LINKED_MAP), rootMessage);
+		return create(c);
 	}
 }

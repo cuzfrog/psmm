@@ -32,7 +32,9 @@ abstract class Module {
 	}
 
 	protected void setup(PsmmFactory psmmFactory) {
-		throw new PsmmUnsupportedOperationException();
+		if(collaberativeModule!=null){
+			collaberativeModule.setup(psmmFactory);
+		}
 	}
 
 	public String getName() {

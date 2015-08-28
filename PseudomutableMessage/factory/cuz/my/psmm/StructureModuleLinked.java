@@ -1,6 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.accessories.StateLess;
 import cuz.my.psmm.data.Data;
 
 @StateLess

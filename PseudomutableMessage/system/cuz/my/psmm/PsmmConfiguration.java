@@ -5,13 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cuz.my.psmm.accessories.NotThreadSafe;
 import cuz.my.psmm.data.Data;
 
 /**
- * Class for configure psmm when initiating.
+ * Class for configuring psmm when initiating.
  * <p>
+ * Methods to setup (see each for details):<br>
+ * {@link #PsmmConfiguration(Integer)} to set message pool size.<br>
+ * {@link #PsmmConfiguration(FactoryPoolType)} to set factory pool type.<br>
+ * {@link #PsmmConfiguration(Integer, FactoryPoolType)} to set above together.
+ * <br>
+ * {@link #setFactoryPoolSize(Integer)} to set message pool size.<br>
  * Psmm will create a default one, if you don't specify it.
+ * <p>
+ * Default message pool size configuration is 0, which means there will not be
+ * any message being cached. See {@link MessagePool} for details. Default
+ * factory pool size configuration is 16, taking MapFactoryPool as an example,
+ * this is according to how many threads ID there'll be.
+ * <p>
+ * However these configurations are not vital. They're for optimization like big
+ * enough pool size to prevent Map rehash.
  * 
  * @author cuzfrog
  *
@@ -36,20 +49,35 @@ public class PsmmConfiguration {
 	private Integer factoryPoolSize = DEFAULT_FACTORY_POOL_SIZE;
 
 	// constructors:
-	public PsmmConfiguration() {
+	PsmmConfiguration() {
 		this(DEFAULT_MESSAGE_POOL_SIZE);
 	}
 
+	/**
+	 * Create PsmmConfiguration.
+	 * 
+	 * @param messagePoolSize
+	 */
 	public PsmmConfiguration(Integer messagePoolSize) {
 		this(messagePoolSize, DEFAULT_FACTORYPOOL_TYPE);
 	}
 
+	/**
+	 * Create PsmmConfiguration.
+	 * 
+	 * @param factoryPoolChoseType
+	 */
 	public PsmmConfiguration(FactoryPoolType factoryPoolChoseType) {
 		this(DEFAULT_MESSAGE_POOL_SIZE, factoryPoolChoseType);
 	}
 
-	public PsmmConfiguration(Integer messagePoolSize,
-			FactoryPoolType factoryPoolChoseType) {
+	/**
+	 * Create PsmmConfiguration.
+	 * 
+	 * @param messagePoolSize
+	 * @param factoryPoolChoseType
+	 */
+	public PsmmConfiguration(Integer messagePoolSize, FactoryPoolType factoryPoolChoseType) {
 		this.messagePoolSize = messagePoolSize;
 		switch (factoryPoolChoseType) {
 		case MAP:
@@ -62,11 +90,11 @@ public class PsmmConfiguration {
 	}
 
 	// custom methods:
-	public void addModule(Module module) {
+	void addModule(Module module) {
 		customModules.put(module.getName(), module);
 	}
 
-	public void addData(Data data) {
+	void addData(Data data) {
 		customData.add(data);
 	}
 
@@ -74,11 +102,11 @@ public class PsmmConfiguration {
 		return messagePoolSize;
 	}
 
-	public Map<String, Module> getCustomModules() {
+	Map<String, Module> getCustomModules() {
 		return customModules;
 	}
 
-	public List<Data> getCustomData() {
+	List<Data> getCustomData() {
 		return customData;
 	}
 

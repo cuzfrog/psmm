@@ -1,6 +1,18 @@
 package cuz.my.psmm;
 
-
+/**
+ * An interface for hiding {@link PsmmFactory}, and to ensure you've invoked {@link #cook()}
+ * with cascading method calls.
+ * <p>
+ * So do not grab a reference of it. Implementation {@link RawMessageImpl} of
+ * this interface contains two references, of which are binded factory and
+ * stored the last Message as new Message to wrap.
+ * <p>
+ * The factory wrapped is fetched from factory pool.
+ * 
+ * @author cuzfrog
+ * @see UMessage
+ */
 public interface UntypedRawMessage extends UntypedMessageSetInterface {
 	/**
 	 * Return a cooked {@code UntypedMessage} with the data previously set.

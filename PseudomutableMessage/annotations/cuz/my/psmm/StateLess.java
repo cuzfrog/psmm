@@ -1,14 +1,13 @@
 /**
  * 
  */
-package cuz.my.psmm.accessories;
+package cuz.my.psmm;
 
 /**
  * Thread safe in common situation.
- * 
  * @author cuzfrog
  *
  */
-public @interface ThreadSafe {
+@interface StateLess {
 
 }

@@ -2,8 +2,6 @@ package cuz.my.psmm;
 
 import java.util.Arrays;
 
-import cuz.my.psmm.accessories.StateLess;
-
 @StateLess
 final class Signature {
 	private final byte[] signature;

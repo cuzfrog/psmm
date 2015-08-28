@@ -34,6 +34,8 @@ public abstract class Data {
 		switch (type) {
 		case MAP:
 			return new MapData();
+		case SIMPLE:
+			return new SimpleData();
 		default:
 			break;
 		}
@@ -41,7 +43,7 @@ public abstract class Data {
 	}
 
 	public static enum Type {
-		MAP
+		MAP,SIMPLE
 	}
 	
 	public static <T> byte[] getDataStream(Map<String, T> data) throws IOException {
