@@ -1,8 +1,11 @@
 package cuz.my.psmm;
 
+import cuz.my.psmm.accessories.NotThreadSafe;
 import cuz.my.psmm.data.Data;
 
-final class GeneralPsmmFactory extends PsmmFactory {
+//assume Factory is run by single thread.
+@NotThreadSafe
+final class GeneralPsmmFactory implements PsmmFactory {
 
 	private Data data;
 	private Module module;
@@ -19,10 +22,10 @@ final class GeneralPsmmFactory extends PsmmFactory {
 	}
 
 	@Override
-	public <T> TypedMessage<T> commit(TypedMessage<T> messageBeingWrapped) {
+	public <T> TMessage<T> commit(TMessage<T> messageBeingWrapped) {
 		// TODO Auto-generated method stub
 
-		TypedMessage<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
+		TMessage<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
 
 		// once a new message has been created, delete this.data reference
 		// for safety.

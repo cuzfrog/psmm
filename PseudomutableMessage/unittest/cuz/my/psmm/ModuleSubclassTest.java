@@ -1,4 +1,4 @@
-package cuz.my.psmm.test;
+package cuz.my.psmm;
 
 import cuz.my.psmm.Module;
 

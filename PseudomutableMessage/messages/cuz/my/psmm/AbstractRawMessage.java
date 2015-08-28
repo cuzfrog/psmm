@@ -5,7 +5,7 @@ import cuz.my.psmm.PsmmFactory;
 abstract class AbstractRawMessage<T> implements TypedRawMessage<T>,UntypedRawMessage {
 
 	protected PsmmFactory psmmFactory;
-	protected TypedMessage<T> messageBeingWrapped;
+	protected TMessage<T> messageBeingWrapped;
 
 	@Override
 	public AbstractMessage<T> cook() {

@@ -5,9 +5,9 @@ import cuz.my.psmm.data.Data;
 final class CachedMessage<T> extends AbstractMessage<T>{
 
 
-	private byte[] signature;
+	private Signature signature;
 	
-	public CachedMessage(Messages.Type type, TypedMessage<T> parent, Data data,byte[] signature) {
+	public CachedMessage(Messages.Type type, TMessage<T> parent, Data data,Signature signature) {
 		super(type, parent, data);
 		// TODO Auto-generated constructor stub
 		this.signature=signature;
@@ -15,6 +15,6 @@ final class CachedMessage<T> extends AbstractMessage<T>{
 
 	@Override
 	public byte[] getSignature() {
-		return this.signature;
+		return this.signature.getSignature();
 	}
 }

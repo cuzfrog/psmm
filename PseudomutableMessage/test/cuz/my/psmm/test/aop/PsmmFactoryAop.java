@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cuz.my.psmm.TypedMessage;
+import cuz.my.psmm.TMessage;
 
 @Aspect
 public class PsmmFactoryAop {
@@ -28,7 +28,7 @@ public class PsmmFactoryAop {
     }
 
 	@AfterReturning(pointcut="done()" ,returning="result")
-	public void checkDoneReturn(TypedMessage<?> result){
+	public void checkDoneReturn(TMessage<?> result){
         logger.debug("Message Name:{},depth:{}",result,result.depth());
     }
 }

@@ -4,24 +4,31 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * A {@code ConcurrentHashMap} is used for cache PsmmFactory.
+ * 
+ * <p>
  * 
  * @author cuzfrog
  *
  */
-class ThreadFactoryPool implements FactoryPool  {
+class MapFactoryPool implements FactoryPool {
 
 	private final Map<Long, PsmmFactory> pool;
 	private final Map<String, Module> modules;
 
-	ThreadFactoryPool(Configuration config) {
-		pool = new ConcurrentHashMap<>();
+	MapFactoryPool(int initialSize) {
+		pool = new ConcurrentHashMap<>(initialSize);
 		modules = Module.createModuleMap();
 
-		modules.putAll(config.getCustomModules());
+		// modules.putAll(config.getCustomModules());
+		// because I want factory invisible from outside,it doesn't support
+		// custom module for now.
 	}
 
 	// Functionalities:
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see cuz.psmm.FactoryPool#seekFactory(cuz.psmm.Messages.Type)
 	 */
 	@Override
@@ -29,16 +36,16 @@ class ThreadFactoryPool implements FactoryPool  {
 		// TODO Auto-generated method stub
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;
-		String name=type.toString();
+		String name = type.toString();
 		if (pool.containsKey(threadId)) {
 			psmmFactory = pool.get(threadId);
 		} else {
 			psmmFactory = new GeneralPsmmFactory();
 			pool.put(threadId, psmmFactory);
 		}
-		psmmFactory.assemble( modules.get(name),type);
-		//DEBUG:
-		//System.out.println(modules.get(type));
+		psmmFactory.assemble(modules.get(name), type);
+		// DEBUG:
+		// System.out.println(modules.get(type));
 		return psmmFactory;
 	}
 }

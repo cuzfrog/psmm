@@ -3,6 +3,7 @@ package cuz.my.psmm;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmException;
@@ -17,31 +18,43 @@ final class CreationModuleCached extends Module {
 	}
 
 	@Override
-	public <T> TypedMessage<T> createMessage(Messages.Type type,TypedMessage<T> messageBeingWrapped,
+	public <T> TMessage<T> createMessage(Messages.Type type,TMessage<T> messageBeingWrapped,
 			Data data) throws PsmmException {
 		// TODO Auto-generated method stub
-		byte[] signature = calculateSignature(
+		Signature signature = calculateSignature(
 				type, messageBeingWrapped, data);
 		
-		TypedMessage<T> message;
-		if((message=MessageHelper.seekMessage(signature))==null){
-			message=MessageHelper.getConcretMessage(type, messageBeingWrapped, data, signature);
+		TMessage<T> message;
+		if((message=PsmmSystem.seekMessage(signature))==null){
+			message=PsmmSystem.getConcretMessage(type, messageBeingWrapped, data, signature);
 		}
+		
 		return message;
 	}
 	
-	private static byte[] calculateSignature(Messages.Type type, TypedMessage<?> parent,
+	//A message's signature is only associated with type and the data it exhibits.
+	private static <T> Signature calculateSignature(Messages.Type type, TMessage<T> parent,
 			Data data) throws PsmmException {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA1");
-			md.update(Integer.valueOf(type.ordinal()).byteValue());
-			md.update(data.getSignature());
-			md.update(parent.getSignature());
-			return  md.digest();
+			
+			Map<String,T> parentMap=parent.getAll();
+			Map<String,T> dataMap=data.getAll();
+			
+			if(parentMap==null){
+				md.update(data.getDataStream());
+			}else{
+				parentMap.putAll(dataMap);
+				md.update(Data.getDataStream(parentMap));
+			}
+			
+			md.update(Integer.valueOf(type.ordinal()).byteValue());		
+			return  new Signature(md.digest()); //here is about to modify
 		} catch (NoSuchAlgorithmException | IOException e) {
 			// TODO Auto-generated catch block
 			throw new PsmmMessageConstructionFailedException();
 		}
 	}
+	
 
 }

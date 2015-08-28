@@ -7,7 +7,7 @@ import cuz.my.psmm.accessories.StateLess;
 
 
 @StateLess
-final class RootMessage implements TypedMessage<Object> {
+final class RootMessage implements TMessage<Object> {
 	
 	private static final RootMessage instance=new RootMessage();
 	
@@ -15,8 +15,8 @@ final class RootMessage implements TypedMessage<Object> {
 	
 	//-------------------utility behavior:
 	@SuppressWarnings("unchecked")
-	public static <T> TypedMessage<T> getInstance(){
-		return (TypedMessage<T>) instance;
+	public static <T> TMessage<T> getInstance(){
+		return (TMessage<T>) instance;
 	}
 	//-------------------message behavior:
 	@Override

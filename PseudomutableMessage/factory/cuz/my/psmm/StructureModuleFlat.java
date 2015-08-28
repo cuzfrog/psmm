@@ -15,13 +15,13 @@ final class StructureModuleFlat extends Module {
 	}
 
 	@Override
-	public <T> TypedMessage<T> createMessage(Messages.Type type,TypedMessage<T> messageBeingWrapped,
+	public <T> TMessage<T> createMessage(Messages.Type type,TMessage<T> messageBeingWrapped,
 			Data data) {
 		Map<String, T> parentData = messageBeingWrapped.getAll();
 		Map<String, T> newData = data.getAll();
 		if (parentData != null)
-			newData.putAll(parentData);
-		TypedMessage<T> rootMessage = MessageHelper.getRootMessage();
+			parentData.putAll(newData);
+		TMessage<T> rootMessage = PsmmSystem.getRootMessage();
 		return this.getCollaberativeModule().createMessage(type,rootMessage, data);
 	}
 

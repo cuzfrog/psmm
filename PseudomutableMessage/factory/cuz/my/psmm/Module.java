@@ -8,7 +8,7 @@ import java.util.Set;
 import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmUnsupportedOperationException;
 
-public abstract class Module {
+abstract class Module {
 
 	private final Module collaberativeModule;
 	private final String name;
@@ -22,8 +22,8 @@ public abstract class Module {
 		}
 	}
 
-	protected <T> TypedMessage<T> createMessage(Messages.Type type,
-			TypedMessage<T> messageBeingWrapped, Data data) {
+	protected <T> TMessage<T> createMessage(Messages.Type type,
+			TMessage<T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
 			return collaberativeModule.createMessage(type, messageBeingWrapped,
 					data);
@@ -58,6 +58,7 @@ public abstract class Module {
 			structureSet.add(new StructureModuleLinked(creation));
 			structureSet.add(new StructureModuleFlat(creation));
 			// new structure module add here
+
 		}
 		for (Module structure : structureSet) {
 			dataSet.add(new DataModuleMap(structure));
@@ -70,4 +71,6 @@ public abstract class Module {
 
 		return moduleList;
 	}
+	
+
 }

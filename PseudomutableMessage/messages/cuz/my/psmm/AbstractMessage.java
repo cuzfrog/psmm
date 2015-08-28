@@ -10,14 +10,14 @@ import cuz.my.psmm.data.Data;
  *
  * @param <T> The Message<T> it contains.
  */
-abstract class AbstractMessage<T>  implements TypedMessage<T>,UntypedMessage {
+abstract class AbstractMessage<T>  implements TMessage<T>,UMessage {
 
-	protected final TypedMessage<T> parent;
+	protected final TMessage<T> parent;
 	protected final Data data;
 	protected final Integer depth;
 	protected final Messages.Type type;
 
-	protected AbstractMessage(Messages.Type type, TypedMessage<T> parent,
+	protected AbstractMessage(Messages.Type type, TMessage<T> parent,
 			Data data) {
 		super();
 		this.parent = parent;
@@ -67,62 +67,62 @@ abstract class AbstractMessage<T>  implements TypedMessage<T>,UntypedMessage {
 	@Override
 	public TypedRawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, datum);
+		return PsmmSystem.fetch(this.type, this).set(key, datum);
 	}
 	// ------------UntypedMessage behaviors:
 
 	@Override
 	public UntypedRawMessage set(String key, int value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, short value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, long value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, boolean value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, float value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, double value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, char value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, byte value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	@Override
 	public UntypedRawMessage set(String key, String value) {
 		// TODO Auto-generated method stub
-		return MessageHelper.fetch(this.type, this).set(key, value);
+		return PsmmSystem.fetch(this.type, this).set(key, value);
 	}
 
 	
