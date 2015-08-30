@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
-import cuz.my.psmm.TMessage;
-
 public abstract class Data {
 	public <T> void set(String key, T datum) {
 	}
@@ -43,24 +41,16 @@ public abstract class Data {
 	}
 
 	public static enum Type {
-		MAP,SIMPLE
+		MAP, SIMPLE
 	}
-	
-	public static <T> byte[] getDataStream(Map<String, T> data) throws IOException {
+
+	public static <T> byte[] getDataStream(Object data) throws IOException {
 		// TODO Auto-generated method stub
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
-		for(String key:data.keySet()){
-			Object value=data.get(key);
-			if(value instanceof String ){
-				outputStream.write(((String)value).getBytes());
-			}else if(value instanceof TMessage){
-				outputStream.write(((TMessage<?>)value).getSignature());
-			}else{
-				ObjectOutputStream os = new ObjectOutputStream(outputStream);
-				os.writeObject(value);
-			}
-		}
-		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+		ObjectOutputStream os = new ObjectOutputStream(outputStream);
+		os.writeObject(data);
+
 		return outputStream.toByteArray();
 	}
 }

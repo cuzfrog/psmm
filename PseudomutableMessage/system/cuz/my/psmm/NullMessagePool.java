@@ -19,4 +19,10 @@ class NullMessagePool implements MessagePool {
 
 	}
 
+	@Override
+	public boolean check(Signature signature) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

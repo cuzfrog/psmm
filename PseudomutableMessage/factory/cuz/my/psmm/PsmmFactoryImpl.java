@@ -4,7 +4,7 @@ import cuz.my.psmm.data.Data;
 
 //assume Factory is run by single thread.
 @NotThreadSafe
-final class GeneralPsmmFactory implements PsmmFactory {
+final class PsmmFactoryImpl implements PsmmFactory {
 
 	private Data data;
 	private Module module;

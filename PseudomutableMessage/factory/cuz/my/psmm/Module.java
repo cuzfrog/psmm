@@ -22,30 +22,46 @@ abstract class Module {
 		}
 	}
 
-	protected <T> TMessage<T> createMessage(Messages.Type type,
-			TMessage<T> messageBeingWrapped, Data data) {
+	/**
+	 * Method for factory to invoke.
+	 * 
+	 * @param type
+	 * @param messageBeingWrapped
+	 * @param data
+	 * @return
+	 */
+	protected <T> TMessage<T> createMessage(Messages.Type type, TMessage<T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
-			return collaberativeModule.createMessage(type, messageBeingWrapped,
-					data);
+			return collaberativeModule.createMessage(type, messageBeingWrapped, data);
 		}
 		throw new PsmmUnsupportedOperationException();
 	}
 
+	/**
+	 * Method for factory to invoke.
+	 * 
+	 * @param type
+	 * @param messageBeingWrapped
+	 * @param data
+	 * @return
+	 */
 	protected void setup(PsmmFactory psmmFactory) {
-		if(collaberativeModule!=null){
+		if (collaberativeModule != null) {
 			collaberativeModule.setup(psmmFactory);
 		}
 	}
 
-	public String getName() {
+	String getName() {
 		return this.name;
 	}
 
-	public Module getCollaberativeModule() {
+	Module getCollaberativeModule() {
 		return collaberativeModule;
 	}
-	
-	//static methods:
+
+	// static methods:
+	// there's still room for optimization: change Map to Array, use predefined
+	// order to find module.
 	static Map<String, Module> createModuleMap() {
 		Map<String, Module> moduleList = new HashMap<>();
 
@@ -73,6 +89,5 @@ abstract class Module {
 
 		return moduleList;
 	}
-	
 
 }

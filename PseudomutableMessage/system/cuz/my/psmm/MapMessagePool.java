@@ -11,6 +11,11 @@ final class MapMessagePool implements MessagePool {
 		this.messagePool = new ConcurrentHashMap<>((int) Math.ceil(initialSize / 0.75));
 	}
 
+	@Override
+	public boolean check(Signature signature){
+		return messagePool.containsKey(signature);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> TMessage<T> get(Signature signature) {
@@ -22,7 +27,7 @@ final class MapMessagePool implements MessagePool {
 	public void put(Signature signature, TMessage<?> message) {
 		// TODO Auto-generated method stub
 		messagePool.put(signature, message);
-		//System.out.println(messagePool.values().toString());
+		//System.out.println("put! messagePoll size:"+messagePool.size());
 	}
 
 }

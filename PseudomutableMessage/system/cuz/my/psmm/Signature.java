@@ -2,7 +2,7 @@ package cuz.my.psmm;
 
 import java.util.Arrays;
 
-@StateLess
+@ThreadSafe
 final class Signature {
 	private final byte[] signature;
 
@@ -15,7 +15,7 @@ final class Signature {
 	 * @return the signature
 	 */
 	byte[] getSignature() {
-		return signature;
+		return Arrays.copyOf(signature,signature.length);
 	}
 
 	/*

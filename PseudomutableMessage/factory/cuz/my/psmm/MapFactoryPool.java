@@ -43,7 +43,7 @@ class MapFactoryPool implements FactoryPool {
 		if (pool.containsKey(threadId)) {
 			psmmFactory = pool.get(threadId);
 		} else {
-			psmmFactory = new GeneralPsmmFactory();
+			psmmFactory = new PsmmFactoryImpl();
 			pool.put(threadId, psmmFactory);
 		}
 		psmmFactory.assemble(modules.get(name), type);
