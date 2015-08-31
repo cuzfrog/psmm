@@ -14,17 +14,23 @@ import cuz.my.psmm.UntypedRawMessage;
 public class Sender extends UntypedActor {
 
 	private SharedReadOnlyData dataSource;
-	private boolean working=false;
+	private boolean working = false;
 
-	private VerificationPackage randomGenerateMessage(
-			VerificationPackage receivedVp) {
+	private VerificationPackage randomGenerateMessage(VerificationPackage receivedVp) {
 		UntypedRawMessage newRawMessage;
 
 		int dataAmount = ThreadLocalRandom.current().nextInt(5); // up to 5 pair
 																	// of data
 		List<Pair> dataPairs = new ArrayList<>();
-		for (int i = 0; i < dataAmount; i++) {
-			dataPairs.add(dataSource.randomPair());
+		List<String> keysPreceding = new ArrayList<>();
+		for (int i = 0; i < dataAmount;) {
+			Pair pair = dataSource.randomPair();
+
+			if (!keysPreceding.contains(pair.getKey())) {
+				keysPreceding.add(pair.getKey());
+				dataPairs.add(pair);
+				i++;
+			}
 		} // prepare data pairs
 
 		int odds = ThreadLocalRandom.current().nextInt(100);
@@ -44,8 +50,8 @@ public class Sender extends UntypedActor {
 	}
 
 	private void randomSend(VerificationPackage newVp) {
-		context().actorSelection("../"+dataSource.randomName())
-				.tell(newVp, getSelf());
+		context().actorSelection("../" + dataSource.randomName()).tell(newVp, getSelf());
+		context().actorSelection("../listener").tell(Integer.valueOf(1), self());
 	}
 
 	@Override
@@ -57,19 +63,19 @@ public class Sender extends UntypedActor {
 			if (receivedVp.verify()) {
 				VerificationPackage vp = randomGenerateMessage(receivedVp);
 				randomSend(vp);
-				context().actorSelection("../listener").tell(Integer.valueOf(1),self()); //count message
+
 			} else {
-				context().actorSelection("../listener").tell(receivedVp,
-						getSender());  //when error
-			} 
+				context().actorSelection("../listener").tell(receivedVp, getSender()); // when
+																						// error
+			}
 		} else if (arg0 instanceof SharedReadOnlyData) {
 			dataSource = (SharedReadOnlyData) arg0; // when initiating
-			working=true;
-		} else if (arg0 instanceof InstructionStop){
-			working=false;
-			//terminate self:
-			context().stop(self());
-		}else {
+			working = true;
+		} else if (arg0 instanceof InstructionStop) {
+			working = false;
+			context().actorSelection("../listener").tell(new InstructionStopConfirmed(), getSender());
+			// terminate self:
+		} else {
 			unhandled(arg0);
 		}
 	}

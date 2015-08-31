@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,11 +18,13 @@ import cuz.my.psmm.MyAbstractTest;
 import cuz.my.psmm.UMessage;
 
 public class ActorSimulationTest extends MyAbstractTest {
-	final static ActorSystem system = ActorSystem.create("test");
+	ActorSystem system;
 	final static List<ActorRef> actors = new ArrayList<>();
 
-	private final static int ACTOR_AMOUNT = 100;
+	public final static int ACTOR_AMOUNT = 20;
+	public final static long MESSAGE_TEST_AMOUNT = 5000000;
 	private final static int VALUE_PAIR_AMOUNT = 1000;
+	private final static int STARTING_ACTOR_AMOUNT=10;  //how many actors that start work at the beginning.
 
 	private void createActor(Class<Sender> c) {
 		List<String> keys = nameList();
@@ -36,6 +39,7 @@ public class ActorSimulationTest extends MyAbstractTest {
 
 	@Before
 	public void setUp() throws Exception {
+		system = ActorSystem.create("test");
 		initiate(6000);
 		initiatePairList("int", 30, VALUE_PAIR_AMOUNT); // immutable value pair
 														// list
@@ -43,6 +47,12 @@ public class ActorSimulationTest extends MyAbstractTest {
 		createActor(Sender.class); // create actors
 		final ActorRef listener=system.actorOf(Props.create(Listener.class), "listener"); //create listener
 		listener.tell(this,  ActorRef.noSender());
+	}
+	@After
+	public void tearDown(){
+		system.shutdown();
+		system=null;
+		actors.clear();
 	}
 
 	private void test(Style type) {
@@ -56,18 +66,40 @@ public class ActorSimulationTest extends MyAbstractTest {
 		List<Pair> dataPairs=new ArrayList<>();
 		dataPairs.add(pair);
 		VerificationPackage startVp=new VerificationPackage(message, dataPairs);
-		actors.get(0).tell(startVp, ActorRef.noSender());
+		for(int i=0;i<STARTING_ACTOR_AMOUNT;i++){
+		actors.get(i).tell(startVp, ActorRef.noSender());
+		}
 
 		// need to wait here, until all actors stop.
-		system.awaitTermination();
+		awaitThreadFinish();
 	}
 
 	@Test 
 	public void testUntypedLinkedMap() {
-		
-
+		threadFailKey.set(false);
 		test(Style.LINKED_MAP);
 		assertFalse(threadFailKey.get());
 	}
 
+	@Test 
+	public void testUntypedFlatMap() {
+		threadFailKey.set(false);
+		test(Style.FLAT_MAP);
+		assertFalse(threadFailKey.get());
+	}
+	
+	@Test 
+	public void testUntypedCachedLinkedMap() {
+		threadFailKey.set(false);
+		test(Style.CACHED_LINKED_MAP);
+		assertFalse(threadFailKey.get());
+	}
+	
+	@Test 
+	public void testCachedUntypedFlatMap() {
+		threadFailKey.set(false);
+		test(Style.CACHED_FLAT_MAP);
+		assertFalse(threadFailKey.get());
+	}
+	
 }

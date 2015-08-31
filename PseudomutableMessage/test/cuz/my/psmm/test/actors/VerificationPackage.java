@@ -28,6 +28,10 @@ final class VerificationPackage {
 	UMessage getMessage() {
 		return message;
 	}
+	
+	List<Pair> getData(){
+		return new ArrayList<>(expectedData);
+	}
 
 	boolean verify() {
 		for (Pair pair : expectedData) {

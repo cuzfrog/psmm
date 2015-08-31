@@ -20,11 +20,12 @@ import org.slf4j.LoggerFactory;
 
 import cuz.my.psmm.Messages.Style;
 
-public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadFailTrigger {
+public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	protected ExecutorService executors = Executors.newFixedThreadPool(6);
 	protected Style[] types = cuz.my.psmm.Messages.Style.values();
 	protected AtomicBoolean threadFailKey=new AtomicBoolean(false);
+	protected AtomicBoolean threadFinishKey=new AtomicBoolean(false);
 	
     private List<Pair> valuePairs; 
     private List<String> names;
@@ -46,6 +47,22 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadFailTri
 		threadFailKey.set(true);
 	}
 	
+	@Override
+	public void threadFinished() {
+		threadFinishKey.set(true);
+	}
+	
+	protected void awaitThreadFinish(){
+		while(!threadFinishKey.get()){
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				break;
+			}
+		}
+	}
+
 	public List<Pair> valuePairList(){
 		return new CopyOnWriteArrayList<>(valuePairs);
 	}
@@ -60,7 +77,7 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadFailTri
 		sb.append(name);
 		for (int i = 0; i < amount; i++) {
 			String num = Integer.valueOf(i).toString();
-			sb.replace(3, 3 + num.length(), num);
+			sb.replace(name.length(), name.length() + num.length(), num);
 			keys.add(sb.toString());
 		}
 		return keys;
