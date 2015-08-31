@@ -7,7 +7,7 @@ import cuz.my.psmm.data.Data;
  * message type.
  * <p>
  * There are several message interfaces锛�<br>
- * {@link UMessage} only accept primitives and Strings, which ensures its data's
+ * {@link Object} only accept primitives and Strings, which ensures its data's
  * immutability. However bad {@link Data} implementation could violate it.<br>
  * {@link TMessage} gives flexibility to data carried, but you have to be very
  * careful designing your message, since TypedMessage doesn't check the
@@ -24,7 +24,7 @@ public abstract class Messages implements Psmm {
 	 * @author cuzfrog
 	 *
 	 */
-	public static enum Type {
+	public static enum Style {
 		LINKED_MAP {
 			@Override
 			public String toString() {
@@ -55,14 +55,14 @@ public abstract class Messages implements Psmm {
 	/**
 	 * Create a new {@link UntypedRawMessage}.
 	 * <p>
-	 * There are several {@link Messages.Type}s of message you can choose for
+	 * There are several {@link Messages.Style}s of message you can choose for
 	 * different usage.
 	 * 
 	 * @param messageType
 	 *            instructing factory how to generate this message.
 	 * @return UntypedRawMessage.
 	 */
-	public static UntypedRawMessage create(Messages.Type messageType) {
+	public static UntypedRawMessage create(Messages.Style messageType) {
 		TMessage<Object> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);	
 		return rawMessage;
@@ -71,19 +71,19 @@ public abstract class Messages implements Psmm {
 	/**
 	 * Create a new {@link UntypedRawMessage} .
 	 * <p>
-	 * This is a helper method with the default message type of
-	 * {@link Type#LINKED_MAP}.
+	 * This is a helper method for {@link #create(Style)} with the default message type of
+	 * {@link Style#LINKED_MAP}.
 	 * 
 	 * @return RawMessage.
 	 */
 	public static UntypedRawMessage create() {
-		return create(Type.LINKED_MAP);
+		return create(Style.LINKED_MAP);
 	}
 
 	/**
 	 * Create a new {@link TypedRawMessage} with class parameter type specified.
 	 * <p>
-	 * There are several {@link Messages.Type}s of message you can choose for
+	 * There are several {@link Messages.Style}s of message you can choose for
 	 * different usage.
 	 * 
 	 * 
@@ -93,7 +93,7 @@ public abstract class Messages implements Psmm {
 	 *            The class parameter type of this RawMessage.
 	 * @return RawMessage.
 	 */
-	public static <T> TypedRawMessage<T> create(Messages.Type messageType, Class<T> c) {
+	public static <T> TypedRawMessage<T> create(Messages.Style messageType, Class<T> c) {
 
 		TMessage<T> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);	
@@ -104,7 +104,7 @@ public abstract class Messages implements Psmm {
 	 * Create a new {@link TypedRawMessage} with class parameter type specified.
 	 * <p>
 	 * This is a helper method with the default message type of
-	 * {@link Type#LINKED_MAP}.
+	 * {@link Style#LINKED_MAP}.
 	 * 
 	 * @param c
 	 *            The class parameter type of this RawMessage.

@@ -28,7 +28,7 @@ public abstract class Data {
 		return null;
 	}
 
-	public static Data newData(Data.Type type) {
+	public static Data newData(Data.Structure type) {
 		switch (type) {
 		case MAP:
 			return new MapData();
@@ -40,7 +40,7 @@ public abstract class Data {
 		return null;
 	}
 
-	public static enum Type {
+	public static enum Structure {
 		MAP, SIMPLE
 	}
 

@@ -10,7 +10,7 @@ final class CreationModuleUncached extends Module {
 	}
 
 	@Override
-	public <T> TMessage<T> createMessage(Messages.Type type,TMessage<T> messageBeingWrapped, Data data) {
+	public <T> TMessage<T> createMessage(Messages.Style type,TMessage<T> messageBeingWrapped, Data data) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.getConcretMessage(type, messageBeingWrapped, data);
 	}

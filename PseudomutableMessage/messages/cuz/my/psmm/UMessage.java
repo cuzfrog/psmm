@@ -27,17 +27,14 @@ public interface UMessage extends Psmm,UntypedMessageSetInterface {
 	 */
 	public abstract Object get(String key);
 
-	
 	/**
-	 * Return a signature of this message.<br>
+	 * Change into a new raw message.
 	 * 
+	 * <P>
+	 * This method is unnecessary for most cases, you can directly call set when
+	 * cascadingly invoking.
 	 * 
-	 * 
-	 * Signature is calculated by the fields data and type of a message.
-	 * Messages that have the same type and values, i.e. you can get equal
-	 * values by the same key, have same signature.
-	 * 
-	 * @return signature of this message.
+	 * @return Raw message without setting data.
 	 */
-	public abstract byte[] getSignature();
+	public abstract UntypedRawMessage raw();
 }

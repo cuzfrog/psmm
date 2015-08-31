@@ -30,7 +30,7 @@ public interface TypedRawMessage<T> {
 	 * @return a cooked {@code TypedMessage}.
 	 * @see PsmmFactory
 	 * @see TMessage
-	 * @see UMessage
+	 * @see Object
 	 * @see UntypedRawMessage
 	 */
 	public abstract TMessage<T> cook();

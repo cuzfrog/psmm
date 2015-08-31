@@ -13,20 +13,23 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cuz.my.psmm.Messages.Type;
+import cuz.my.psmm.Messages.Style;
 
-public abstract class MyAbstractTest {
+public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadFailTrigger {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	protected ExecutorService executors = Executors.newFixedThreadPool(6);
-	protected Type[] types = cuz.my.psmm.Messages.Type.values();
+	protected Style[] types = cuz.my.psmm.Messages.Style.values();
+	protected AtomicBoolean threadFailKey=new AtomicBoolean(false);
+	
     private List<Pair> valuePairs; 
     private List<String> names;
 	
-	public Type randomType() {
+	public Style randomType() {
 		return types[ThreadLocalRandom.current().nextInt(types.length)];
 	}
 	
@@ -34,8 +37,21 @@ public abstract class MyAbstractTest {
 		return valuePairs.get(ThreadLocalRandom.current().nextInt(valuePairs.size()));
 	}
 	
+	public String randomName(){
+		return names.get(ThreadLocalRandom.current().nextInt(names.size()));
+	}
+	
+	@Override
+	public void threadFailed() {
+		threadFailKey.set(true);
+	}
+	
 	public List<Pair> valuePairList(){
 		return new CopyOnWriteArrayList<>(valuePairs);
+	}
+	
+	public List<String> nameList(){
+		return new CopyOnWriteArrayList<>(names);
 	}
 
 	protected List<String> keyList(String name, int amount) {
@@ -50,13 +66,17 @@ public abstract class MyAbstractTest {
 		return keys;
 	}
 	
+	protected void initiateNameList(String name,int amount){
+		names=Collections.unmodifiableList(keyList(name, amount));
+	}
+	
 	protected void initiatePairList(String keyName,int keyAmount,int pairsAmount){
 		List<Pair> valuePairs = new ArrayList<>();
 		List<String> keys = keyList(keyName, keyAmount);
 		int i = 0;
 		while (i < pairsAmount) {
 			Pair pair = new Pair(keys.get(ThreadLocalRandom.current().nextInt(keys.size())),
-					ThreadLocalRandom.current().nextInt(20000));
+					ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE));
 			if (!valuePairs.contains(pair)) {
 				valuePairs.add(pair);
 				i++;
@@ -127,8 +147,8 @@ public abstract class MyAbstractTest {
 
 	}
 	
-	
-	protected class Pair {
+	@Immutable
+	public class Pair {
 
 		String key;
 		Integer value;
@@ -147,4 +167,7 @@ public abstract class MyAbstractTest {
 			this.value = value;
 		}
 	}
+
+
+	
 }

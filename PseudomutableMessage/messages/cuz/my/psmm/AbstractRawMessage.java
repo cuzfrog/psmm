@@ -23,70 +23,70 @@ abstract class AbstractRawMessage<T> implements TypedRawMessage<T>,UntypedRawMes
 	}
 	
 	@Override
-	public TypedRawMessage<T> set(String key, T datum) {
+	public AbstractRawMessage<T> set(String key, T datum) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, datum);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, int value) {
+	public AbstractRawMessage<T> set(String key, int value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, short value) {
+	public AbstractRawMessage<T> set(String key, short value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, long value) {
+	public AbstractRawMessage<T> set(String key, long value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, boolean value) {
+	public AbstractRawMessage<T> set(String key, boolean value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, float value) {
+	public AbstractRawMessage<T> set(String key, float value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, double value) {
+	public AbstractRawMessage<T> set(String key, double value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, char value) {
+	public AbstractRawMessage<T> set(String key, char value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, byte value) {
+	public AbstractRawMessage<T> set(String key, byte value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, String value) {
+	public AbstractRawMessage<T> set(String key, String value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;

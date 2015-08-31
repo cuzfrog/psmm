@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import cuz.my.psmm.PsmmConfiguration;
 import cuz.my.psmm.Messages;
+import cuz.my.psmm.PsmmConfiguration;
 import cuz.my.psmm.PsmmSystem;
 import cuz.my.psmm.UMessage;
 
@@ -18,7 +18,7 @@ class SimpleTest {
 		String key1 = "int1";
 		String key2 = "int2";
 		String key3 = "str1";
-		UMessage rm = Messages.create(Messages.Type.CACHED_FLAT_MAP)
+		UMessage rm = Messages.create(Messages.Style.CACHED_FLAT_MAP)
 				.set(key1, 2).set(key2, 122).set(key3, "this is string")
 				.cook();
 

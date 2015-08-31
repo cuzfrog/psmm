@@ -14,7 +14,7 @@ final class DataModuleMap extends Module {
 	public void setup(PsmmFactory psmmFactory) {
 		super.setup(psmmFactory);
 		// TODO Auto-generated method stub
-		psmmFactory.setData(Data.newData(Data.Type.MAP));
+		psmmFactory.setData(Data.newData(Data.Structure.MAP));
 
 	}
 

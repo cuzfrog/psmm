@@ -51,6 +51,12 @@ final class RootMessage implements TMessage<Object> {
 		return null;
 	}
 
+	@Override
+	public TypedRawMessage<Object> raw() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

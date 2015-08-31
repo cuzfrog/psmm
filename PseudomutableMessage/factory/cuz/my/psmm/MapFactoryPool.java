@@ -35,7 +35,7 @@ class MapFactoryPool implements FactoryPool {
 	 * @see cuz.psmm.FactoryPool#seekFactory(cuz.psmm.Messages.Type)
 	 */
 	@Override
-	public PsmmFactory seekFactory(Messages.Type type) {
+	public PsmmFactory seekFactory(Messages.Style type) {
 		// TODO Auto-generated method stub
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;

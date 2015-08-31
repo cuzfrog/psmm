@@ -11,7 +11,7 @@ package cuz.my.psmm;
  * The factory wrapped is fetched from factory pool.
  * 
  * @author cuzfrog
- * @see UMessage
+ * @see Object
  */
 public interface UntypedRawMessage extends UntypedMessageSetInterface {
 	/**
@@ -26,7 +26,7 @@ public interface UntypedRawMessage extends UntypedMessageSetInterface {
 	 * @return a cooked {@code UntypedMessage}.
 	 * @see PsmmFactory
 	 * @see TMessage
-	 * @see UMessage
+	 * @see Object
 	 * @see TypedRawMessage
 	 */
 	UMessage cook();

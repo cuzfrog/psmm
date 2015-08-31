@@ -24,7 +24,7 @@ interface PsmmFactory {
 	 * @param type
 	 *            message type specified.
 	 */
-	public abstract void assemble(Module module, Messages.Type type);
+	public abstract void assemble(Module module, Messages.Style type);
 
 	/**
 	 * Commit all the data previously set to generate a new message.

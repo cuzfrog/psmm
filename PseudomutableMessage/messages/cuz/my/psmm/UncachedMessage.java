@@ -4,7 +4,7 @@ import cuz.my.psmm.data.Data;
 
 final class UncachedMessage<T> extends AbstractMessage<T> {
 
-	public UncachedMessage(Messages.Type type,TMessage<T> parent, Data data) {
+	public UncachedMessage(Messages.Style type,TMessage<T> parent, Data data) {
 		super(type, parent, data);
 		// TODO Auto-generated constructor stub
 	}

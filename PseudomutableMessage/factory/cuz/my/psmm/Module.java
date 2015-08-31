@@ -30,7 +30,7 @@ abstract class Module {
 	 * @param data
 	 * @return
 	 */
-	protected <T> TMessage<T> createMessage(Messages.Type type, TMessage<T> messageBeingWrapped, Data data) {
+	protected <T> TMessage<T> createMessage(Messages.Style type, TMessage<T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
 			return collaberativeModule.createMessage(type, messageBeingWrapped, data);
 		}

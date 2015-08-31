@@ -8,7 +8,7 @@ final class PsmmFactoryImpl implements PsmmFactory {
 
 	private Data data;
 	private Module module;
-	private Messages.Type type;
+	private Messages.Style type;
 	/**
 	 * Raw message binded with this factory.
 	 */
@@ -35,7 +35,7 @@ final class PsmmFactoryImpl implements PsmmFactory {
 	}
 
 	@Override
-	public void assemble(Module module, Messages.Type type) {
+	public void assemble(Module module, Messages.Style type) {
 		this.type = type;
 		module.setup(this);
 	}

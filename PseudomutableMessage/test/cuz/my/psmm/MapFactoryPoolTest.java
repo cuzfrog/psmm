@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.Before;
 import org.junit.Test;
 
-import cuz.my.psmm.Messages.Type;
+import cuz.my.psmm.Messages.Style;
 import cuz.my.test.util.Timer;
 
 public class MapFactoryPoolTest extends MyAbstractTest {
@@ -59,7 +59,7 @@ public class MapFactoryPoolTest extends MyAbstractTest {
 	public void loadTestCreateFactory() {
 		run(() -> {
 			PsmmFactory factory = new PsmmFactoryImpl();
-			Type type = types[ThreadLocalRandom.current().nextInt(types.length - 1)];
+			Style type = types[ThreadLocalRandom.current().nextInt(types.length - 1)];
 			factory.assemble(modules.get(type.toString()), type);
 		});
 	}

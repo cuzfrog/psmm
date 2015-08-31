@@ -13,15 +13,16 @@ import java.util.Map;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations. However, you can only create them via
- * static method {@link Messages#create}.<br> Message type is used for instructing how to assemble
- * the factory with a specified message-generating behavior.
- * Type of a message is stored inside a message as an enum {@link Messages.Type}
- * , so that it can get a factory of the same type without telling it the type.
+ * static method {@link Messages#create}.<br>
+ * Message type is used for instructing how to assemble the factory with a
+ * specified message-generating behavior. Type of a message is stored inside a
+ * message as an enum {@link Messages.Style} , so that it can get a factory of
+ * the same type without telling it the type.
  * 
  * <p>
  * When you want to store variant types of data, use {@code Object} as
  * parameter,but be ware of the mutability.To make sure data stored is
- * immutable, use {@link UMessage} which only accepts immutable basic types such
+ * immutable, use {@link Object} which only accepts immutable basic types such
  * as {@code String}, {@code Integer}.If you only send one value per message,
  * use {@link SMessage} which take that value directly as inner datum instead of
  * data structure.
@@ -35,7 +36,7 @@ import java.util.Map;
  * 
  * 
  *
- * @see UMessage
+ * @see Object
  */
 @ThreadSafe
 public interface TMessage<T> extends Psmm {
@@ -69,7 +70,7 @@ public interface TMessage<T> extends Psmm {
 	 * <p>
 	 * The method in Message actually does nothing. It first gives its own
 	 * reference to a newly created RawMessage which invokes the static method
-	 * {@link PsmmSystem#seekFactory(Messages.Type)} to get a
+	 * {@link PsmmSystem#seekFactory(Messages.Style)} to get a
 	 * {@link PsmmFactory} reference , which is enveloped in the RawMessage, as
 	 * this only presents to you as a RawMessage. Then it invokes the factory's
 	 * homonymous method {@link PsmmFactory#set(String, Object)} to store datum
@@ -84,25 +85,13 @@ public interface TMessage<T> extends Psmm {
 	public abstract TypedRawMessage<T> set(String key, T datum);
 
 	/**
-	 * Return a signature of this message.<br>
+	 * Change into a new raw message.
 	 * 
+	 * <P>
+	 * This method is unnecessary for most cases, you can directly call set when
+	 * cascadingly invoking.
 	 * 
-	 * 
-	 * Signature is calculated by the fields data and type of a message.
-	 * Messages that have the same type and values, i.e. you can get equal
-	 * values by the same key, have same signature.
-	 * 
-	 * @return signature of this message.
+	 * @return Raw message without setting data.
 	 */
-	public abstract byte[] getSignature();
-
-	/**
-	 * Return the number of messages this one has wrapped.
-	 * <p>
-	 * see {@link TMessage} for details of message structure. Flat message
-	 * always has the depth equal one.
-	 * 
-	 * @return position of the message in the linked structure.
-	 */
-	public abstract Integer depth();
+	public abstract TypedRawMessage<T> raw();
 }

@@ -12,7 +12,7 @@ final class StructureModuleLinked extends Module {
 	}
 
 	@Override
-	public <T> TMessage<T> createMessage(Messages.Type type,TMessage<T> messageBeingWrapped,
+	public <T> TMessage<T> createMessage(Messages.Style type,TMessage<T> messageBeingWrapped,
 			Data data) {
 		// TODO Auto-generated method stub
 		return this.getCollaberativeModule().createMessage(type,messageBeingWrapped, data);

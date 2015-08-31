@@ -34,7 +34,7 @@ final class CreationModuleCached extends Module {
 	}
 
 	@Override
-	public <T> TMessage<T> createMessage(Messages.Type type, TMessage<T> messageBeingWrapped, Data data)
+	public <T> TMessage<T> createMessage(Messages.Style type, TMessage<T> messageBeingWrapped, Data data)
 			throws PsmmException {
 		// TODO Auto-generated method stub
 		Signature signature = calculateSignature(type, messageBeingWrapped, data);
@@ -49,7 +49,7 @@ final class CreationModuleCached extends Module {
 
 	// A message's signature is only associated with type and the data it
 	// exhibits, but not structure.
-	private static <T> Signature calculateSignature(Messages.Type type, TMessage<T> parent, Data data)
+	private static <T> Signature calculateSignature(Messages.Style type, TMessage<T> parent, Data data)
 			throws PsmmException {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA1");

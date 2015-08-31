@@ -35,10 +35,10 @@ public class ModuleTest extends MyAbstractTest {
 		Set<TMessage<Integer>> messages = new HashSet<>();
 
 		List<TMessage<Integer>> results = call(() -> {
-			Data data = Data.newData(Data.Type.MAP);
+			Data data = Data.newData(Data.Structure.MAP);
 			Pair pair = randomPair();
 			data.set(pair.getKey(), pair.getValue());
-			TMessage<Integer> message = cached.createMessage(Messages.Type.CACHED_FLAT_MAP, RootMessage.getInstance(),
+			TMessage<Integer> message = cached.createMessage(Messages.Style.CACHED_FLAT_MAP, RootMessage.getInstance(),
 					data);
 			return message;
 		} , 500000, 6);
