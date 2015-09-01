@@ -23,12 +23,12 @@ abstract class Module {
 	}
 
 	/**
-	 * Method for factory to invoke.
+	 * Method for factory to invoke. Create new concrete message depending on specific module.
 	 * 
 	 * @param type
 	 * @param messageBeingWrapped
 	 * @param data
-	 * @return
+	 * @return new concrete messsage
 	 */
 	protected <T> TMessage<T> createMessage(Messages.Style type, TMessage<T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
@@ -38,12 +38,9 @@ abstract class Module {
 	}
 
 	/**
-	 * Method for factory to invoke.
+	 * Method for factory to invoke. Setup factory module and data.
 	 * 
-	 * @param type
-	 * @param messageBeingWrapped
-	 * @param data
-	 * @return
+	 * @param psmmFactory
 	 */
 	protected void setup(PsmmFactory psmmFactory) {
 		if (collaberativeModule != null) {

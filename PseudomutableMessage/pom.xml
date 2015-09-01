@@ -30,17 +30,28 @@
 
 		<!-- Debug and Testing -->
 		<dependency>
+			<groupId>org.openjdk.jmh</groupId>
+			<artifactId>jmh-core</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjdk.jmh</groupId>
+			<artifactId>jmh-generator-annprocess</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+
+		<dependency>
 			<groupId>nl.jqno.equalsverifier</groupId>
 			<artifactId>equalsverifier</artifactId>
 			<version>1.7.4</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring-framework.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework</groupId> -->
+		<!-- <artifactId>spring-context</artifactId> -->
+		<!-- <version>${spring-framework.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>com.typesafe.akka</groupId>
@@ -76,18 +87,18 @@
 		</dependency>
 
 		<!-- AspectJ dependencies -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${aspectj.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjtools</artifactId>
-			<version>${aspectj.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.aspectj</groupId> -->
+		<!-- <artifactId>aspectjrt</artifactId> -->
+		<!-- <version>${aspectj.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.aspectj</groupId> -->
+		<!-- <artifactId>aspectjtools</artifactId> -->
+		<!-- <version>${aspectj.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 
 		<!-- Required dependencies -->
 		<dependency>

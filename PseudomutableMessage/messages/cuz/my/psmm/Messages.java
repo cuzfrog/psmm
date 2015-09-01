@@ -64,15 +64,16 @@ public abstract class Messages implements Psmm {
 	 */
 	public static UntypedRawMessage create(Messages.Style messageType) {
 		TMessage<Object> rootMessage = RootMessage.getInstance();
-		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);	
+		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(
+				messageType, rootMessage);
 		return rawMessage;
 	}
 
 	/**
 	 * Create a new {@link UntypedRawMessage} .
 	 * <p>
-	 * This is a helper method for {@link #create(Style)} with the default message type of
-	 * {@link Style#LINKED_MAP}.
+	 * This is a helper method for {@link #create(Style)} with the default
+	 * message type of {@link Style#LINKED_MAP}.
 	 * 
 	 * @return RawMessage.
 	 */
@@ -90,13 +91,15 @@ public abstract class Messages implements Psmm {
 	 * @param messageType
 	 *            instructing factory how to generate this message.
 	 * @param c
-	 *            The class parameter type of this RawMessage.
+	 *            type parameter
 	 * @return RawMessage.
 	 */
-	public static <T> TypedRawMessage<T> create(Messages.Style messageType, Class<T> c) {
+	public static <T> TypedRawMessage<T> create(Messages.Style messageType,
+			Class<T> c) {
 
 		TMessage<T> rootMessage = RootMessage.getInstance();
-		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);	
+		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType,
+				rootMessage);
 		return rawMessage;
 	}
 
@@ -107,11 +110,11 @@ public abstract class Messages implements Psmm {
 	 * {@link Style#LINKED_MAP}.
 	 * 
 	 * @param c
-	 *            The class parameter type of this RawMessage.
+	 *            type parameter
 	 * @return RawMessage.
 	 */
 	public static <T> TypedRawMessage<T> create(Class<T> c) {
 
-		return create(c);
+		return create(Style.LINKED_MAP, c);
 	}
 }

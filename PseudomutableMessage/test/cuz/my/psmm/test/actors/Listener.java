@@ -11,23 +11,22 @@ public class Listener extends UntypedActor {
 	private Logger logger = LoggerFactory.getLogger("listener");
 	private boolean working = false;
 	private long messageCount = 0;
-	private long actorWorkingCount = ActorSimulationTest.ACTOR_AMOUNT;
+	private long actorWorkingCount = TestAbstractActorSimulation.ACTOR_AMOUNT;
 	private ThreadTrigger threadTrigger;
 
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 		// TODO Auto-generated method stub
-		if (arg0 instanceof Integer && working) {
-			messageCount++;
-			if (messageCount > ActorSimulationTest.MESSAGE_TEST_AMOUNT) {
+		if (arg0 instanceof InstructionCount && working) {
+			if (++messageCount > TestAbstractActorSimulation.MESSAGE_TEST_AMOUNT) {
 				// on end:
 				working = false;
 				context().actorSelection("/user/*").tell(new InstructionStop(), self());
-				logger.info("Message sending completed.");
-			} else if (messageCount % (ActorSimulationTest.MESSAGE_TEST_AMOUNT / 5) == 0) {
-				logger.info(messageCount + " messages have sent.");
+				//logger.info("Message sending completed.");
+			} else if (messageCount % (TestAbstractActorSimulation.MESSAGE_TEST_AMOUNT / 5) == 0) {
+				//logger.info(messageCount + " messages have sent.");
 			}
-		} else if (arg0 instanceof VerificationPackage && working) {
+		} else if (arg0 instanceof ParcelVerification && working) {
 			// on error:
 			working = false;
 			threadTrigger.threadFailed();
@@ -37,8 +36,7 @@ public class Listener extends UntypedActor {
 			working = true;
 			threadTrigger = (ThreadTrigger) arg0;
 		} else if (arg0 instanceof InstructionStopConfirmed) {
-			actorWorkingCount--;
-			if (actorWorkingCount == 0) {
+			if (--actorWorkingCount == 0) {
 				threadTrigger.threadFinished();
 				logger.info("{} messages sent,Actors shutdown!",messageCount);
 			}

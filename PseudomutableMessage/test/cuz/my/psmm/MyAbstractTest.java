@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cuz.my.psmm.Messages.Style;
+import cuz.my.psmm.test.actors.SenderModule;
 
 public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -26,6 +27,7 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger
 	protected Style[] types = cuz.my.psmm.Messages.Style.values();
 	protected AtomicBoolean threadFailKey=new AtomicBoolean(false);
 	protected AtomicBoolean threadFinishKey=new AtomicBoolean(false);
+	protected SenderModule senderModule;
 	
     private List<Pair> valuePairs; 
     private List<String> names;
@@ -42,6 +44,12 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger
 		return names.get(ThreadLocalRandom.current().nextInt(names.size()));
 	}
 	
+	@Override
+	public SenderModule getModule() {
+		// TODO Auto-generated method stub
+		return senderModule;
+	}
+
 	@Override
 	public void threadFailed() {
 		threadFailKey.set(true);

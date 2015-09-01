@@ -85,11 +85,12 @@ public interface TMessage<T> extends Psmm {
 	public abstract TypedRawMessage<T> set(String key, T datum);
 
 	/**
-	 * Change into a new raw message.
+	 * Change into a new raw message without setting data.
 	 * 
 	 * <P>
-	 * This method is unnecessary for most cases, you can directly call set when
-	 * cascadingly invoking.
+	 * Actually return a raw message that wraps this message.This method is
+	 * unnecessary for most cases, you can directly call set when cascadingly
+	 * invoking.
 	 * 
 	 * @return Raw message without setting data.
 	 */

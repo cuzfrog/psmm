@@ -17,7 +17,7 @@ import cuz.my.psmm.Psmm;
  * @author cuzfrog
  * @see TMessage
  */
-public interface UMessage extends Psmm,UntypedMessageSetInterface {
+public interface UMessage extends Psmm, UntypedMessageSetInterface {
 	/**
 	 * Return a single value by a specified key. If the value cannot be found by
 	 * the key, it'll return null.
@@ -28,11 +28,12 @@ public interface UMessage extends Psmm,UntypedMessageSetInterface {
 	public abstract Object get(String key);
 
 	/**
-	 * Change into a new raw message.
+	 * Change into a new raw message without setting data.
 	 * 
 	 * <P>
-	 * This method is unnecessary for most cases, you can directly call set when
-	 * cascadingly invoking.
+	 * Actually return a raw message that wraps this message.This method is
+	 * unnecessary for most cases, you can directly call set when cascadingly
+	 * invoking.
 	 * 
 	 * @return Raw message without setting data.
 	 */
