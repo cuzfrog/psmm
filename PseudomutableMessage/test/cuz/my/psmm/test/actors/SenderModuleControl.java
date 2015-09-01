@@ -4,19 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cuz.my.psmm.MyAbstractTest.Pair;
+import cuz.my.psmm.Pair;
 
 public class SenderModuleControl implements SenderModule {
 
 	@Override
-	public Parcel parcel(List<Pair> data, Parcel receivedParcel) {
+	public <T> Parcel<T> parcel(List<Pair<T>> data, Parcel<T> receivedParcel) {
 		// TODO Auto-generated method stub
-		Map<String, Integer> map = new HashMap<>();
-		for (Pair pair : data) {
+		Map<String, T> map = new HashMap<>();
+		for (Pair<T> pair : data) {
 			map.put(pair.getKey(), pair.getValue());
 		}
 
-		return new ParcelControl(map, data);
+		return new ParcelControl<>(map, data);
 	}
 
 }

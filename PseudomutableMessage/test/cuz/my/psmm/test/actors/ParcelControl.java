@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cuz.my.psmm.Pair;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UntypedRawMessage;
-import cuz.my.psmm.MyAbstractTest.Pair;
 
-public final class ParcelControl implements Parcel {
-	private final Map<String,Integer> message;
-	private final List<Pair> expectedData;
+public final class ParcelControl<T> implements Parcel<T> {
+	private final Map<String,T> message;
+	private final List<Pair<T>> expectedData;
 
-	ParcelControl(Map<String,Integer> message, List<Pair> expectedData) {
+	ParcelControl(Map<String,T> message, List<Pair<T>> expectedData) {
 		super();
 		this.message = new HashMap<>(message);
 		this.expectedData =new ArrayList<>( expectedData);
@@ -26,7 +26,7 @@ public final class ParcelControl implements Parcel {
 	}
 
 	@Override
-	public List<Pair> getData() {
+	public List<Pair<T>> getData() {
 		// TODO Auto-generated method stub
 		return new ArrayList<>(expectedData);
 	}
@@ -34,7 +34,7 @@ public final class ParcelControl implements Parcel {
 	@Override
 	public boolean verify() {
 		// TODO Auto-generated method stub
-		for (Pair pair : expectedData) {
+		for (Pair<T> pair : expectedData) {
 			if (!message.get(pair.getKey()).equals(pair.getValue())) {
 				return false;
 			}
@@ -43,7 +43,7 @@ public final class ParcelControl implements Parcel {
 	}
 
 	@Override
-	public <T> TypedRawMessage<T> getTypedMessage() {
+	public TypedRawMessage<T> getTypedMessage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

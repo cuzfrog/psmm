@@ -1,4 +1,4 @@
-package cuz.my.psmm;
+package cuz.my.psmm.test.actors.threadinterface;
 
 public interface ThreadTrigger {
 	void threadFailed();

@@ -2,20 +2,20 @@ package cuz.my.psmm.test.actors;
 
 import java.util.List;
 
-import cuz.my.psmm.MyAbstractTest.Pair;
+import cuz.my.psmm.Pair;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
-public interface Parcel {
+public interface Parcel<T> {
 
 	/**
 	 * @return the message's raw message
 	 */
 	UntypedRawMessage getMessage();
 	
-	<T> TypedRawMessage<T> getTypedMessage();
+	TypedRawMessage<T> getTypedMessage();
 
-	List<Pair> getData();
+	List<Pair<T>> getData();
 
 	boolean verify();
 

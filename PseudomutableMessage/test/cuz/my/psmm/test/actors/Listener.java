@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import akka.actor.UntypedActor;
-import cuz.my.psmm.ThreadTrigger;
+import cuz.my.psmm.test.actors.threadinterface.ThreadTrigger;
 
 public class Listener extends UntypedActor {
 

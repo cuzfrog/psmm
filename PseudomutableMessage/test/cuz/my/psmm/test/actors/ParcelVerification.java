@@ -3,7 +3,7 @@ package cuz.my.psmm.test.actors;
 import java.util.ArrayList;
 import java.util.List;
 
-import cuz.my.psmm.MyAbstractTest.Pair;
+import cuz.my.psmm.Pair;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UMessage;
 import cuz.my.psmm.UntypedRawMessage;
@@ -14,38 +14,29 @@ import cuz.my.psmm.UntypedRawMessage;
  * @author cuzfrog
  *
  */
-public  class ParcelVerification implements Parcel {
+public  class ParcelVerification<T> implements Parcel<T> {
 	private final UMessage message;
-	private final List<Pair> expectedData;
+	private final List<Pair<T>> expectedData;
 
-	ParcelVerification(UMessage message, List<Pair> expectedData) {
+	ParcelVerification(UMessage message, List<Pair<T>> expectedData) {
 		super();
 		this.message = message;
 		this.expectedData =new ArrayList<>( expectedData);
 	}
 
-	/* (non-Javadoc)
-	 * @see cuz.my.psmm.test.actors.Parcel#getMessage()
-	 */
 	@Override
 	public UntypedRawMessage getMessage() {
 		return message.raw();
 	}
 	
-	/* (non-Javadoc)
-	 * @see cuz.my.psmm.test.actors.Parcel#getData()
-	 */
 	@Override
-	public List<Pair> getData(){
+	public List<Pair<T>> getData(){
 		return new ArrayList<>(expectedData);
 	}
 
-	/* (non-Javadoc)
-	 * @see cuz.my.psmm.test.actors.Parcel#verify()
-	 */
 	@Override
 	public boolean verify() {
-		for (Pair pair : expectedData) {
+		for (Pair<T> pair : expectedData) {
 			if (!message.get(pair.getKey()).equals(pair.getValue())) {
 				return false;
 			}
@@ -54,7 +45,7 @@ public  class ParcelVerification implements Parcel {
 	}
 
 	@Override
-	public <T> TypedRawMessage<T> getTypedMessage() {
+	public TypedRawMessage<T> getTypedMessage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

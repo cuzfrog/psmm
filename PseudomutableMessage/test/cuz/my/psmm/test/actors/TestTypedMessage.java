@@ -16,7 +16,8 @@ import cuz.my.psmm.Messages.Style;
 public class TestTypedMessage extends TestAbstractActorSimulation {
 	@Before
 	public void setUp() throws Exception {
-		//this.senderModule = new SenderModuleMessage();
+		
+		this.senderModule = new SenderModuleTypedMessage();
 		super.setUp();
 
 	}
@@ -38,28 +39,28 @@ public class TestTypedMessage extends TestAbstractActorSimulation {
 	@Benchmark
 	public void testTypedLinkedMap() {
 		threadFailKey.set(false);
-		typedTest(Style.LINKED_MAP);
+		typedTest(Style.LINKED_MAP, Integer.class);
 		assertFalse(threadFailKey.get());
 	}
 
 	@Benchmark
 	public void testTypedFlatMap() {
 		threadFailKey.set(false);
-		typedTest(Style.FLAT_MAP);
+		typedTest(Style.FLAT_MAP,Integer.class);
 		assertFalse(threadFailKey.get());
 	}
 
 	@Benchmark
 	public void testTypedCachedLinkedMap() {
 		threadFailKey.set(false);
-		typedTest(Style.CACHED_LINKED_MAP);
+		typedTest(Style.CACHED_LINKED_MAP,Integer.class);
 		assertFalse(threadFailKey.get());
 	}
 
 	@Benchmark
 	public void testTypedCachedFlatMap() {
 		threadFailKey.set(false);
-		typedTest(Style.CACHED_FLAT_MAP);
+		typedTest(Style.CACHED_FLAT_MAP,Integer.class);
 		assertFalse(threadFailKey.get());
 	}
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -21,47 +22,27 @@ import org.slf4j.LoggerFactory;
 import cuz.my.psmm.Messages.Style;
 import cuz.my.psmm.test.actors.SenderModule;
 
-public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger {
+public abstract class MyAbstractTest {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	protected ExecutorService executors = Executors.newFixedThreadPool(6);
 	protected Style[] types = cuz.my.psmm.Messages.Style.values();
-	protected AtomicBoolean threadFailKey=new AtomicBoolean(false);
-	protected AtomicBoolean threadFinishKey=new AtomicBoolean(false);
+	protected AtomicBoolean threadFailKey = new AtomicBoolean(false);
+	protected AtomicBoolean threadFinishKey = new AtomicBoolean(false);
 	protected SenderModule senderModule;
-	
-    private List<Pair> valuePairs; 
-    private List<String> names;
-	
+
+	protected List<Pair<?>> valuePairs;
+	protected List<String> names;
+
 	public Style randomType() {
 		return types[ThreadLocalRandom.current().nextInt(types.length)];
 	}
-	
-	public Pair randomPair(){
+
+	public Pair<?> randomPair() {
 		return valuePairs.get(ThreadLocalRandom.current().nextInt(valuePairs.size()));
 	}
-	
-	public String randomName(){
-		return names.get(ThreadLocalRandom.current().nextInt(names.size()));
-	}
-	
-	@Override
-	public SenderModule getModule() {
-		// TODO Auto-generated method stub
-		return senderModule;
-	}
 
-	@Override
-	public void threadFailed() {
-		threadFailKey.set(true);
-	}
-	
-	@Override
-	public void threadFinished() {
-		threadFinishKey.set(true);
-	}
-	
-	protected void awaitThreadFinish(){
-		while(!threadFinishKey.get()){
+	protected void awaitThreadFinish() {
+		while (!threadFinishKey.get()) {
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -71,11 +52,11 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger
 		}
 	}
 
-	public List<Pair> valuePairList(){
+	public List<Pair<?>> valuePairList() {
 		return new CopyOnWriteArrayList<>(valuePairs);
 	}
-	
-	public List<String> nameList(){
+
+	public List<String> nameList() {
 		return new CopyOnWriteArrayList<>(names);
 	}
 
@@ -90,24 +71,35 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger
 		}
 		return keys;
 	}
-	
-	protected void initiateNameList(String name,int amount){
-		names=Collections.unmodifiableList(keyList(name, amount));
+
+	protected void initiateNameList(String name, int amount) {
+		names = Collections.unmodifiableList(keyList(name, amount));
 	}
-	
-	protected void initiatePairList(String keyName,int keyAmount,int pairsAmount){
-		List<Pair> valuePairs = new ArrayList<>();
+
+	protected List<Pair<?>> initiatePairList(String keyName, int keyAmount, int pairsAmount,int randomBound) {
+		List<Pair<?>> valuePairs = new ArrayList<>();
 		List<String> keys = keyList(keyName, keyAmount);
 		int i = 0;
+		Pair<?> pair = null;
 		while (i < pairsAmount) {
-			Pair pair = new Pair(keys.get(ThreadLocalRandom.current().nextInt(keys.size())),
-					ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE));
+			if (keyName.contains("int")) {
+				pair = new Pair<Integer>(keys.get(ThreadLocalRandom.current().nextInt(keys.size())),
+						ThreadLocalRandom.current().nextInt(randomBound));
+			}else if(keyName.contains("double")){
+				pair = new Pair<Double>(keys.get(ThreadLocalRandom.current().nextInt(keys.size())),
+						ThreadLocalRandom.current().nextDouble(randomBound));
+			}else{
+				pair = new Pair<String>(keys.get(ThreadLocalRandom.current().nextInt(keys.size())),
+						UUID.randomUUID().toString().substring(0, randomBound));
+			}
 			if (!valuePairs.contains(pair)) {
 				valuePairs.add(pair);
 				i++;
 			}
 		}
-		this.valuePairs=Collections.unmodifiableList(valuePairs);
+
+		this.valuePairs = Collections.unmodifiableList(valuePairs);
+		return this.valuePairs;
 	}
 
 	/**
@@ -143,6 +135,15 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger
 		this.run(task, 5000000, 6);
 	}
 
+	/**
+	 * Concurrently run task and return a list of results.
+	 * 
+	 * @param task
+	 * @param executeTimes
+	 *            how many times of invoking the task.
+	 * @param threadCnt
+	 * @return List of results.
+	 */
 	protected <T> List<T> call(Callable<T> task, long executeTimes, int threadCnt) {
 		ExecutorService executor = Executors.newFixedThreadPool(threadCnt);
 		List<Future<T>> futures = new ArrayList<>();
@@ -171,28 +172,5 @@ public abstract class MyAbstractTest implements SharedReadOnlyData,ThreadTrigger
 		return results;
 
 	}
-	
-	@Immutable
-	public class Pair {
 
-		String key;
-		Integer value;
-
-		public String getKey() {
-			return key;
-		}
-
-		public Integer getValue() {
-			return value;
-		}
-
-		public Pair(String key, Integer value) {
-			super();
-			this.key = key;
-			this.value = value;
-		}
-	}
-
-
-	
 }

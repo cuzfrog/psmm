@@ -3,18 +3,15 @@ package cuz.my.psmm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cuz.my.psmm.MyAbstractTest.Pair;
 import cuz.my.psmm.data.Data;
 
 public class ModuleTest extends MyAbstractTest {
@@ -26,7 +23,7 @@ public class ModuleTest extends MyAbstractTest {
 	@Before
 	public void setUp() {
 		initiate(6000);
-		initiatePairList("int", 30, VALUE_PAIR_AMOUNT);
+		initiatePairList("int", 30, VALUE_PAIR_AMOUNT,Integer.MAX_VALUE);
 		// prepare 1000 value pairs with 30 keys, but different values
 	}
 
@@ -36,7 +33,7 @@ public class ModuleTest extends MyAbstractTest {
 
 		List<TMessage<Integer>> results = call(() -> {
 			Data data = Data.newData(Data.Structure.MAP);
-			Pair pair = randomPair();
+			Pair<?> pair = randomPair();
 			data.set(pair.getKey(), pair.getValue());
 			TMessage<Integer> message = cached.createMessage(Messages.Style.CACHED_FLAT_MAP, RootMessage.getInstance(),
 					data);
@@ -48,9 +45,9 @@ public class ModuleTest extends MyAbstractTest {
 
 		// see if those 1000 value pairs have been successfully conveyed by
 		// these messages:
-		List<Pair> valuePairs = valuePairList();
+		List<Pair<?>> valuePairs = valuePairList();
 		for (TMessage<Integer> message : messages) {
-			for (Pair pair : valuePairs) {
+			for (Pair<?> pair : valuePairs) {
 				if (pair.getValue().equals(message.get(pair.key))) {
 					valuePairs.remove(pair);
 					break;

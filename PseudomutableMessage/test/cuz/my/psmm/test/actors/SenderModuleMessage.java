@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import cuz.my.psmm.Messages;
+import cuz.my.psmm.Pair;
 import cuz.my.psmm.UMessage;
 import cuz.my.psmm.UntypedRawMessage;
-import cuz.my.psmm.MyAbstractTest.Pair;
 
 public class SenderModuleMessage implements SenderModule {
 
 	@Override
-	public Parcel parcel(List<Pair> dataPairs, Parcel receivedParcel) {
+	public <T> Parcel<T> parcel(List<Pair<T>> dataPairs, Parcel<T> receivedParcel) {
 		// TODO Auto-generated method stub
 		UntypedRawMessage newRawMessage;
 		int odds = ThreadLocalRandom.current().nextInt(100);
@@ -22,12 +22,19 @@ public class SenderModuleMessage implements SenderModule {
 			newRawMessage = receivedParcel.getMessage();
 		} // prepare raw message
 
-		for (Pair pair : dataPairs) {
-			newRawMessage.set(pair.getKey(), pair.getValue());
+		for (Pair<T> pair : dataPairs) {
+			T value = pair.getValue();
+			if (value instanceof Integer) {
+				newRawMessage.set(pair.getKey(), (int) pair.getValue());
+			} else if (value instanceof Double) {
+				newRawMessage.set(pair.getKey(), (double) pair.getValue());
+			} else {
+				newRawMessage.set(pair.getKey(), (String) pair.getValue());
+			}
 		}
 		UMessage newMessage = newRawMessage.cook(); // set and cook raw message
 
-		return new ParcelVerification(newMessage, dataPairs);
+		return new ParcelVerification<>(newMessage, dataPairs);
 	}
 
 }

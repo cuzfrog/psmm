@@ -3,16 +3,16 @@ package cuz.my.psmm.test.actors;
 import java.util.ArrayList;
 import java.util.List;
 
-import cuz.my.psmm.MyAbstractTest.Pair;
+import cuz.my.psmm.Pair;
 import cuz.my.psmm.TMessage;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
-public class ParcelTypedVerification<T> implements Parcel {
+public class ParcelTypedVerification<T> implements Parcel<T> {
 	private final TMessage<T> message;
-	private final List<Pair> expectedData;
+	private final List<Pair<T>> expectedData;
 
-	ParcelTypedVerification(TMessage<T> message, List<Pair> expectedData) {
+	ParcelTypedVerification(TMessage<T> message, List<Pair<T>> expectedData) {
 		super();
 		this.message = message;
 		this.expectedData = new ArrayList<>(expectedData);
@@ -24,7 +24,6 @@ public class ParcelTypedVerification<T> implements Parcel {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public TypedRawMessage<T> getTypedMessage() {
 		// TODO Auto-generated method stub
@@ -32,14 +31,14 @@ public class ParcelTypedVerification<T> implements Parcel {
 	}
 
 	@Override
-	public List<Pair> getData() {
+	public List<Pair<T>> getData() {
 		return new ArrayList<>(expectedData);
 	}
 
 
 	@Override
 	public boolean verify() {
-		for (Pair pair : expectedData) {
+		for (Pair<T> pair : expectedData) {
 			if (!message.get(pair.getKey()).equals(pair.getValue())) {
 				return false;
 			}
