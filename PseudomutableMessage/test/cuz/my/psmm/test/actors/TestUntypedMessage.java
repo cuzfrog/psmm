@@ -5,11 +5,6 @@ import static org.junit.Assert.assertFalse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import cuz.my.psmm.Messages.Style;
 
@@ -28,36 +23,29 @@ public class TestUntypedMessage extends TestAbstractActorSimulation {
 
 	}
 
-	@Test
-	public void testUntypedMessage() throws RunnerException {
-		Options opt = new OptionsBuilder()
-				.include(this.getClass().getSimpleName())
-				.forks(1).build();
-		new Runner(opt).run();
-	}
 
-	@Benchmark
+	@Test
 	public void testUntypedLinkedMap() {
 		threadFailKey.set(false);
 		untypedTest(Style.LINKED_MAP);
 		assertFalse(threadFailKey.get());
 	}
 
-	@Benchmark
+	@Test
 	public void testUntypedFlatMap() {
 		threadFailKey.set(false);
 		untypedTest(Style.FLAT_MAP);
 		assertFalse(threadFailKey.get());
 	}
 
-	@Benchmark
+	@Test
 	public void testUntypedCachedLinkedMap() {
 		threadFailKey.set(false);
 		untypedTest(Style.CACHED_LINKED_MAP);
 		assertFalse(threadFailKey.get());
 	}
 
-	@Benchmark
+	@Test
 	public void testUntypedCachedFlatMap() {
 		threadFailKey.set(false);
 		untypedTest(Style.CACHED_FLAT_MAP);

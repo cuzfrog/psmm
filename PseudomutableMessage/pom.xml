@@ -29,11 +29,6 @@
 	<dependencies>
 
 		<!-- Debug and Testing -->
-		<dependency>
-			<groupId>org.openjdk.jmh</groupId>
-			<artifactId>jmh-generator-annprocess</artifactId>
-			<version>1.10.5</version>
-		</dependency>
 
 		<dependency>
 			<groupId>nl.jqno.equalsverifier</groupId>

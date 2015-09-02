@@ -30,8 +30,8 @@ public abstract class MyAbstractTest {
 	protected AtomicBoolean threadFinishKey = new AtomicBoolean(false);
 	protected SenderModule senderModule;
 
-	protected List<Pair<?>> valuePairs;
-	protected List<String> names;
+	protected static List<Pair<?>> valuePairs;
+	protected static List<String> names;
 
 	public Style randomType() {
 		return types[ThreadLocalRandom.current().nextInt(types.length)];
@@ -56,11 +56,11 @@ public abstract class MyAbstractTest {
 		return new CopyOnWriteArrayList<>(valuePairs);
 	}
 
-	public List<String> nameList() {
+	public static List<String> nameList() {
 		return new CopyOnWriteArrayList<>(names);
 	}
 
-	protected List<String> keyList(String name, int amount) {
+	protected static List<String> keyList(String name, int amount) {
 		List<String> keys = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
 		sb.append(name);
@@ -72,11 +72,11 @@ public abstract class MyAbstractTest {
 		return keys;
 	}
 
-	protected void initiateNameList(String name, int amount) {
+	protected static void initiateNameList(String name, int amount) {
 		names = Collections.unmodifiableList(keyList(name, amount));
 	}
 
-	protected List<Pair<?>> initiatePairList(String keyName, int keyAmount, int pairsAmount,int randomBound) {
+	protected static List<Pair<?>> initiatePairList(String keyName, int keyAmount, int pairsAmount,int randomBound) {
 		List<Pair<?>> valuePairs = new ArrayList<>();
 		List<String> keys = keyList(keyName, keyAmount);
 		int i = 0;
@@ -98,14 +98,14 @@ public abstract class MyAbstractTest {
 			}
 		}
 
-		this.valuePairs = Collections.unmodifiableList(valuePairs);
-		return this.valuePairs;
+		MyAbstractTest.valuePairs = Collections.unmodifiableList(valuePairs);
+		return MyAbstractTest.valuePairs;
 	}
 
 	/**
 	 * initiate PsmmSystem.
 	 */
-	protected void initiate(int messagePoolSize) {
+	protected static void initiate(int messagePoolSize) {
 		PsmmSystem.initiate(new PsmmConfiguration(messagePoolSize));
 
 	}

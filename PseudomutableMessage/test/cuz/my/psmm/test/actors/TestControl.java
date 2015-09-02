@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openjdk.jmh.annotations.Benchmark;
 
 public class TestControl extends TestAbstractActorSimulation {
 
@@ -21,19 +20,16 @@ public class TestControl extends TestAbstractActorSimulation {
 		super.tearDown();
 	}
 
-	@Test
-	public void testControl() {
-		
-	}
 
-	@Benchmark
+
+	@Test
 	public void testControlParcel() {
 		threadFailKey.set(false);
 		controlTest();
 		assertFalse(threadFailKey.get());
 	}
 
-	@Benchmark
+	@Test
 	public void testControlDoNothing() {
 		threadFailKey.set(false);
 		// do nothing

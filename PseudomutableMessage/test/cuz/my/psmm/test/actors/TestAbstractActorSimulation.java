@@ -23,7 +23,7 @@ import cuz.my.psmm.UMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
 public class TestAbstractActorSimulation extends MyAbstractTest implements SharedReadOnlyData, ThreadTrigger {
-	protected ActorSystem system;
+	protected static ActorSystem system;
 	protected final static List<ActorRef> actors = new ArrayList<>();
 
 	public final static int ACTOR_AMOUNT = 20;
@@ -38,33 +38,26 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	@Rule
 	public TestName testName = new TestName(); // beginning.
 
-	protected void createActor(Class<Sender> c) {
+	protected static void createActor(Class<? extends Sender> c) {
 		List<String> keys = nameList();
 		for (String key : keys) {
 			final ActorRef actor = system.actorOf(Props.create(c), key);
-			actor.tell(this, ActorRef.noSender());
-			// give actor interface SharedReadOnlyData to read MyAbstractTest
 			actors.add(actor);
 		}
 
 	}
 
 	public void setUp() throws Exception {
-		system = ActorSystem.create("test");
-		initiate(6000);
-		initiatePairList("int", 30, VALUE_PAIR_AMOUNT,Integer.MAX_VALUE); 
-		// immutable value pair list
-		initiateNameList("sender", ACTOR_AMOUNT); // create actors' names;
-		createActor(Sender.class); // create actors
-		final ActorRef listener = system.actorOf(Props.create(Listener.class),
-				"listener"); // create listener
-		listener.tell(this, ActorRef.noSender());
+		
+		
+		system.actorSelection("/user/listener").tell(this, ActorRef.noSender());
+		system.actorSelection("/user/*").tell(this, ActorRef.noSender());
+		// give actor interface SharedReadOnlyData to read MyAbstractTest
 	}
 
 	public void tearDown() {
-		system.shutdown();
-		system = null;
-		actors.clear();
+		
+		
 		logger.info("{} completed.", testName.getMethodName());
 	}
 
