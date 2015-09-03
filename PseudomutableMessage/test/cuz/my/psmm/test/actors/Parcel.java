@@ -6,7 +6,7 @@ import cuz.my.psmm.Pair;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
-public interface Parcel<T> {
+interface Parcel<T> {
 
 	/**
 	 * @return the message's raw message

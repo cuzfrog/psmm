@@ -15,10 +15,10 @@ final class PsmmFactoryImpl implements PsmmFactory {
 	private final AbstractRawMessage<?> rawMessageRefr=new RawMessageImpl<>(this);
 
 	@Override
-	public <T> TMessage<T> commit(TMessage<T> messageBeingWrapped) {
+	public <T> Message<T> commit(Message<T> messageBeingWrapped) {
 		// TODO Auto-generated method stub
 
-		TMessage<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
+		Message<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
 
 		// once a new message has been created, delete this.data reference
 		// for safety.

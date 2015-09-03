@@ -14,7 +14,7 @@ import cuz.my.psmm.UntypedRawMessage;
  * @author cuzfrog
  *
  */
-public  class ParcelVerification<T> implements Parcel<T> {
+class ParcelVerification<T> implements Parcel<T> {
 	private final UMessage message;
 	private final List<Pair<T>> expectedData;
 

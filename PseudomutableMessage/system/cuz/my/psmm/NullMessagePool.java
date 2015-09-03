@@ -14,7 +14,7 @@ class NullMessagePool implements MessagePool {
 	}
 
 	@Override
-	public void put(Signature signature, TMessage<?> message) {
+	public void put(Signature signature, AbstractMessage<?> message) {
 		// TODO Auto-generated method stub
 
 	}

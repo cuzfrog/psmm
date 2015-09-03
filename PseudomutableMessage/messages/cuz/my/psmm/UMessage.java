@@ -1,6 +1,6 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.Psmm;
+import cuz.my.psmm.MessageCommonInterface;
 
 /**
  * An untyped version for {@code TypedMessage}.
@@ -17,7 +17,7 @@ import cuz.my.psmm.Psmm;
  * @author cuzfrog
  * @see TMessage
  */
-public interface UMessage extends Psmm, UntypedMessageSetInterface {
+public interface UMessage extends MessageCommonInterface, UntypedMessageSetInterface {
 	/**
 	 * Return a single value by a specified key. If the value cannot be found by
 	 * the key, it'll return null.

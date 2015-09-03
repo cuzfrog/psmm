@@ -6,7 +6,7 @@ import java.util.Map;
 
 import cuz.my.psmm.Pair;
 
-public class SenderModuleControl implements SenderModule {
+class SenderModuleControl implements SenderModule {
 
 	@Override
 	public <T> Parcel<T> parcel(List<Pair<T>> data, Parcel<T> receivedParcel) {

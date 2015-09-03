@@ -6,8 +6,8 @@ import cuz.my.psmm.data.Data;
  * An abstract class that has message creation methods and the definition of
  * message type.
  * <p>
- * There are several message interfaces锛�<br>
- * {@link Object} only accept primitives and Strings, which ensures its data's
+ * There are several message interfaces<br>
+ * {@link UMessae} only accept primitives and Strings, which ensures its data's
  * immutability. However bad {@link Data} implementation could violate it.<br>
  * {@link TMessage} gives flexibility to data carried, but you have to be very
  * careful designing your message, since TypedMessage doesn't check the
@@ -16,7 +16,7 @@ import cuz.my.psmm.data.Data;
  * @author cuzfrog
  *
  */
-public abstract class Messages implements Psmm {
+public abstract class Messages implements MessageCommonInterface {
 
 	/**
 	 * Message types indicating the structures of messages.
@@ -63,7 +63,7 @@ public abstract class Messages implements Psmm {
 	 * @return UntypedRawMessage.
 	 */
 	public static UntypedRawMessage create(Messages.Style messageType) {
-		TMessage<Object> rootMessage = RootMessage.getInstance();
+		Message<Object> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(
 				messageType, rootMessage);
 		return rawMessage;
@@ -97,7 +97,7 @@ public abstract class Messages implements Psmm {
 	public static <T> TypedRawMessage<T> create(Messages.Style messageType,
 			Class<T> c) {
 
-		TMessage<T> rootMessage = RootMessage.getInstance();
+		Message<T> rootMessage =  RootMessage.getInstance();
 		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType,
 				rootMessage);
 		return rawMessage;

@@ -10,14 +10,14 @@ import cuz.my.psmm.data.Data;
  *
  * @param <T> The Message<T> it contains.
  */
-abstract class AbstractMessage<T>  implements TMessage<T>,UMessage {
+abstract class AbstractMessage<T>  implements Message<T> {
 
-	protected final TMessage<T> parent;
+	protected final Message<T> parent;
 	protected final Data data;
 	protected final Integer depth;
 	protected final Messages.Style type;
 
-	protected AbstractMessage(Messages.Style type, TMessage<T> parent,
+	protected AbstractMessage(Messages.Style type, Message<T> parent,
 			Data data) {
 		super();
 		this.parent = parent;
@@ -76,6 +76,12 @@ abstract class AbstractMessage<T>  implements TMessage<T>,UMessage {
 		return PsmmSystem.fetchRaw(this.type, this);
 	}
 	// ------------UntypedMessage behaviors:
+
+	@Override
+	public TMessage<T> regress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, int value) {

@@ -22,8 +22,8 @@ public final class PsmmSystem {
 	private static PsmmSystem instance;
 
 	// pool members:
-	private static FactoryPool factoryPool;
-	private static MessagePool messagePool;
+	private FactoryPool factoryPool;
+	private MessagePool messagePool;
 
 	// singleton behavior:
 	private PsmmSystem(PsmmConfiguration config) {
@@ -43,9 +43,7 @@ public final class PsmmSystem {
 	 * @see PsmmConfiguration
 	 */
 	public static void initiate(PsmmConfiguration config) {
-		if (instance == null) {
 			instance = new PsmmSystem(config);
-		}
 	}
 
 	/**
@@ -57,7 +55,7 @@ public final class PsmmSystem {
 
 	// utility methods:----------------
 	// create raw message:
-	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, TMessage<T> messageBeingWrapped) {
+	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, Message<T> messageBeingWrapped) {
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractRawMessage<T> rawMessage = factory.getRawMessage();
 		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
@@ -65,11 +63,11 @@ public final class PsmmSystem {
 	}
 
 	@SuppressWarnings("unchecked")
-	static <T> TMessage<T> seekMessage(Signature signature) {
-		return (TMessage<T>) messagePool.get(signature);
+	static <T> Message<T> seekMessage(Signature signature) {
+		return (AbstractMessage<T>) instance.messagePool.get(signature);
 	}
 
-	static <T> TMessage<T> getRootMessage() {
+	static <T> Message<T> getRootMessage() {
 		return RootMessage.getInstance();
 	}
 
@@ -84,10 +82,10 @@ public final class PsmmSystem {
 	 *            for this message.
 	 * @return a new cached message
 	 */
-	static <T> TMessage<T> getConcretMessage(Messages.Style type, TMessage<T> messageBeingWrapped, Data data, Signature signature) {
+	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data, Signature signature) {
 
-		TMessage<T> message = new CachedMessage<>(type, messageBeingWrapped, data, signature);
-		messagePool.put(signature, message);
+		AbstractMessage<T> message = new CachedMessage<>(type, messageBeingWrapped, data, signature);
+		instance.messagePool.put(signature, message);
 		return message;
 
 	}
@@ -100,12 +98,12 @@ public final class PsmmSystem {
 	 * @param data
 	 * @return a new uncached message.
 	 */
-	static <T> TMessage<T> getConcretMessage(Messages.Style type, TMessage<T> messageBeingWrapped, Data data) {
+	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
 		return new UncachedMessage<>(type, messageBeingWrapped, data);
 	}
 
 	// factory bridge:
 	static PsmmFactory seekFactory(Messages.Style type) {
-		return factoryPool.seekFactory(type);
+		return instance.factoryPool.seekFactory(type);
 	}
 }

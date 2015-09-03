@@ -10,14 +10,14 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestControl.class, TestUntypedMessage.class,
-		TestTypedMessage.class })
+@SuiteClasses({ TestUntypedMessage.class,
+		TestTypedMessage.class,TestControl.class })
 public class TestSuite extends TestAbstractActorSimulation {
 
 	@BeforeClass
 	public static void setUpAll() {
-		initiate(6000);
-		initiatePairList("int", 30, VALUE_PAIR_AMOUNT,Integer.MAX_VALUE); 
+		
+		initiatePairList(VALUE_NAME, VALUE_KEY_AMOUNT , VALUE_PAIR_AMOUNT,VALUE_UPBOUND); 
 		// immutable value pair list
 		initiateNameList("sender", ACTOR_AMOUNT); // create actors' names;
 		system = ActorSystem.create("test");
@@ -27,7 +27,7 @@ public class TestSuite extends TestAbstractActorSimulation {
 
 	@AfterClass
 	public static void tearDownAll() {
-		actors.clear();
+		senders.clear();
 		system.shutdown();
 		system = null;
 	}

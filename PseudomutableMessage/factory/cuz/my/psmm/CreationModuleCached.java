@@ -23,7 +23,7 @@ import cuz.my.psmm.exceptions.PsmmMessageConstructionFailedException;
  * thread at the same time, and this possibility is low and once message-putting
  * has completed it can be checked thread-safely.
  * 
- * @author cuz
+ * @author Cause Chung
  *
  */
 final class CreationModuleCached extends Module {
@@ -34,12 +34,12 @@ final class CreationModuleCached extends Module {
 	}
 
 	@Override
-	public <T> TMessage<T> createMessage(Messages.Style type, TMessage<T> messageBeingWrapped, Data data)
+	public <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data)
 			throws PsmmException {
 		// TODO Auto-generated method stub
 		Signature signature = calculateSignature(type, messageBeingWrapped, data);
 
-		TMessage<T> message;
+		Message<T> message;
 		if ((message = PsmmSystem.seekMessage(signature)) == null) {
 			message = PsmmSystem.getConcretMessage(type, messageBeingWrapped, data, signature);
 		}

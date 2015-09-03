@@ -9,7 +9,7 @@ import cuz.my.psmm.Pair;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
-public final class ParcelControl<T> implements Parcel<T> {
+final class ParcelControl<T> implements Parcel<T> {
 	private final Map<String,T> message;
 	private final List<Pair<T>> expectedData;
 

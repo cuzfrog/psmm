@@ -1,8 +1,6 @@
 package cuz.my.psmm.test.actors;
 
-import cuz.my.psmm.test.actors.threadinterface.SharedReadOnlyData;
-
-public class SenderInteger extends Sender {
+class SenderInteger extends Sender {
 	@Override
 	public void onReceive(Object arg0) throws Exception {
 		// TODO Auto-generated method stub

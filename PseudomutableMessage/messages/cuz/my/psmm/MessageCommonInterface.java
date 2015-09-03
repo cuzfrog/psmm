@@ -1,11 +1,11 @@
 package cuz.my.psmm;
 
 /**
- * I plan this to be available later version.
- * @author cuzfrog
+ * Common method interface.
+ * @author Cause Chung
  *
  */
-interface Psmm {
+interface MessageCommonInterface {
 	/**
 	 * Return a signature of this message.<br>
 	 * 
@@ -17,7 +17,7 @@ interface Psmm {
 	 * 
 	 * @return signature of this message.
 	 */
-	public abstract byte[] getSignature();
+	byte[] getSignature();
 	
 	/**
 	 * Return the number of messages this one has wrapped.
@@ -27,5 +27,7 @@ interface Psmm {
 	 * 
 	 * @return position of the message in the linked structure.
 	 */
-	public abstract Integer depth();
+	Integer depth();
+	
+	
 }

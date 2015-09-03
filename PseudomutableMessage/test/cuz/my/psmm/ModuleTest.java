@@ -33,7 +33,7 @@ public class ModuleTest extends MyAbstractTest {
 
 		List<TMessage<Integer>> results = call(() -> {
 			Data data = Data.newData(Data.Structure.MAP);
-			Pair<?> pair = randomPair();
+			Pair<?> pair = staticRandomPair();
 			data.set(pair.getKey(), pair.getValue());
 			TMessage<Integer> message = cached.createMessage(Messages.Style.CACHED_FLAT_MAP, RootMessage.getInstance(),
 					data);
@@ -54,12 +54,12 @@ public class ModuleTest extends MyAbstractTest {
 				}
 			}
 		}
-		if (messages.size() > 5) {
-
-			for (TMessage<Integer> message : messages) {
-				logger.debug("message:{},signature:{}", message.getAll().toString(), message.getSignature());
-			}
-		}
+//		if (messages.size() > VALUE_PAIR_AMOUNT) {
+//
+//			for (TMessage<Integer> message : messages) {
+//				logger.debug("message:{},signature:{}", message.getAll().toString(), message.getSignature());
+//			}
+//		}
 		assertEquals(0, valuePairs.size()); // passed all info has been conveyed
 		assertTrue(messages.size() <= VALUE_PAIR_AMOUNT); // sometimes failed,
 															// but acceptable,

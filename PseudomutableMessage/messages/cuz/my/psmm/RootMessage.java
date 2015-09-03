@@ -5,16 +5,19 @@ import java.util.Map;
 
 
 @StateLess
-final class RootMessage implements TMessage<Object> {
+final class RootMessage implements Message<Object> {
 	
-	private static final RootMessage instance=new RootMessage();
+	private RootMessage() {
+	}
+
+	private static final Message<Object> instance=new RootMessage();
 	
-	private RootMessage(){}
 	
 	//-------------------utility behavior:
+
 	@SuppressWarnings("unchecked")
-	public static <T> TMessage<T> getInstance(){
-		return (TMessage<T>) instance;
+	public static <T> Message<T> getInstance(){
+		return   (Message<T>) instance;
 	}
 	//-------------------message behavior:
 	@Override
@@ -46,13 +49,73 @@ final class RootMessage implements TMessage<Object> {
 	//factory behaviors:
 
 	@Override
-	public TypedRawMessage<Object> set(String key, Object datum) {
+	public AbstractRawMessage<Object> set(String key, Object datum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public TypedRawMessage<Object> raw() {
+	public AbstractRawMessage<Object> raw() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, int value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, short value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, long value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, boolean value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, float value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, double value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, char value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, byte value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AbstractRawMessage<Object> set(String key, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TMessage<Object> regress() {
 		// TODO Auto-generated method stub
 		return null;
 	}

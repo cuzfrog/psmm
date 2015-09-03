@@ -39,7 +39,7 @@ import java.util.Map;
  * @see Object
  */
 @ThreadSafe
-public interface TMessage<T> extends Psmm {
+public interface TMessage<T> extends MessageCommonInterface {
 
 	/**
 	 * Return a single value by a specified key. If the value cannot be found by
@@ -95,4 +95,16 @@ public interface TMessage<T> extends Psmm {
 	 * @return Raw message without setting data.
 	 */
 	public abstract TypedRawMessage<T> raw();
+	
+	/**
+	 * Try to get last message before last cook.
+	 * <p>
+	 * As for linked message with depth more than one, there's always another message inside it.
+	 * So it's able to provide a simulation of "time regression" method to get that message.
+	 * If depth is one, it'll return singleton instance of {@link RootMessage}
+	 * 
+	 * @return last message before last cook.
+	 * @throws PsmmUnsupportedOperationException when none-linked message calls this method.
+	 */
+    public abstract TMessage<T> regress();
 }

@@ -14,21 +14,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cuz.my.psmm.Messages.Style;
-import cuz.my.psmm.test.actors.SenderModule;
 
 public abstract class MyAbstractTest {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	protected ExecutorService executors = Executors.newFixedThreadPool(6);
 	protected Style[] types = cuz.my.psmm.Messages.Style.values();
-	protected AtomicBoolean threadFailKey = new AtomicBoolean(false);
-	protected AtomicBoolean threadFinishKey = new AtomicBoolean(false);
-	protected SenderModule senderModule;
+	
+	
 
 	protected static List<Pair<?>> valuePairs;
 	protected static List<String> names;
@@ -37,20 +34,11 @@ public abstract class MyAbstractTest {
 		return types[ThreadLocalRandom.current().nextInt(types.length)];
 	}
 
-	public Pair<?> randomPair() {
+	public static Pair<?> staticRandomPair() {
 		return valuePairs.get(ThreadLocalRandom.current().nextInt(valuePairs.size()));
 	}
 
-	protected void awaitThreadFinish() {
-		while (!threadFinishKey.get()) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				break;
-			}
-		}
-	}
+	
 
 	public List<Pair<?>> valuePairList() {
 		return new CopyOnWriteArrayList<>(valuePairs);
@@ -76,7 +64,7 @@ public abstract class MyAbstractTest {
 		names = Collections.unmodifiableList(keyList(name, amount));
 	}
 
-	protected static List<Pair<?>> initiatePairList(String keyName, int keyAmount, int pairsAmount,int randomBound) {
+	public static List<Pair<?>> initiatePairList(String keyName, int keyAmount, int pairsAmount,int randomBound) {
 		List<Pair<?>> valuePairs = new ArrayList<>();
 		List<String> keys = keyList(keyName, keyAmount);
 		int i = 0;
@@ -105,7 +93,7 @@ public abstract class MyAbstractTest {
 	/**
 	 * initiate PsmmSystem.
 	 */
-	protected static void initiate(int messagePoolSize) {
+	public static void initiate(int messagePoolSize) {
 		PsmmSystem.initiate(new PsmmConfiguration(messagePoolSize));
 
 	}

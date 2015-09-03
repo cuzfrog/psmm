@@ -33,8 +33,7 @@ class SimpleTest {
 		System.out.println(rmnew2.equals(rmnew));
 		System.out.println(Arrays.equals(rm.getSignature(), rmnew.getSignature()));
 		
-		int i=1;
-		System.out.println(++i);
+		System.out.println(Runtime.getRuntime().availableProcessors());
 	}
     
 }

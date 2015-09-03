@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import akka.actor.UntypedActor;
 import cuz.my.psmm.Pair;
-import cuz.my.psmm.test.actors.threadinterface.SharedReadOnlyData;
 
 abstract class Sender extends UntypedActor {
 

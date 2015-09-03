@@ -8,7 +8,7 @@ import cuz.my.psmm.TMessage;
 import cuz.my.psmm.TypedRawMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
-public class ParcelTypedVerification<T> implements Parcel<T> {
+class ParcelTypedVerification<T> implements Parcel<T> {
 	private final TMessage<T> message;
 	private final List<Pair<T>> expectedData;
 

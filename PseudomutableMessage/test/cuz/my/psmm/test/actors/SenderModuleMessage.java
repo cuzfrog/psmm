@@ -8,7 +8,7 @@ import cuz.my.psmm.Pair;
 import cuz.my.psmm.UMessage;
 import cuz.my.psmm.UntypedRawMessage;
 
-public class SenderModuleMessage implements SenderModule {
+class SenderModuleMessage implements SenderModule {
 
 	@Override
 	public <T> Parcel<T> parcel(List<Pair<T>> dataPairs, Parcel<T> receivedParcel) {

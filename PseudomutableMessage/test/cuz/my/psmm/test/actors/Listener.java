@@ -4,14 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import akka.actor.UntypedActor;
-import cuz.my.psmm.test.actors.threadinterface.ThreadTrigger;
 
-public class Listener extends UntypedActor {
+class Listener extends UntypedActor {
 
 	private Logger logger = LoggerFactory.getLogger("listener");
 	private boolean working = false;
-	private long messageCount = 0;
-	private long actorWorkingCount = TestAbstractActorSimulation.ACTOR_AMOUNT;
+	private long messageCount;
+	private long actorWorkingCount;
 	private ThreadTrigger threadTrigger;
 
 	@Override
@@ -34,11 +33,13 @@ public class Listener extends UntypedActor {
 			logger.error("Verification failed:");
 		} else if (arg0 instanceof ThreadTrigger) {
 			working = true;
+			actorWorkingCount = TestAbstractActorSimulation.ACTOR_AMOUNT;
+			messageCount = 0;
 			threadTrigger = (ThreadTrigger) arg0;
 		} else if (arg0 instanceof InstructionStopConfirmed) {
 			if (--actorWorkingCount == 0) {
 				threadTrigger.threadFinished();
-				logger.info("{} messages sent,Actors shutdown!",messageCount);
+				logger.info("{} messages sent,Actors stopped!",messageCount);
 			}
 			//logger.info("working senders:{}",actorWorkingCount);
 		} else {
