@@ -57,7 +57,7 @@
 <h2>
 <a id="get-started" class="anchor" href="#get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get started:</h2>
 
-<p>First initiate PsmmSystem(create factories and so on):</p>
+<p>First must initiate PsmmSystem:</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(); <span class="pl-c">//only invoke once in your main thread</span></pre></div>
 
@@ -225,13 +225,14 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to assemble same Module instances.</li>
 </ul>
 
-<p>There are three kinds of Module:</p>
+<p>There are three kinds of Modules:
+1. Creation: creates concrete message, like CachedMessage or UncachedMessage.
+2. Data: designates Data implementation into factory, like HashMap.
+3. Structure: decides which style, like Flat or Linked.</p>
+
+<p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li>Creation: creates concrete message, like CachedMessage or UncachedMessage.</li>
-<li>Data: designates Data implementation into factory, like HashMap.</li>
-<li><p>Structure: decides which style, like Flat or Linked.
-Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p></li>
 <li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is very efficient. When fetching factory, module is assembled into factory according to message's style. </p></li>
 <li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
 </ul>
