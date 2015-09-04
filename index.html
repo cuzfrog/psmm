@@ -81,7 +81,7 @@
 
 <p>Regress a message:</p>
 
-<div class="highlight highlight-java"><pre>           <span class="pl-k">try</span> {
+<div class="highlight highlight-java"><pre>        <span class="pl-k">try</span> {
             <span class="pl-smi">UMessage</span> message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
         } <span class="pl-k">catch</span> (<span class="pl-smi">PsmmCannotRegressExeption</span> e) {
             <span class="pl-c">//tell actor message only has one level</span>
@@ -147,29 +147,25 @@
 
 }</pre></div>
 
+<p>Typed message (others are the same):</p>
+
+<div class="highlight highlight-java"><pre>        <span class="pl-k">TMessage&lt;<span class="pl-smi">Integer</span>&gt;</span> message2<span class="pl-k">=</span>
+                <span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Integer</span><span class="pl-k">.</span>class)
+                .set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)
+                <span class="pl-c">//.set("key2", "string value") //compile time error</span>
+                .cook();</pre></div>
+
+<p><em>NOTE:When use typed message, you must ensure type's immutability.</em></p>
+
 <h2>
-<a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document:</h2>
+<a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document</h2>
 
 <h4>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h4>
 
 <p>Psmm messages take advantage of Decorator Pattern. Every message has a reference of preceded message. For newly created message, PsmmFactory puts a RootMessage in it. After a message has been set("modified"), factory create a new message decorating the old one, of course, with new data. Therefore, you can access psmm as if it's mutable.</p>
 
-<h4>
-<a id="raw-message-and-psmm-factory-model" class="anchor" href="#raw-message-and-psmm-factory-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raw Message and Psmm Factory model:</h4>
-
-<ul>
-<li>
-<strong>Raw Message</strong> is a concept helper class which is exposed to user instead of factory, and to ensure message is actually created. Consider situation below:
-<code>UMessage message2 =
-            message1
-            .set(key2, 45)  //when first call set(), it turns to a raw message
-            .set(key3, "this is another string")
-            .set(key4, 568.3d)
-            //.cook(); //no message is really created.
-</code>
-</li>
-</ul>
+<p><em>For class info, please see source file.</em></p>
 
 <h4>
 <a id="styles" class="anchor" href="#styles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Styles</h4>
@@ -190,15 +186,70 @@
 <strong>Uncached</strong>(default): Oppose to cached.</li>
 </ol>
 
-<p><em>*Style is used for distinguishing from Parameter Type.</em></p>
+<p><em>The word *Style is used for distinguishing from Parameter Type.</em></p>
 
-<p>How to choose style:
-<code>Messages.create(Messages.Style.FLAT_MAP)</code></p>
+<p>How to choose style:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Messages</span><span class="pl-k">.</span><span class="pl-smi">Style</span><span class="pl-c1"><span class="pl-k">.</span>FLAT_MAP</span>)</pre></div>
+
+<h4>
+<a id="raw-message-and-factory-model" class="anchor" href="#raw-message-and-factory-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raw Message and Factory model</h4>
+
+<ul>
+<li>
+<strong>Raw Message</strong> is a concept helper class which is exposed to user instead of a factory, and to ensure message is actually created. It's a <a href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy</a> of a factory. Consider situation below:</li>
+</ul>
+
+<div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
+                message1
+                .set(key2, <span class="pl-c1">45</span>)  <span class="pl-c">//when first call set(), it turns to a raw message</span>
+                .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
+                .set(key4, <span class="pl-c1">568.3d</span>)
+                <span class="pl-c">//.cook(); //no message is really created. Type mismatch, compile time error.</span></pre></div>
+
+<p>A raw message cannot evaluate to UMessage. Also, in concept, it's better than return a factory object.
+There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
+
+<p><em>It's not necessary to grab a raw message's reference in most cases.</em></p>
+
+<ul>
+<li>
+<strong>Factory</strong> do the real job to store user data and create message. Factory has a final reference of raw message, which means they're paired when their instance are created. The reason to do so is because only factories are store in Factory Pool.</li>
+</ul>
+
+<h4>
+<a id="factory-detail" class="anchor" href="#factory-detail" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factory detail</h4>
+
+<ul>
+<li>
+<strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to assemble same Module instances.</li>
+</ul>
+
+<p>There are three kinds of Module:</p>
+
+<ul>
+<li>Creation: creates concrete message, like CachedMessage or UncachedMessage.</li>
+<li>Data: designates Data implementation into factory, like HashMap.</li>
+<li><p>Structure: decides which style, like Flat or Linked.
+Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p></li>
+<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is very efficient. When fetching factory, module is assembled into factory according to message's style. </p></li>
+<li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
+</ul>
+
+<h4>
+<a id="psmmsystem-and-helper-messages" class="anchor" href="#psmmsystem-and-helper-messages" aria-hidden="true"><span class="octicon octicon-link"></span></a>PsmmSystem and helper Messages</h4>
+
+<ul>
+<li>
+<strong>PsmmSystem</strong> holds instances of factory pool, message pool and initiate Modules, internally provide static methods.  Instantiating Module at runtime gives more flexibility.</li>
+<li>
+<strong>Messages</strong> provides factory methods to create message.</li>
+</ul>
 
 <h4>
 <a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h4>
 
-<p>Psmm provides a class PsmmConfiguration to do some custom setup when initiation.</p>
+<p>Psmm provides a class PsmmConfiguration to do some custom setup when initiation. Later I shall probably provide way to customize factory Module and Data through configuration.</p>
 
 <p>How to setup:</p>
 
@@ -209,14 +260,14 @@
         <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(config);</pre></div>
 
 <h4>
-<a id="performance" class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance:</h4>
+<a id="performance" class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance</h4>
 
 <p>I've prepared some performance test data, and I'll upload them, and explain in detail.</p>
 
-<p>It's very important to know that generating message, in most cases, only takes a fraction of application time. It's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
+<p>It's very important to know that generating message, in most cases, only takes a fraction of application time. Sometimes, it's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
 
 <h4>
-<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javadoc:</h4>
+<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javadoc</h4>
 
 <p>I have written complete javadoc, and I'll  upload it.</p>
 
