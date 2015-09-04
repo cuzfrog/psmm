@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <meta name="description" content="Psmm : PSeudo-Mutable Message for Actors">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Psmm by cuzfrog</title>
+    <title>Psmm</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>Psmm</h1>
-        <h2>PSeudo-Mutable Message for Actors</h2>
-        <a href="https://github.com/cuzfrog/psmm" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
-<a id="project-developing-progress" class="anchor" href="#project-developing-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project developing progress:</h3>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/cuzfrog/psmm">View on GitHub</a>
+
+          <h1 id="project_title">Psmm</h1>
+          <h2 id="project_tagline">PSeudo-Mutable Message for Actors</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/cuzfrog/psmm/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/cuzfrog/psmm/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="project-developing-progress" class="anchor" href="#project-developing-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project developing progress:</h2>
 
 <p>General tests passed. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project.</p>
 
-<h3>
-<a id="what-is-psmm" class="anchor" href="#what-is-psmm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Psmm?</h3>
+<h2>
+<a id="what-is-psmm" class="anchor" href="#what-is-psmm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Psmm?</h2>
 
 <p>Psmm is abbreviation for PSeudo-Mutable Message. It's a java library to easy implement immutable message for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a>.</p>
 
 <p>Messages are passed on from actors to actors, thus probably shared by threads. <a href="http://akka.io/">Akka</a> document clearly states that messages must be immutable, otherwise Akka actors can't ensure eliminating evils of low level java concurrency. But for writing immutable object, you need to be careful about things. In this note, I wrote Psmm, so we can easily generate immutable message.</p>
 
-<h3>
-<a id="get-started" class="anchor" href="#get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get started:</h3>
+<h2>
+<a id="get-started" class="anchor" href="#get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get started:</h2>
 
 <p>First initiate PsmmSystem(create factories and so on):</p>
 
@@ -108,52 +111,57 @@
 
 }</pre></div>
 
-<h3>
-<a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document:</h3>
+<h2>
+<a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document:</h2>
+
+<h4>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h4>
 
 <p>Psmm messages take advantage of Decorator Pattern. Every message has a reference of preceded message. For newly created message, PsmmFactory puts a RootMessage in it. After a message has been set("modified"), factory create a new message decorating the old one, of course, with new data. Therefore, you can access psmm as if it's mutable.</p>
 
-<p>Psmm includes different *Styles of messages standing for different structures.
-1.Linked(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.
-But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: 
-2.Flat: no decoration, read data from old message and merge them into new message.
-3.Typed: need to explicitly indicate Generic parameter Type.  </p>
+<p>Psmm includes different *Styles of messages standing for different structures.</p>
 
-<p>Performance:
-I've prepared some performance test data, and I'll upload them, and explain in detail.
-It's very important to know that generating message, in most cases, only takes a fraction of application time. It's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
+<ol>
+<li>Linked(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.</li>
+<li>Flat: no decoration, read data from old message and merge them into new message.</li>
+<li>Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.</li>
+<li>Untyped: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.</li>
+<li>Cached: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Maybe you can tell me more</em>.)</li>
+<li>Uncached: Oppose to cached.
+####Performance:
+I've prepared some performance test data, and I'll upload them, and explain in detail.</li>
+</ol>
 
-<p>Nomenclature:
-*Style is used for distinguishing from Parameter Type.</p>
+<p>It's very important to know that generating message, in most cases, only takes a fraction of application time. It's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
 
-<p>Javadoc:
-I have written complete javadoc, and I'll  upload it.</p>
+<h4>
+<a id="nomenclature" class="anchor" href="#nomenclature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nomenclature:</h4>
 
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<p>*Style is used for distinguishing from Parameter Type.</p>
 
-<p>Authors:Cause Chung (<a href="https://github.com/cuzfrog" class="user-mention">@cuzfrog</a>)
-Any problem, please hit on GitHub or mail me: <a href="mailto:cuzfrog@139.com">cuzfrog@139.com</a> /cuzfrog@gamil.com</p>
-        </section>
+<h4>
+<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javadoc:</h4>
 
-        <aside id="sidebar">
-          <a href="https://github.com/cuzfrog/psmm/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/cuzfrog/psmm/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+<p>I have written complete javadoc, and I'll  upload it.</p>
 
-          <p class="repo-owner"><a href="https://github.com/cuzfrog/psmm"></a> is maintained by <a href="https://github.com/cuzfrog">cuzfrog</a>.</p>
+<h2>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h2>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+<p>Authors:Cause Chung (<a href="https://github.com/cuzfrog" class="user-mention">@cuzfrog</a>)</p>
+
+<p>Any problem, please hit on GitHub or mail me: <a href="mailto:cuzfrog@139.com">cuzfrog@139.com</a> /cuzfrog@gamil.com</p>
+      </section>
     </div>
 
-            <script type="text/javascript">
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Psmm maintained by <a href="https://github.com/cuzfrog">cuzfrog</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -163,6 +171,7 @@ Any problem, please hit on GitHub or mail me: <a href="mailto:cuzfrog@139.com">c
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
