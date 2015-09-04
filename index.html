@@ -55,13 +55,13 @@
 <p>Messages are passed on from actors to actors, thus probably shared by threads. <a href="http://akka.io/">Akka</a> document clearly states that messages must be immutable, otherwise Akka actors can't ensure eliminating evils of low level java concurrency. But for writing immutable object, you need to be careful about things. In this note, I wrote Psmm, so we can easily generate immutable message.</p>
 
 <h2>
-<a id="get-started" class="anchor" href="#get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get started:</h2>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting started:</h2>
 
-<p>First must initiate PsmmSystem:</p>
+<p>First needing to initiate PsmmSystem:</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(); <span class="pl-c">//only invoke once in your main thread</span></pre></div>
 
-<p>Create a new message</p>
+<p>Creating a new message</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> message <span class="pl-k">=</span> 
                 <span class="pl-smi">Messages</span><span class="pl-k">.</span>create() <span class="pl-c">//create a raw message</span>
@@ -70,7 +70,7 @@
                 <span class="pl-c1">...</span>
                 .cook(); </pre></div>
 
-<p>Modify an existed one:</p>
+<p>Modifying an existed one:</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> messageAfter <span class="pl-k">=</span> 
                 messageBefore 
@@ -79,7 +79,7 @@
                 <span class="pl-c1">...</span>
                 .cook(); </pre></div>
 
-<p>Regress a message:</p>
+<p>Regressing a message:</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-k">try</span> {
             <span class="pl-smi">UMessage</span> message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
@@ -147,7 +147,7 @@
 
 }</pre></div>
 
-<p>Typed message (others are the same):</p>
+<p>Using typed message (others are the same):</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-k">TMessage&lt;<span class="pl-smi">Integer</span>&gt;</span> message2<span class="pl-k">=</span>
                 <span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Integer</span><span class="pl-k">.</span>class)
@@ -200,12 +200,12 @@
 <strong>Raw Message</strong> is a concept helper class which is exposed to user instead of a factory, and to ensure message is actually created. It's a <a href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy</a> of a factory. Consider situation below:</li>
 </ul>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
-                message1
-                .set(key2, <span class="pl-c1">45</span>)  <span class="pl-c">//when first call set(), it turns to a raw message</span>
-                .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
-                .set(key4, <span class="pl-c1">568.3d</span>)
-                <span class="pl-c">//.cook(); //no message is really created. Type mismatch, compile time error.</span></pre></div>
+<div class="highlight highlight-java"><pre><span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
+        message1
+        .set(key2, <span class="pl-c1">45</span>)  <span class="pl-c">//when first call set(), it turns to a raw message</span>
+        .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
+        .set(key4, <span class="pl-c1">568.3d</span>)
+        <span class="pl-c">//.cook(); //no message is really created. Type mismatch, compile time error.</span></pre></div>
 
 <p>A raw message cannot evaluate to UMessage. Also, in concept, it's better than return a factory object.
 There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
