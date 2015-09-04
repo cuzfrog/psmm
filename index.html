@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Psmm by cuzfrog</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Psmm</h1>
+        <h2>PSeudo-Mutable Message for Actors</h2>
+        <a href="https://github.com/cuzfrog/psmm" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a id="project-developing-progress" class="anchor" href="#project-developing-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project developing progress:</h3>
+
+<p>General tests passed. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project.</p>
+
+<h3>
+<a id="what-is-psmm" class="anchor" href="#what-is-psmm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Psmm?</h3>
+
+<p>Psmm is abbreviation for PSeudo-Mutable Message. It's a java library to easy implement immutable message for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a>.</p>
+
+<p>Messages are passed on from actors to actors, thus probably shared by threads. <a href="http://akka.io/">Akka</a> document clearly states that messages must be immutable, otherwise Akka actors can't ensure eliminating evils of low level java concurrency. But for writing immutable object, you need to be careful about things. In this note, I wrote Psmm, so we can easily generate immutable message.</p>
+
+<h3>
+<a id="get-started" class="anchor" href="#get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get started:</h3>
+
+<p>First initiate PsmmSystem(create factories and so on):</p>
+
+<div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(); <span class="pl-c">//only invoke once in your main thread</span></pre></div>
+
+<p>Create a new message</p>
+
+<div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> message <span class="pl-k">=</span> 
+                <span class="pl-smi">Messages</span><span class="pl-k">.</span>create() <span class="pl-c">//create a raw message</span>
+                .set(key1, value1) 
+                .set(key2, value2) <span class="pl-c">//add some data</span>
+                <span class="pl-c1">...</span>
+                .cook(); </pre></div>
+
+<p>Modify an existed one:</p>
+
+<div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> messageAfter <span class="pl-k">=</span> 
+                messageBefore 
+                .set(key1, value1) 
+                .set(key2, value2) <span class="pl-c">//add or reset some data</span>
+                <span class="pl-c1">...</span>
+                .cook(); </pre></div>
+
+<p>Code example:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.Messages</span>;
+<span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.PsmmSystem</span>;
+<span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.UMessage</span>;
+
+<span class="pl-k">class</span> <span class="pl-en">SimpleTest</span> {
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">main</span>(<span class="pl-k">String</span>[] <span class="pl-v">args</span>) {
+        <span class="pl-c">// TODO Auto-generated method stub</span>
+
+        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(); <span class="pl-c">//only invoke once in your main thread</span>
+
+
+        <span class="pl-c">//create a new message:</span>
+        <span class="pl-smi">String</span> key1 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>int1<span class="pl-pds">"</span></span>;
+        <span class="pl-smi">String</span> key2 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>int2<span class="pl-pds">"</span></span>;
+        <span class="pl-smi">String</span> key3 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>str1<span class="pl-pds">"</span></span>;
+        <span class="pl-smi">UMessage</span> message1 <span class="pl-k">=</span> 
+                <span class="pl-smi">Messages</span><span class="pl-k">.</span>create() <span class="pl-c">//create a raw message</span>
+                .set(key1, <span class="pl-c1">2</span>)
+                .set(key2, <span class="pl-c1">122</span>)
+                .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is string<span class="pl-pds">"</span></span>) <span class="pl-c">//add some data</span>
+                .cook(); <span class="pl-c">//without cook() compile time error.</span>
+        <span class="pl-c">//after passed to another actor, fetch data:</span>
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message1<span class="pl-k">.</span>get(key1) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key2) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key3));
+        <span class="pl-c">//result: 2|122|this is string</span>
+
+        <span class="pl-smi">String</span> key4 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>double1<span class="pl-pds">"</span></span>;
+        <span class="pl-c">//"modify" last message, reset some data, add some new data:</span>
+        <span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
+                message1
+                .set(key2, <span class="pl-c1">122</span>)
+                .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
+                .set(key4, <span class="pl-c1">568.3d</span>)
+                .cook();
+        <span class="pl-c">//after passed to another actor, fetch data:</span>
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message2<span class="pl-k">.</span>get(key1) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key2) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key3)<span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key4));
+        <span class="pl-c">//result: 2|122|this is another string|568.3</span>
+    }
+
+}</pre></div>
+
+<h3>
+<a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document:</h3>
+
+<p>Psmm messages take advantage of Decorator Pattern. Every message has a reference of preceded message. For newly created message, PsmmFactory puts a RootMessage in it. After a message has been set("modified"), factory create a new message decorating the old one, of course, with new data. Therefore, you can access psmm as if it's mutable.</p>
+
+<p>Psmm includes different *Styles of messages standing for different structures.
+1.Linked(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.
+But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: 
+2.Flat: no decoration, read data from old message and merge them into new message.
+3.Typed: need to explicitly indicate Generic parameter Type.  </p>
+
+<p>Performance:
+I've prepared some performance test data, and I'll upload them, and explain in detail.
+It's very important to know that generating message, in most cases, only takes a fraction of application time. It's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
+
+<p>Nomenclature:
+*Style is used for distinguishing from Parameter Type.</p>
+
+<p>Javadoc:
+I have written complete javadoc, and I'll  upload it.</p>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Authors:Cause Chung (<a href="https://github.com/cuzfrog" class="user-mention">@cuzfrog</a>)
+Any problem, please hit on GitHub or mail me: <a href="mailto:cuzfrog@139.com">cuzfrog@139.com</a> /cuzfrog@gamil.com</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/cuzfrog/psmm/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/cuzfrog/psmm/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/cuzfrog/psmm"></a> is maintained by <a href="https://github.com/cuzfrog">cuzfrog</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-67181335-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
