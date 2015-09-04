@@ -34,12 +34,23 @@
         <h2>
 <a id="project-developing-progress" class="anchor" href="#project-developing-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project developing progress:</h2>
 
-<p>General tests passed. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project.</p>
+<p>General tests passed, so far actors work fine. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project.</p>
+
+<ul>
+<li>[x] Most coding work.</li>
+<li>[x] Actor simulation test.</li>
+<li>[ ] Snapshot jar.</li>
+<li>[ ] Refining and test.</li>
+<li>[x] Simple usage description.</li>
+<li>[ ] Detailed description.</li>
+<li>[ ] Upload javadoc and performance report.</li>
+<li>[ ] Release.</li>
+</ul>
 
 <h2>
 <a id="what-is-psmm" class="anchor" href="#what-is-psmm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Psmm?</h2>
 
-<p>Psmm is abbreviation for PSeudo-Mutable Message. It's a java library to easy implement immutable message for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a>.</p>
+<p>Psmm is abbreviation for PSeudo-Mutable Message. It's a java library for for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a> that allows to create and access immutable messages as if they were mutable ones.</p>
 
 <p>Messages are passed on from actors to actors, thus probably shared by threads. <a href="http://akka.io/">Akka</a> document clearly states that messages must be immutable, otherwise Akka actors can't ensure eliminating evils of low level java concurrency. But for writing immutable object, you need to be careful about things. In this note, I wrote Psmm, so we can easily generate immutable message.</p>
 
@@ -122,15 +133,26 @@
 <p>Psmm includes different *Styles of messages standing for different structures.</p>
 
 <ol>
-<li>Linked(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.</li>
-<li>Flat: no decoration, read data from old message and merge them into new message.</li>
+<li>
+<strong>Linked</strong>(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.</li>
+<li>
+<strong>Flat</strong>: no decoration, read data from old message and merge them into new message.</li>
 <li>Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.</li>
-<li>Untyped: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.</li>
-<li>Cached: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Maybe you can tell me more</em>.)</li>
-<li>Uncached: Oppose to cached.
-####Performance:
-I've prepared some performance test data, and I'll upload them, and explain in detail.</li>
+<li>
+<strong>Untyped</strong>: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.</li>
+<li>
+<strong>Cached</strong>: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Maybe you can tell me more</em>.)</li>
+<li>
+<strong>Uncached</strong>(default): Oppose to cached.</li>
 </ol>
+
+<h4>
+<a id="class-structure-model" class="anchor" href="#class-structure-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class structure model:</h4>
+
+<h4>
+<a id="performance" class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance:</h4>
+
+<p>I've prepared some performance test data, and I'll upload them, and explain in detail.</p>
 
 <p>It's very important to know that generating message, in most cases, only takes a fraction of application time. It's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
 
