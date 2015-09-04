@@ -1,6 +1,6 @@
 package cuz.my.psmm.exceptions;
 
-public class PsmmFactoryNotClosedException extends PsmmIllegalStateException {
+public class PsmmFactoryModuleChainErrorException extends PsmmRuntimeException {
 
 	/**
 	 * 

@@ -4,21 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cuz.my.psmm.data.Data;
+import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
+
 /**
  * In this abstract message, only signature has not been implemented.
+ * 
  * @author cuzfrog
  *
- * @param <T> The Message<T> it contains.
+ * @param <T>
+ *            The Message<T> it contains.
  */
-abstract class AbstractMessage<T>  implements Message<T> {
+abstract class AbstractMessage<T> implements Message<T> {
 
 	protected final Message<T> parent;
 	protected final Data data;
 	protected final Integer depth;
 	protected final Messages.Style type;
 
-	protected AbstractMessage(Messages.Style type, Message<T> parent,
-			Data data) {
+	protected AbstractMessage(Messages.Style type, Message<T> parent, Data data) {
 		super();
 		this.parent = parent;
 		this.data = data;
@@ -49,7 +52,7 @@ abstract class AbstractMessage<T>  implements Message<T> {
 	}
 
 	@Override
-	public Map<String,T> getAll() {
+	public Map<String, T> getAll() {
 		// TODO Auto-generated method stub
 		Map<String, T> resultMap;
 		Map<String, T> parentResult;
@@ -58,7 +61,7 @@ abstract class AbstractMessage<T>  implements Message<T> {
 		} else {
 			resultMap = new HashMap<>();
 		}
-		parentResult=data.getAll();
+		parentResult = data.getAll();
 		resultMap.putAll(parentResult);
 		return resultMap;
 	}
@@ -69,7 +72,7 @@ abstract class AbstractMessage<T>  implements Message<T> {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, datum);
 	}
-	
+
 	@Override
 	public AbstractRawMessage<T> raw() {
 		// TODO Auto-generated method stub
@@ -78,9 +81,12 @@ abstract class AbstractMessage<T>  implements Message<T> {
 	// ------------UntypedMessage behaviors:
 
 	@Override
-	public TMessage<T> regress() {
+	public Message<T> regress() throws PsmmCannotRegressExeption {
 		// TODO Auto-generated method stub
-		return null;
+		if (depth.equals(1)) {
+			throw new PsmmCannotRegressExeption();
+		}
+		return parent;
 	}
 
 	@Override
@@ -137,7 +143,4 @@ abstract class AbstractMessage<T>  implements Message<T> {
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
-	
-
-	
 }

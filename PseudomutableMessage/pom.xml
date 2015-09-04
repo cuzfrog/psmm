@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cuz</groupId>
+	<groupId>cuz.my</groupId>
 	<artifactId>PseudomutableMessage</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 
 	<properties>
 
@@ -61,6 +61,7 @@
 			<groupId>com.puppycrawl.tools</groupId>
 			<artifactId>checkstyle</artifactId>
 			<version>6.9</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- Logging with SLF4J -->
@@ -112,4 +113,6 @@
 		</plugins>
 
 	</build>
+	<name>Psmm</name>
+	<url>http://cuzfrog.github.io/psmm/</url>
 </project>

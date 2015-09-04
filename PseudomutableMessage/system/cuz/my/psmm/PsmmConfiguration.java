@@ -49,7 +49,7 @@ public class PsmmConfiguration {
 	private Integer factoryPoolSize = DEFAULT_FACTORY_POOL_SIZE;
 
 	// constructors:
-	PsmmConfiguration() {
+	public PsmmConfiguration() {
 		this(DEFAULT_MESSAGE_POOL_SIZE);
 	}
 
@@ -90,12 +90,14 @@ public class PsmmConfiguration {
 	}
 
 	// custom methods:
-	void addModule(Module module) {
+	PsmmConfiguration addModule(Module module) {
 		customModules.put(module.getName(), module);
+		return this;
 	}
 
-	void addData(Data data) {
+	PsmmConfiguration addData(Data data) {
 		customData.add(data);
+		return this;
 	}
 
 	public Integer getMessagePoolSize() {
@@ -118,8 +120,17 @@ public class PsmmConfiguration {
 		return factoryPoolSize;
 	}
 
-	public void setFactoryPoolSize(Integer factoryPoolSize) {
+	public PsmmConfiguration setFactoryPoolSize(Integer factoryPoolSize) {
 		this.factoryPoolSize = factoryPoolSize;
+		return this;
+	}
+	public PsmmConfiguration setMessagePoolSize(Integer messagePoolSize) {
+		this.messagePoolSize = messagePoolSize;
+		return this;
 	}
 
+	public PsmmConfiguration setFactoryPoolChoseType(FactoryPoolType factoryPoolChoseType) {
+		this.factoryPoolChoseType = factoryPoolChoseType;
+		return this;
+	}
 }

@@ -44,9 +44,14 @@ final class RootMessage implements Message<Object> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
-	//factory behaviors:
+	@Override
+	public Message<Object> regress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	//---------------------factory behaviors:
 
 	@Override
 	public AbstractRawMessage<Object> set(String key, Object datum) {
@@ -114,11 +119,7 @@ final class RootMessage implements Message<Object> {
 		return null;
 	}
 
-	@Override
-	public TMessage<Object> regress() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 

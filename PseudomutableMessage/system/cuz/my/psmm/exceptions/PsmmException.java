@@ -1,6 +1,6 @@
 package cuz.my.psmm.exceptions;
 
-public abstract class PsmmException extends RuntimeException {
+public abstract class PsmmException extends Exception {
 
 	/**
 	 * 

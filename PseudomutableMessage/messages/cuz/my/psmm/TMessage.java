@@ -2,6 +2,8 @@ package cuz.my.psmm;
 
 import java.util.Map;
 
+import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
+
 /**
  * A typed message interface.
  * 
@@ -95,16 +97,18 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 * @return Raw message without setting data.
 	 */
 	public abstract TypedRawMessage<T> raw();
-	
+
 	/**
-	 * Try to get last message before last cook.
+	 * Try to regain last message before last cook.
 	 * <p>
-	 * As for linked message with depth more than one, there's always another message inside it.
-	 * So it's able to provide a simulation of "time regression" method to get that message.
-	 * If depth is one, it'll return singleton instance of {@link RootMessage}
+	 * As for linked message with depth more than one, there's always another
+	 * message inside it. So it's able to provide a simulation of
+	 * "time regression" method to get that message. If depth is one, it'll
+	 * return singleton instance of {@link RootMessage}
 	 * 
 	 * @return last message before last cook.
-	 * @throws PsmmUnsupportedOperationException when none-linked message calls this method.
+	 * @throws PsmmCannotRegressExeption
+	 *             when depth is one.
 	 */
-    public abstract TMessage<T> regress();
+	public abstract TMessage<T> regress() throws PsmmCannotRegressExeption;
 }

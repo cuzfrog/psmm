@@ -1,6 +1,6 @@
 package cuz.my.psmm.exceptions;
 
-public class PsmmIllegalStateException extends PsmmException {
+public class PsmmCannotRegressExeption extends PsmmException {
 
 	/**
 	 * 

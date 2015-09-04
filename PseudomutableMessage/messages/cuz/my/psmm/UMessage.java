@@ -1,6 +1,7 @@
 package cuz.my.psmm;
 
 import cuz.my.psmm.MessageCommonInterface;
+import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
  * An untyped version for {@code TypedMessage}.
@@ -32,10 +33,25 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 * 
 	 * <P>
 	 * Actually return a raw message that wraps this message.This method is
-	 * unnecessary for most cases, you can directly call set when cascadingly
-	 * invoking.
+	 * unnecessary for most cases, you can directly call set when invoking with
+	 * cascading style.
 	 * 
 	 * @return Raw message without setting data.
 	 */
 	public abstract UntypedRawMessage raw();
+
+	/**
+	 * Try to regain last message before last cook.
+	 * <p>
+	 * As for linked message with depth more than one, there's always another
+	 * message inside it. So it's able to provide a simulation of
+	 * "time regression" method to get that message. This method actually return
+	 * the encapsulated message.
+	 * 
+	 * 
+	 * @return last message before last cook.
+	 * @throws PsmmCannotRegressExeption
+	 *             when depth is one.
+	 */
+	public abstract UMessage regress() throws PsmmCannotRegressExeption;
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cuz.my.psmm.data.Data;
-import cuz.my.psmm.exceptions.PsmmUnsupportedOperationException;
+import cuz.my.psmm.exceptions.PsmmFactoryModuleChainErrorException;
 
 abstract class Module {
 
@@ -28,13 +28,13 @@ abstract class Module {
 	 * @param type
 	 * @param messageBeingWrapped
 	 * @param data
-	 * @return new concrete messsage
+	 * @return new concrete message
 	 */
 	protected <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
 			return collaberativeModule.createMessage(type, messageBeingWrapped, data);
 		}
-		throw new PsmmUnsupportedOperationException();
+		throw new PsmmFactoryModuleChainErrorException();
 	}
 
 	/**

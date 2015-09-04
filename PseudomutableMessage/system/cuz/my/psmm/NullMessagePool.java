@@ -8,13 +8,13 @@ package cuz.my.psmm;
 class NullMessagePool implements MessagePool {
 
 	@Override
-	public <T> TMessage<T> get(Signature signature) {
+	public <T> Message<T> get(Signature signature) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void put(Signature signature, AbstractMessage<?> message) {
+	public void put(Signature signature, Message<?> message) {
 		// TODO Auto-generated method stub
 
 	}

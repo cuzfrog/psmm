@@ -64,7 +64,7 @@ public final class PsmmSystem {
 
 	@SuppressWarnings("unchecked")
 	static <T> Message<T> seekMessage(Signature signature) {
-		return (AbstractMessage<T>) instance.messagePool.get(signature);
+		return (Message<T>) instance.messagePool.get(signature);
 	}
 
 	static <T> Message<T> getRootMessage() {
@@ -84,7 +84,7 @@ public final class PsmmSystem {
 	 */
 	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data, Signature signature) {
 
-		AbstractMessage<T> message = new CachedMessage<>(type, messageBeingWrapped, data, signature);
+		Message<T> message = new CachedMessage<>(type, messageBeingWrapped, data, signature);
 		instance.messagePool.put(signature, message);
 		return message;
 

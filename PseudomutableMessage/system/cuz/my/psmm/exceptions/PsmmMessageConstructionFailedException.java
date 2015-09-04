@@ -1,6 +1,6 @@
 package cuz.my.psmm.exceptions;
 
-public class PsmmMessageConstructionFailedException extends PsmmException {
+public class PsmmMessageConstructionFailedException extends PsmmRuntimeException {
 
 	/**
 	 * 

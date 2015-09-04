@@ -85,7 +85,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	 * For cached psmm, the fewer the possible values are, the more likely it
 	 * hits the cache. For string value, the max up-bond is the length of a UUID.
 	 */
-	protected final static int VALUE_UPBOUND = 100;
+	protected final static int VALUE_UPBOUND = 10000;
 	//protected final static int VALUE_UPBOUND = Integer.MAX_VALUE;
 	/**
 	 * The amount of senders that parallel send message at the beginning.
@@ -96,7 +96,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 
 	// before
 	public void setUp() throws Exception {
-		initiate(600000);
+		initiate(60000);
 		//initiate Psmm with message cache capacity.
 		threadFinishKey.set(false);
 		system.actorSelection("/user/listener").tell(this, ActorRef.noSender());

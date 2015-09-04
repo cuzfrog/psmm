@@ -2,7 +2,7 @@ package cuz.my.psmm;
 
 import java.util.Arrays;
 
-@ThreadSafe
+@Immutable
 final class Signature {
 	private final byte[] signature;
 
@@ -18,11 +18,6 @@ final class Signature {
 		return Arrays.copyOf(signature,signature.length);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -31,11 +26,6 @@ final class Signature {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -1,6 +1,6 @@
 package cuz.my.psmm.exceptions;
 
-public class PsmmInvalidValuePathException extends PsmmException {
+public abstract class PsmmRuntimeException extends RuntimeException {
 
 	/**
 	 * 

@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 final class MapMessagePool implements MessagePool {
 
-	private Map<Signature, TMessage<?>> messagePool;
+	private Map<Signature, Message<?>> messagePool;
 
 	MapMessagePool(int initialSize) {
 		this.messagePool = new ConcurrentHashMap<>((int) Math.ceil(initialSize / 0.75));
@@ -18,13 +18,13 @@ final class MapMessagePool implements MessagePool {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> TMessage<T> get(Signature signature) {
+	public <T> Message<T> get(Signature signature) {
 		// TODO Auto-generated method stub
-		return (TMessage<T>) messagePool.get(signature);
+		return (Message<T>) messagePool.get(signature);
 	}
 
 	@Override
-	public void put(Signature signature, AbstractMessage<?> message) {
+	public void put(Signature signature, Message<?> message) {
 		// TODO Auto-generated method stub
 		messagePool.put(signature, message);
 		//System.out.println("put! messagePoll size:"+messagePool.size());

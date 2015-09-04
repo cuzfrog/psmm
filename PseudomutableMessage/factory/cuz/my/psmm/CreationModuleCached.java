@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import cuz.my.psmm.data.Data;
-import cuz.my.psmm.exceptions.PsmmException;
 import cuz.my.psmm.exceptions.PsmmMessageConstructionFailedException;
 
 /**
@@ -35,7 +34,7 @@ final class CreationModuleCached extends Module {
 
 	@Override
 	public <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data)
-			throws PsmmException {
+			 {
 		// TODO Auto-generated method stub
 		Signature signature = calculateSignature(type, messageBeingWrapped, data);
 
@@ -49,8 +48,8 @@ final class CreationModuleCached extends Module {
 
 	// A message's signature is only associated with type and the data it
 	// exhibits, but not structure.
-	private static <T> Signature calculateSignature(Messages.Style type, TMessage<T> parent, Data data)
-			throws PsmmException {
+	private static <T> Signature calculateSignature(Messages.Style type, Message<T> parent, Data data)
+			 {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 

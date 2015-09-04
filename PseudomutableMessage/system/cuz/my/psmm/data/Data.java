@@ -5,6 +5,16 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
+/**
+ * Class encapsulated in message for store user data.
+ * <p>
+ * Implement this for extra data store means. All methods in this class have
+ * been set NOT abstract , so it must explicitly override methods associated with given
+ * message interface for that interface to work properly.
+ * 
+ * @author Cause Chung
+ *
+ */
 public abstract class Data {
 	public <T> void set(String key, T datum) {
 	}
@@ -44,7 +54,7 @@ public abstract class Data {
 		MAP, SIMPLE
 	}
 
-	public static <T> byte[] getDataStream(Object data) throws IOException {
+	public static byte[] getDataStream(Object data) throws IOException {
 		// TODO Auto-generated method stub
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

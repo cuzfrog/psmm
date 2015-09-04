@@ -1,39 +1,60 @@
 package cuz.my.psmm.test;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 import cuz.my.psmm.Messages;
-import cuz.my.psmm.PsmmConfiguration;
 import cuz.my.psmm.PsmmSystem;
 import cuz.my.psmm.UMessage;
+import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 class SimpleTest {
 
-	public static void main(String[] args) throws NoSuchAlgorithmException,
-			IOException {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		PsmmSystem.initiate(new PsmmConfiguration(64));
+
+		PsmmSystem.initiate(); //only invoke once in your main thread
+		
+		
+		//create a new message:
 		String key1 = "int1";
 		String key2 = "int2";
 		String key3 = "str1";
-		UMessage rm = Messages.create(Messages.Style.CACHED_FLAT_MAP)
-				.set(key1, 2).set(key2, 122).set(key3, "this is string")
-				.cook();
-
-		UMessage rmnew=rm.set(key1, 315).set(key2, 122).set(key3, "this is string")
-				.cook();
-		UMessage rmnew2=rm.set(key1, 315).set(key2, 122).set(key3, "this is string")
-				.cook();
+		UMessage message1 = 
+				Messages.create() //create a raw message
+				.set(key1, 2)
+				.set(key2, 122)
+				.set(key3, "this is string") //add some data
+				.cook(); //without cook() compile time error.
+		//after passed to another actor, fetch data:
+		System.out.println(message1.get(key1) 
+				+ "|" + message1.get(key2) 
+				+ "|" + message1.get(key3));
+		//result: 2|122|this is string
 		
-		System.out.println(rm+"|"+rm.get(key1));
-		System.out.println(rmnew+"|"+rmnew.get(key1));
-		System.out.println(rmnew2+"|"+rmnew2.get(key1));
-		System.out.println(rmnew2.equals(rmnew));
-		System.out.println(Arrays.equals(rm.getSignature(), rmnew.getSignature()));
+		String key4 = "double1";
+		//"modify" last message, reset some data, add some new data:
+		UMessage message2 =
+				message1
+				.set(key2, 45)
+				.set(key3, "this is another string")
+				.set(key4, 568.3d)
+				.cook();
+		//after passed to another actor, fetch data:
+		System.out.println(message2.get(key1) 
+				+ "|" + message2.get(key2) 
+				+ "|" + message2.get(key3)
+				+ "|" + message2.get(key4));
+		//result: 2|45|this is another string|568.3
 		
-		System.out.println(Runtime.getRuntime().availableProcessors());
+		UMessage message3 = null;
+		try {
+			message3=message2.regress();
+		} catch (PsmmCannotRegressExeption e) {
+			e.printStackTrace();
+		}
+		System.out.println(message3.get(key1) 
+				+ "|" + message3.get(key2) 
+				+ "|" + message3.get(key3)
+				+ "|" + message3.get(key4));
+		//result: 2|122|this is string|null
 	}
-    
+
 }
