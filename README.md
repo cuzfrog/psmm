@@ -1,2 +1,2 @@
 # PseudomutableMessage
-under construction...
+see http://cuzfrog.github.io/psmm/
