@@ -50,7 +50,7 @@
 <h2>
 <a id="what-is-psmm" class="anchor" href="#what-is-psmm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Psmm?</h2>
 
-<p>Psmm is abbreviation for PSeudo-Mutable Message. It's a java library for for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a> that allows to create and access immutable messages as if they were mutable ones.</p>
+<p>Psmm is abbreviation for PSeudo-Mutable Message. It's a java library for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a> that allows to create and access immutable messages as if they were mutable ones.</p>
 
 <p>Messages are passed on from actors to actors, thus probably shared by threads. <a href="http://akka.io/">Akka</a> document clearly states that messages must be immutable, otherwise Akka actors can't ensure eliminating evils of low level java concurrency. But for writing immutable object, you need to be careful about things. In this note, I wrote Psmm, so we can easily generate immutable message.</p>
 
@@ -79,6 +79,14 @@
                 <span class="pl-c1">...</span>
                 .cook(); </pre></div>
 
+<p>Regress a message:</p>
+
+<div class="highlight highlight-java"><pre>           <span class="pl-k">try</span> {
+            <span class="pl-smi">UMessage</span> message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
+        } <span class="pl-k">catch</span> (<span class="pl-smi">PsmmCannotRegressExeption</span> e) {
+            <span class="pl-c">//tell actor message only has one level</span>
+        }</pre></div>
+
 <p>Code example:</p>
 
 <div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.Messages</span>;
@@ -104,20 +112,37 @@
                 .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is string<span class="pl-pds">"</span></span>) <span class="pl-c">//add some data</span>
                 .cook(); <span class="pl-c">//without cook() compile time error.</span>
         <span class="pl-c">//after passed to another actor, fetch data:</span>
-        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message1<span class="pl-k">.</span>get(key1) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key2) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key3));
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message1<span class="pl-k">.</span>get(key1) 
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key2) 
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key3));
         <span class="pl-c">//result: 2|122|this is string</span>
 
         <span class="pl-smi">String</span> key4 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>double1<span class="pl-pds">"</span></span>;
         <span class="pl-c">//"modify" last message, reset some data, add some new data:</span>
         <span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
                 message1
-                .set(key2, <span class="pl-c1">122</span>)
+                .set(key2, <span class="pl-c1">45</span>)
                 .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
                 .set(key4, <span class="pl-c1">568.3d</span>)
                 .cook();
         <span class="pl-c">//after passed to another actor, fetch data:</span>
-        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message2<span class="pl-k">.</span>get(key1) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key2) <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key3)<span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key4));
-        <span class="pl-c">//result: 2|122|this is another string|568.3</span>
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message2<span class="pl-k">.</span>get(key1) 
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key2) 
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key3)
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key4));
+        <span class="pl-c">//result: 2|45|this is another string|568.3</span>
+
+        <span class="pl-smi">UMessage</span> message3 <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+        <span class="pl-k">try</span> {
+            message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
+        } <span class="pl-k">catch</span> (<span class="pl-smi">PsmmCannotRegressExeption</span> e) {
+            e<span class="pl-k">.</span>printStackTrace();
+        }
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message3<span class="pl-k">.</span>get(key1) 
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key2) 
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key3)
+                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key4));
+        <span class="pl-c">//result: 2|122|this is string|null</span>
     }
 
 }</pre></div>
@@ -129,6 +154,25 @@
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h4>
 
 <p>Psmm messages take advantage of Decorator Pattern. Every message has a reference of preceded message. For newly created message, PsmmFactory puts a RootMessage in it. After a message has been set("modified"), factory create a new message decorating the old one, of course, with new data. Therefore, you can access psmm as if it's mutable.</p>
+
+<h4>
+<a id="raw-message-and-psmm-factory-model" class="anchor" href="#raw-message-and-psmm-factory-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raw Message and Psmm Factory model:</h4>
+
+<ul>
+<li>
+<strong>Raw Message</strong> is a concept helper class which is exposed to user instead of factory, and to ensure message is actually created. Consider situation below:
+<code>UMessage message2 =
+            message1
+            .set(key2, 45)  //when first call set(), it turns to a raw message
+            .set(key3, "this is another string")
+            .set(key4, 568.3d)
+            //.cook(); //no message is really created.
+</code>
+</li>
+</ul>
+
+<h4>
+<a id="styles" class="anchor" href="#styles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Styles</h4>
 
 <p>Psmm includes different *Styles of messages standing for different structures.</p>
 
@@ -146,8 +190,23 @@
 <strong>Uncached</strong>(default): Oppose to cached.</li>
 </ol>
 
+<p><em>*Style is used for distinguishing from Parameter Type.</em></p>
+
+<p>How to choose style:
+<code>Messages.create(Messages.Style.FLAT_MAP)</code></p>
+
 <h4>
-<a id="class-structure-model" class="anchor" href="#class-structure-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class structure model:</h4>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h4>
+
+<p>Psmm provides a class PsmmConfiguration to do some custom setup when initiation.</p>
+
+<p>How to setup:</p>
+
+<div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmConfiguration</span> config<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">PsmmConfiguration</span>()
+                        .setMessagePoolSize(<span class="pl-c1">6000</span>)
+                        .setFactoryPoolSize(<span class="pl-c1">24</span>)
+                        <span class="pl-c1">...</span>
+        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(config);</pre></div>
 
 <h4>
 <a id="performance" class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance:</h4>
@@ -155,11 +214,6 @@
 <p>I've prepared some performance test data, and I'll upload them, and explain in detail.</p>
 
 <p>It's very important to know that generating message, in most cases, only takes a fraction of application time. It's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
-
-<h4>
-<a id="nomenclature" class="anchor" href="#nomenclature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nomenclature:</h4>
-
-<p>*Style is used for distinguishing from Parameter Type.</p>
 
 <h4>
 <a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javadoc:</h4>
