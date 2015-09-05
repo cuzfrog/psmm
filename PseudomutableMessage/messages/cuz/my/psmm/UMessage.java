@@ -11,9 +11,10 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * mutable-like behavior, but remain immutable by wrapping a psmm or completely
  * create a new data structure.
  * <p>
- * This interface only receive primitives and String value. When returning a
+ * This interface only receive primitives' boxes and String value. When returning a
  * value, you need to explicitly do downcast. A good practice is to use part of
- * the key to infer its value's type.
+ * the key to infer its value's type.(Since method get return Object, value that 
+ * has been set will be boxed anyway, so method set doesn't take primitives.)
  * 
  * @author cuzfrog
  * @see TMessage

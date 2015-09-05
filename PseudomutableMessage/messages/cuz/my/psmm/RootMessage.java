@@ -27,7 +27,7 @@ final class RootMessage implements Message<Object> {
 	}
 
 	@Override
-	public Integer depth() {
+	public int depth() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -66,55 +66,47 @@ final class RootMessage implements Message<Object> {
 	}
 
 	@Override
-	public AbstractRawMessage<Object> set(String key, int value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, short value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, long value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, boolean value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, float value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, double value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, char value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AbstractRawMessage<Object> set(String key, byte value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public AbstractRawMessage<Object> set(String key, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Integer value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Short value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Long value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Boolean value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Float value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Double value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Character value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public UntypedRawMessage set(String key, Byte value) {
 		// TODO Auto-generated method stub
 		return null;
 	}

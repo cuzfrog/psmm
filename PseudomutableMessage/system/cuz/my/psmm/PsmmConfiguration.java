@@ -37,16 +37,16 @@ public class PsmmConfiguration {
 	}
 
 	// constants:
-	private static final Integer DEFAULT_MESSAGE_POOL_SIZE = 0;
+	private static final int DEFAULT_MESSAGE_POOL_SIZE = 0;
 	private static final FactoryPoolType DEFAULT_FACTORYPOOL_TYPE = FactoryPoolType.MAP;
-	private static final Integer DEFAULT_FACTORY_POOL_SIZE = 16;
+	private static final int DEFAULT_FACTORY_POOL_SIZE = 16;
 
 	// configuration members:
-	private Integer messagePoolSize;
+	private int messagePoolSize;
 	private Map<String, Module> customModules = new HashMap<>();
 	private List<Data> customData = new ArrayList<>();
 	private FactoryPoolType factoryPoolChoseType;
-	private Integer factoryPoolSize = DEFAULT_FACTORY_POOL_SIZE;
+	private int factoryPoolSize = DEFAULT_FACTORY_POOL_SIZE;
 
 	// constructors:
 	public PsmmConfiguration() {
@@ -58,7 +58,7 @@ public class PsmmConfiguration {
 	 * 
 	 * @param messagePoolSize
 	 */
-	public PsmmConfiguration(Integer messagePoolSize) {
+	public PsmmConfiguration(int messagePoolSize) {
 		this(messagePoolSize, DEFAULT_FACTORYPOOL_TYPE);
 	}
 
@@ -77,7 +77,7 @@ public class PsmmConfiguration {
 	 * @param messagePoolSize
 	 * @param factoryPoolChoseType
 	 */
-	public PsmmConfiguration(Integer messagePoolSize, FactoryPoolType factoryPoolChoseType) {
+	public PsmmConfiguration(int messagePoolSize, FactoryPoolType factoryPoolChoseType) {
 		this.messagePoolSize = messagePoolSize;
 		switch (factoryPoolChoseType) {
 		case MAP:
@@ -100,7 +100,7 @@ public class PsmmConfiguration {
 		return this;
 	}
 
-	public Integer getMessagePoolSize() {
+	public int getMessagePoolSize() {
 		return messagePoolSize;
 	}
 
@@ -116,15 +116,15 @@ public class PsmmConfiguration {
 		return factoryPoolChoseType;
 	}
 
-	public Integer getFactoryPoolSize() {
+	public int getFactoryPoolSize() {
 		return factoryPoolSize;
 	}
 
-	public PsmmConfiguration setFactoryPoolSize(Integer factoryPoolSize) {
+	public PsmmConfiguration setFactoryPoolSize(int factoryPoolSize) {
 		this.factoryPoolSize = factoryPoolSize;
 		return this;
 	}
-	public PsmmConfiguration setMessagePoolSize(Integer messagePoolSize) {
+	public PsmmConfiguration setMessagePoolSize(int messagePoolSize) {
 		this.messagePoolSize = messagePoolSize;
 		return this;
 	}

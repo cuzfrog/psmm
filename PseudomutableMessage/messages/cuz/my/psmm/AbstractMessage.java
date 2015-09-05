@@ -18,7 +18,7 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	protected final Message<T> parent;
 	protected final Data data;
-	protected final Integer depth;
+	protected final int depth;
 	protected final Messages.Style type;
 
 	protected AbstractMessage(Messages.Style type, Message<T> parent, Data data) {
@@ -31,7 +31,7 @@ abstract class AbstractMessage<T> implements Message<T> {
 	}
 
 	@Override
-	public Integer depth() {
+	public int depth() {
 		// TODO Auto-generated method stub
 		return depth;
 	}
@@ -83,56 +83,56 @@ abstract class AbstractMessage<T> implements Message<T> {
 	@Override
 	public Message<T> regress() throws PsmmCannotRegressExeption {
 		// TODO Auto-generated method stub
-		if (depth.equals(1)) {
+		if (depth==1) {
 			throw new PsmmCannotRegressExeption();
 		}
 		return parent;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, int value) {
+	public AbstractRawMessage<T> set(String key, Integer value) {
+		// TODO Auto-generated method stub
+		return raw().set(key, value);
+	}
+
+	@Override
+	public AbstractRawMessage<T> set(String key, Short value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, short value) {
+	public AbstractRawMessage<T> set(String key, Long value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, long value) {
+	public AbstractRawMessage<T> set(String key, Boolean value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, boolean value) {
+	public AbstractRawMessage<T> set(String key, Float value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, float value) {
+	public AbstractRawMessage<T> set(String key, Double value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, double value) {
+	public AbstractRawMessage<T> set(String key, Character value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, char value) {
-		// TODO Auto-generated method stub
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
-	}
-
-	@Override
-	public AbstractRawMessage<T> set(String key, byte value) {
+	public AbstractRawMessage<T> set(String key, Byte value) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}

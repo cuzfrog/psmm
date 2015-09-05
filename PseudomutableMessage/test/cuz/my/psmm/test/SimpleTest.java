@@ -7,6 +7,7 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 class SimpleTest {
 
+	@SuppressWarnings("boxing")
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

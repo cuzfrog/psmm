@@ -30,56 +30,56 @@ abstract class AbstractRawMessage<T> implements TypedRawMessage<T>,UntypedRawMes
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, int value) {
+	public AbstractRawMessage<T> set(String key, Integer value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, short value) {
+	public AbstractRawMessage<T> set(String key, Short value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, long value) {
+	public AbstractRawMessage<T> set(String key, Long value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, boolean value) {
+	public AbstractRawMessage<T> set(String key, Boolean value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, float value) {
+	public AbstractRawMessage<T> set(String key, Float value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, double value) {
+	public AbstractRawMessage<T> set(String key, Double value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, char value) {
+	public AbstractRawMessage<T> set(String key, Character value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, byte value) {
+	public AbstractRawMessage<T> set(String key, Byte value) {
 		// TODO Auto-generated method stub
 		psmmFactory.set(key, value);
 		return this;

@@ -27,7 +27,7 @@ interface MessageCommonInterface {
 	 * 
 	 * @return position of the message in the linked structure.
 	 */
-	Integer depth();
+	int depth();
 	
 	
 }

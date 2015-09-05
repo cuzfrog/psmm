@@ -29,14 +29,9 @@ class MapFactoryPool implements FactoryPool {
 	}
 
 	// Functionalities:
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see cuz.psmm.FactoryPool#seekFactory(cuz.psmm.Messages.Type)
-	 */
 	@Override
 	public PsmmFactory seekFactory(Messages.Style type) {
-		// TODO Auto-generated method stub
+		@SuppressWarnings("boxing") 
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;
 		String name = type.toString();
@@ -47,8 +42,6 @@ class MapFactoryPool implements FactoryPool {
 			pool.put(threadId, psmmFactory);
 		}
 		psmmFactory.assemble(modules.get(name), type);
-		// DEBUG:
-		// System.out.println(modules.get(type));
 		return psmmFactory;
 	}
 }

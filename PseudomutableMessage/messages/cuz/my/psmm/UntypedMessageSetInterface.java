@@ -18,7 +18,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, int value);
+	public abstract UntypedRawMessage set(String key, Integer value);
 
 	/**
 	 * Set value and return a raw message.
@@ -32,7 +32,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, short value);
+	public abstract UntypedRawMessage set(String key, Short value);
 
 	/**
 	 * Set value and return a raw message.
@@ -46,7 +46,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, long value);
+	public abstract UntypedRawMessage set(String key, Long value);
 
 	/**
 	 * Set value and return a raw message.
@@ -60,7 +60,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, boolean value);
+	public abstract UntypedRawMessage set(String key, Boolean value);
 
 	/**
 	 * Set value and return a raw message.
@@ -74,7 +74,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, float value);
+	public abstract UntypedRawMessage set(String key, Float value);
 
 	/**
 	 * Set value and return a raw message.
@@ -88,7 +88,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, double value);
+	public abstract UntypedRawMessage set(String key, Double value);
 
 	/**
 	 * Set value and return a raw message.
@@ -102,7 +102,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, char value);
+	public abstract UntypedRawMessage set(String key, Character value);
 
 	/**
 	 * Set value and return a raw message.
@@ -116,7 +116,7 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, byte value);
+	public abstract UntypedRawMessage set(String key, Byte value);
 
 	/**
 	 * Set value and return a raw message.
