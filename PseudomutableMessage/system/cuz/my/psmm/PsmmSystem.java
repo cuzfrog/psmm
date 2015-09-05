@@ -43,7 +43,7 @@ public final class PsmmSystem {
 	 * @see PsmmConfiguration
 	 */
 	public static void initiate(PsmmConfiguration config) {
-			instance = new PsmmSystem(config);
+		instance = new PsmmSystem(config);
 	}
 
 	/**
@@ -72,34 +72,22 @@ public final class PsmmSystem {
 	}
 
 	/**
-	 * Create and return a cached message. And put this message into message
-	 * pool.
+	 * Create and return a message. If its type indicates it's cached, a cached
+	 * instance will be created and put into message pool.
 	 * 
 	 * @param type
 	 * @param messageBeingWrapped
 	 * @param data
-	 * @param signature
-	 *            for this message.
 	 * @return a new cached message
 	 */
-	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data, Signature signature) {
-
-		Message<T> message = new CachedMessage<>(type, messageBeingWrapped, data, signature);
-		instance.messagePool.put(signature, message);
-		return message;
-
-	}
-
-	/**
-	 * Create and return a uncached message.
-	 * 
-	 * @param type
-	 * @param messageBeingWrapped
-	 * @param data
-	 * @return a new uncached message.
-	 */
 	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
-		return new UncachedMessage<>(type, messageBeingWrapped, data);
+		if (type.isCached()) {
+			Message<T> message = new CachedMessage<>(type, messageBeingWrapped, data);
+			// instance.messagePool.put(signature, message);
+			return message;
+		} else {
+			return new UncachedMessage<>(type, messageBeingWrapped, data);
+		}
 	}
 
 	// factory bridge:

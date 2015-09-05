@@ -35,40 +35,11 @@ final class CreationModuleCached extends Module {
 	@Override
 	public <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data)
 			 {
-		// TODO Auto-generated method stub
-		Signature signature = calculateSignature(type, messageBeingWrapped, data);
-
 		Message<T> message;
 		if ((message = PsmmSystem.seekMessage(signature)) == null) {
-			message = PsmmSystem.getConcretMessage(type, messageBeingWrapped, data, signature);
+			message = PsmmSystem.getConcretMessage(type, messageBeingWrapped, data);
 		}
 
 		return message;
 	}
-
-	// A message's signature is only associated with type and the data it
-	// exhibits, but not structure.
-	private static <T> Signature calculateSignature(Messages.Style type, Message<T> parent, Data data)
-			 {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA1");
-
-			Map<String, T> parentMap = parent.getAll();
-
-			if (parentMap == null) {
-				md.update(data.getDataStream());
-			} else {
-				Map<String, T> dataMap = data.getAll();
-				parentMap.putAll(dataMap);
-				md.update(Data.getDataStream(parentMap));
-			}
-
-			md.update(Integer.valueOf(type.ordinal()).byteValue());
-			return new Signature(md.digest()); // here is about to modify
-		} catch (NoSuchAlgorithmException | IOException e) {
-			// TODO Auto-generated catch block
-			throw new PsmmMessageConstructionFailedException();
-		}
-	}
-
 }

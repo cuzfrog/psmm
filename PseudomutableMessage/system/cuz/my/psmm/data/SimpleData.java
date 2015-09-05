@@ -6,14 +6,23 @@ final class SimpleData extends Data {
 
 	@Override
 	public void set(Object datum) {
-		// TODO Auto-generated method stub
 		this.value=datum;
 	}
 
 	@Override
 	public Object get() {
-		// TODO Auto-generated method stub
 		return value;
+	}
+
+	@Override
+	public Data merge(Data data) {
+		return data;
+	}
+
+	@Override
+	public Structure getStructure() {
+		// TODO Auto-generated method stub
+		return Structure.SIMPLE;
 	}
 	
 }

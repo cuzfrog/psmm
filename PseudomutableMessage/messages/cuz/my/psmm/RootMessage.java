@@ -2,24 +2,24 @@ package cuz.my.psmm;
 
 import java.util.Map;
 
-
+import cuz.my.psmm.data.Data;
 
 @StateLess
 final class RootMessage implements Message<Object> {
-	
+
 	private RootMessage() {
 	}
 
-	private static final Message<Object> instance=new RootMessage();
-	
-	
-	//-------------------utility behavior:
+	private static final Message<Object> instance = new RootMessage();
+
+	// -------------------utility behavior:
 
 	@SuppressWarnings("unchecked")
-	public static <T> Message<T> getInstance(){
-		return   (Message<T>) instance;
+	public static <T> Message<T> getInstance() {
+		return (Message<T>) instance;
 	}
-	//-------------------message behavior:
+
+	// -------------------message behavior:
 	@Override
 	public Object get(String valuePath) {
 		// TODO Auto-generated method stub
@@ -32,26 +32,30 @@ final class RootMessage implements Message<Object> {
 		return 0;
 	}
 
-
 	@Override
 	public byte[] getSignature() {
 		// TODO Auto-generated method stub
-		return new byte[]{Integer.valueOf(0).byteValue()};
+		return new byte[] { Integer.valueOf(0).byteValue() };
 	}
 
 	@Override
-	public Map<String,Object> getAll() {
+	public Map<String, Object> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public Message<Object> regress() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	//---------------------factory behaviors:
+
+	@Override
+	public Data readData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	// ---------------------factory behaviors:
 
 	@Override
 	public AbstractRawMessage<Object> set(String key, Object datum) {
@@ -70,49 +74,53 @@ final class RootMessage implements Message<Object> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Integer value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Short value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Long value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Boolean value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Float value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Double value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Character value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public UntypedRawMessage set(String key, Byte value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-
 
 }

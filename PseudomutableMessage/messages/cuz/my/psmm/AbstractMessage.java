@@ -32,7 +32,6 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	@Override
 	public int depth() {
-		// TODO Auto-generated method stub
 		return depth;
 	}
 
@@ -43,7 +42,6 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	@Override
 	public T get(String key) {
-		// TODO Auto-generated method stub
 		T result = null;
 		if ((result = data.get(key)) == null) {
 			result = parent.get(key);
@@ -53,37 +51,50 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	@Override
 	public Map<String, T> getAll() {
-		// TODO Auto-generated method stub
 		Map<String, T> resultMap;
-		Map<String, T> parentResult;
-		if ((parentResult = parent.getAll()) != null) {
+		Map<String, T> parentResult = parent.getAll();
+		if (parentResult != null) {
 			resultMap = parentResult;
 		} else {
 			resultMap = new HashMap<>();
+			// when reaches root, create a new map to return.
 		}
 		parentResult = data.getAll();
 		resultMap.putAll(parentResult);
-		return resultMap;
+		return resultMap; // return a new instance from root.
+	}
+
+	// package interface method to facilitate internal function.
+	@Override
+	public Data readData() {
+		Data resultData;
+		Data parentData = parent.readData();
+		if (parentData != null) {
+			resultData=parentData.merge(this.data);
+		} else {
+			resultData = Data.newData(data.getStructure());
+			// when reaches root, create a new to return.
+			resultData.merge(this.data);
+		}
+		return resultData; 
+		// return a new instance from the one that contains the root message.
 	}
 
 	// ------------factory behaviors:
 	@Override
 	public AbstractRawMessage<T> set(String key, T datum) {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, datum);
 	}
 
 	@Override
 	public AbstractRawMessage<T> raw() {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this);
 	}
 	// ------------UntypedMessage behaviors:
 
 	@Override
 	public Message<T> regress() throws PsmmCannotRegressExeption {
-		// TODO Auto-generated method stub
-		if (depth==1) {
+		if (depth == 1) {
 			throw new PsmmCannotRegressExeption();
 		}
 		return parent;
@@ -91,56 +102,84 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Integer value) {
-		// TODO Auto-generated method stub
 		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Short value) {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Long value) {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Boolean value) {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Float value) {
-		// TODO Auto-generated method stub
+
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Double value) {
-		// TODO Auto-generated method stub
+
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Character value) {
-		// TODO Auto-generated method stub
+
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Byte value) {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, String value) {
-		// TODO Auto-generated method stub
 		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+	}
+
+	// ----------------------------hashcode and equals:
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		Data mergedData=readData();
+		result = prime * result + (( mergedData== null) ? 0 : mergedData.hashCode());
+		// read all data including those stored in parents as a whole
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		@SuppressWarnings("rawtypes")
+		AbstractMessage other = (AbstractMessage) obj;
+		Data otherData=other.readData();
+		Data thisData=this.readData();
+		if (otherData == null) {
+			return false;
+		} else if (!thisData.equals(otherData)) {
+			return false;
+		}
+		return true;
 	}
 
 }

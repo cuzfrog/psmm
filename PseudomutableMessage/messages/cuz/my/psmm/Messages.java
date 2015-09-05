@@ -50,6 +50,9 @@ public abstract class Messages implements MessageCommonInterface {
 			}
 		};
 
+		boolean isCached(){
+			return this.toString().contains("CACHED");
+		}
 	}
 
 	/**

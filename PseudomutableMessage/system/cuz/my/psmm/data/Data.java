@@ -8,7 +8,10 @@ import java.util.Map;
 /**
  * Class encapsulated in message for store user data.
  * <p>
- * Implement this for extra data store means. All methods in this class have
+ * This class is highly prone to error, it's not thread safe and easy to change its state.
+ * Must be very careful to use it, make a good design to encapsulate it in a message completely.
+ * <p>
+ * Implement this for extra data store means. Most methods in this class have
  * been set NOT abstract , so it must explicitly override methods associated with given
  * message interface for that interface to work properly.
  * 
@@ -38,6 +41,14 @@ public abstract class Data {
 		return null;
 	}
 
+	/**
+	 * Absorb a Data and use it to overwrite this one where keys collide, then return this one.
+	 * @param data update data that will overwrite this one if there are duplicated keys.
+	 * @return this
+	 */
+	public abstract Data merge(Data data);
+	public abstract Structure getStructure();
+	
 	public static Data newData(Data.Structure type) {
 		switch (type) {
 		case MAP:
