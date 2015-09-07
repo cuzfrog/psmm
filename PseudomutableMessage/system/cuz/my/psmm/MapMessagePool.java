@@ -5,26 +5,27 @@ import java.util.concurrent.ConcurrentHashMap;
 
 final class MapMessagePool implements MessagePool {
 
-	private Map<Signature, Message<?>> messagePool;
+	private Map<Checkable, Message<?>> messagePool;
 
+	
 	MapMessagePool(int initialSize) {
 		this.messagePool = new ConcurrentHashMap<>((int) Math.ceil(initialSize / 0.75));
 	}
 
 	@Override
-	public boolean check(Signature signature){
+	public boolean check(Checkable signature){
 		return messagePool.containsKey(signature);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Message<T> get(Signature signature) {
+	public <T> Message<T> get(Checkable signature) {
 		// TODO Auto-generated method stub
 		return (Message<T>) messagePool.get(signature);
 	}
 
 	@Override
-	public void put(Signature signature, Message<?> message) {
+	public void put(Checkable signature, Message<?> message) {
 		// TODO Auto-generated method stub
 		messagePool.put(signature, message);
 		//System.out.println("put! messagePoll size:"+messagePool.size());

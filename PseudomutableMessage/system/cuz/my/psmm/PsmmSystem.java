@@ -3,9 +3,10 @@ package cuz.my.psmm;
 import cuz.my.psmm.data.Data;
 
 /**
- * Singleton class that manages FactoryPool and MessagePool and provides static
- * methods.
- * 
+ * Internal helper class that manages FactoryPool and MessagePool and provides
+ * static methods.
+ * <p>
+ * Not strictly singleton.
  * <p>
  * Before using Psmm, You need to explicitly call static methods
  * {@link PsmmSystem#initiate()} and
@@ -55,7 +56,8 @@ public final class PsmmSystem {
 
 	// utility methods:----------------
 	// create raw message:
-	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, Message<T> messageBeingWrapped) {
+	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type,
+			Message<T> messageBeingWrapped) {
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractRawMessage<T> rawMessage = factory.getRawMessage();
 		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
@@ -63,7 +65,7 @@ public final class PsmmSystem {
 	}
 
 	@SuppressWarnings("unchecked")
-	static <T> Message<T> seekMessage(Signature signature) {
+	static <T> Message<T> seekMessage(Checkable signature) {
 		return (Message<T>) instance.messagePool.get(signature);
 	}
 
@@ -80,14 +82,20 @@ public final class PsmmSystem {
 	 * @param data
 	 * @return a new cached message
 	 */
-	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
-		if (type.isCached()) {
-			Message<T> message = new CachedMessage<>(type, messageBeingWrapped, data);
-			// instance.messagePool.put(signature, message);
-			return message;
-		} else {
-			return new UncachedMessage<>(type, messageBeingWrapped, data);
-		}
+	static <T> Message<T> getConcretMessage(Messages.Style type,
+			Message<T> messageBeingWrapped, Data data) {
+
+		return new UncachedMessage<>(type, messageBeingWrapped, data);
+	}
+
+	static <T> Message<T> getConcretMessage(Messages.Style type,
+			Message<T> messageBeingWrapped, Data data, Data signature) {
+
+		Message<T> message = new CachedMessage<>(type, messageBeingWrapped,
+				data, signature);
+		instance.messagePool.put(message, message);
+		return message;
+
 	}
 
 	// factory bridge:

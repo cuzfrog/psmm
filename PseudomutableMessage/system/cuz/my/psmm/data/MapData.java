@@ -1,8 +1,9 @@
 package cuz.my.psmm.data;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import cuz.my.psmm.Checkable;
 
 final class MapData extends Data {
 
@@ -23,11 +24,6 @@ final class MapData extends Data {
 	@Override
 	public <T> Map<String, T> getAll() {
 		return (Map<String, T>) map;
-	}
-
-	@Override
-	public byte[] getDataStream() throws IOException {
-		return Data.getDataStream(map);
 	}
 
 	@Override
@@ -53,17 +49,19 @@ final class MapData extends Data {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) {	
+		if (obj == null || !(obj instanceof Checkable)) {
+			return false;
+		}
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		Checkable signature=(Checkable) obj;
+		Data otherData=signature.readData();
+		if (getClass() != otherData.getClass()) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		MapData other = (MapData) obj;
+		MapData other = (MapData) otherData;
 		if (map == null) {
 			if (other.map != null) {
 				return false;

@@ -1,5 +1,6 @@
 package cuz.my.psmm;
 
+
 /**
  * Do nothing.
  * @author cuzfrog
@@ -8,19 +9,19 @@ package cuz.my.psmm;
 class NullMessagePool implements MessagePool {
 
 	@Override
-	public <T> Message<T> get(Signature signature) {
+	public <T> Message<T> get(Checkable signature) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void put(Signature signature, Message<?> message) {
+	public void put(Checkable signature, Message<?> message) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean check(Signature signature) {
+	public boolean check(Checkable signature) {
 		// TODO Auto-generated method stub
 		return false;
 	}

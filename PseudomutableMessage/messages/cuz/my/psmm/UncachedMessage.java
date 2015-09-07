@@ -9,5 +9,4 @@ final class UncachedMessage<T> extends AbstractMessage<T> {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 }

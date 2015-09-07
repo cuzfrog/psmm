@@ -1,9 +1,8 @@
 package cuz.my.psmm.data;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.Map;
+
+import cuz.my.psmm.Checkable;
 
 /**
  * Class encapsulated in message for store user data.
@@ -18,7 +17,7 @@ import java.util.Map;
  * @author Cause Chung
  *
  */
-public abstract class Data {
+public abstract class Data implements Checkable {
 	public <T> void set(String key, T datum) {
 	}
 
@@ -37,7 +36,16 @@ public abstract class Data {
 		return null;
 	}
 
-	public byte[] getDataStream() throws IOException {
+	@Override
+	public Data readData() {
+		return this;
+	}
+
+	/**
+	 * Not implemented yet.
+	 * @return byte[] data stream
+	 */
+	public byte[] getDataStream() {
 		return null;
 	}
 
@@ -64,14 +72,11 @@ public abstract class Data {
 	public static enum Structure {
 		MAP, SIMPLE
 	}
-
-	public static byte[] getDataStream(Object data) throws IOException {
-		// TODO Auto-generated method stub
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-		ObjectOutputStream os = new ObjectOutputStream(outputStream);
-		os.writeObject(data);
-
-		return outputStream.toByteArray();
-	}
+	
+	
+	// children must explicitly override hashCode and equals
+	@Override
+	public abstract int hashCode();
+	@Override
+	public abstract boolean equals(Object obj);
 }

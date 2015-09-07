@@ -5,21 +5,22 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
  * An mediate interface between low level class( {@link AbstractMessage},
- * {@link RootMessage}) and high level ones({@link TMessage<T>},
- * {@link UMessage})
+ * {@link RootMessage}) and high level ones({@link TMessage}, {@link UMessage})
  * 
  * @author Cause Chung
  *
  * @param <T>
  */
-interface Message<T> extends TMessage<T>, UMessage {
+interface Message<T> extends TMessage<T>, UMessage, Checkable {
 	AbstractRawMessage<T> raw();
-	
+
 	Message<T> regress() throws PsmmCannotRegressExeption;
-	
+
 	/**
 	 * Read all data in a message. And return one Data object.
-	 * @return all data the message contains, including those stored in its parents
+	 * 
+	 * @return all data the message contains, including those stored in its
+	 *         parents
 	 */
 	Data readData();
 }
