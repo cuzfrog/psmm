@@ -1,1 +1,2 @@
+before_install: cd PseudomutableMessage
 language: java
