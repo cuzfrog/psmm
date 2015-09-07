@@ -40,7 +40,6 @@ final class MapData extends Data {
 
 	@Override
 	public Structure getStructure() {
-		// TODO Auto-generated method stub
 		return Structure.MAP;
 	}
 

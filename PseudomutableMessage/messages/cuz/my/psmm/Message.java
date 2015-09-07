@@ -5,7 +5,7 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
  * An mediate interface between low level class( {@link AbstractMessage},
- * {@link RootMessage}) and high level ones({@link TMessage<T>},
+ * {@link RootMessage}) and high level ones({@link TMessage},
  * {@link UMessage})
  * 
  * @author Cause Chung

@@ -7,7 +7,7 @@ import cuz.my.psmm.data.Data;
  * message type.
  * <p>
  * There are several message interfaces<br>
- * {@link UMessae} only accept primitives and Strings, which ensures its data's
+ * {@link UMessage} only accept primitives and Strings, which ensures its data's
  * immutability. However bad {@link Data} implementation could violate it.<br>
  * {@link TMessage} gives flexibility to data carried, but you have to be very
  * careful designing your message, since TypedMessage doesn't check the

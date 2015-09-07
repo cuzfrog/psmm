@@ -5,15 +5,17 @@ import cuz.my.psmm.data.Data;
 final class CachedMessage<T> extends AbstractMessage<T>{
 
     //speedup hashcode calculation
-	private final int hashcode;
+	private final Signature signature;
 	
-	public CachedMessage(Messages.Style type, Message<T> parent, Data data) {
+	public CachedMessage(Messages.Style type, Message<T> parent, Data data,Signature signature) {
 		super(type, parent, data);
-		hashcode=super.hashCode();
+		this.signature=signature;
 	}
 
 	@Override
-	public int hashCode() {
-		return hashcode;
-	}	
+	public byte[] getSignature() {
+		// TODO Auto-generated method stub
+		return this.signature.getSignature();
+	}
+	
 }

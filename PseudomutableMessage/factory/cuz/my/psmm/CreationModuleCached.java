@@ -3,7 +3,6 @@ package cuz.my.psmm;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmMessageConstructionFailedException;
@@ -35,11 +34,29 @@ final class CreationModuleCached extends Module {
 	@Override
 	public <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data)
 			 {
+		Signature signature=calculateSignature(messageBeingWrapped, data);
 		Message<T> message;
 		if ((message = PsmmSystem.seekMessage(signature)) == null) {
-			message = PsmmSystem.getConcretMessage(type, messageBeingWrapped, data);
+			message = PsmmSystem.getConcretMessage(type, messageBeingWrapped, data,signature);
 		}
 
 		return message;
+	}
+	
+	private <T> Signature calculateSignature(Message<T> messageBeingWrapped, Data data){
+		Data parentData=messageBeingWrapped.readData();
+		Data newData;
+		if(parentData!=null){
+			newData=parentData.merge(data);
+		}else{
+			newData=data;
+		}
+		
+		try {
+			MessageDigest md=MessageDigest.getInstance("SHA1");
+			return new Signature(md.digest(newData.getDataStream()));
+		} catch (IOException | NoSuchAlgorithmException e) {
+			throw new PsmmMessageConstructionFailedException();
+		}
 	}
 }

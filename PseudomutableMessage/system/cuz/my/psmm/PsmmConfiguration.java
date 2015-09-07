@@ -15,7 +15,7 @@ import cuz.my.psmm.data.Data;
  * {@link #PsmmConfiguration(FactoryPoolType)} to set factory pool type.<br>
  * {@link #PsmmConfiguration(Integer, FactoryPoolType)} to set above together.
  * <br>
- * {@link #setFactoryPoolSize(Integer)} to set message pool size.<br>
+ * {@link #setFactoryPoolSize(int)} to set message pool size.<br>
  * Psmm will create a default one, if you don't specify it.
  * <p>
  * Default message pool size configuration is 0, which means there will not be

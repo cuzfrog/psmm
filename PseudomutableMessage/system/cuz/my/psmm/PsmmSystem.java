@@ -55,7 +55,8 @@ public final class PsmmSystem {
 
 	// utility methods:----------------
 	// create raw message:
-	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, Message<T> messageBeingWrapped) {
+	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type,
+			Message<T> messageBeingWrapped) {
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractRawMessage<T> rawMessage = factory.getRawMessage();
 		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
@@ -72,22 +73,34 @@ public final class PsmmSystem {
 	}
 
 	/**
-	 * Create and return a message. If its type indicates it's cached, a cached
-	 * instance will be created and put into message pool.
+	 * Create and return a uncached message. 
 	 * 
 	 * @param type
 	 * @param messageBeingWrapped
 	 * @param data
 	 * @return a new cached message
 	 */
-	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
-		if (type.isCached()) {
-			Message<T> message = new CachedMessage<>(type, messageBeingWrapped, data);
-			// instance.messagePool.put(signature, message);
-			return message;
-		} else {
-			return new UncachedMessage<>(type, messageBeingWrapped, data);
-		}
+	static <T> Message<T> getConcretMessage(Messages.Style type,
+			Message<T> messageBeingWrapped, Data data) {
+		return new UncachedMessage<>(type, messageBeingWrapped, data);
+	}
+
+	/**
+	 * Create and return a cached message. An
+	 * instance will be created and put into message pool.
+	 * 
+	 * @param type
+	 * @param messageBeingWrapped
+	 * @param data
+	 * @param signature message's pseudo-unique signature that for pool check
+	 * @return a new cached message
+	 */
+	static <T> Message<T> getConcretMessage(Messages.Style type,
+			Message<T> messageBeingWrapped, Data data, Signature signature) {
+		Message<T> message = new CachedMessage<>(type, messageBeingWrapped,
+				data, signature);
+		instance.messagePool.put(signature, message);
+		return message;
 	}
 
 	// factory bridge:
