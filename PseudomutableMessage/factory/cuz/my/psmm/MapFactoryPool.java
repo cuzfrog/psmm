@@ -34,7 +34,7 @@ class MapFactoryPool implements FactoryPool {
 		@SuppressWarnings("boxing") 
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;
-		String name = type.toString();
+		String name = type.getName();
 		if (pool.containsKey(threadId)) {
 			psmmFactory = pool.get(threadId);
 		} else {

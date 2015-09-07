@@ -67,7 +67,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	// test parameters(some are self-explanatory), which are essential to the
 	// results of each test:
 	public final static int ACTOR_AMOUNT = 20;
-	public final static long MESSAGE_TEST_AMOUNT = 500000;
+	public final static long MESSAGE_TEST_AMOUNT = 5000000;
 	/**
 	 * Value key's name. Must be one of "int" for integer, "double" for double
 	 * or whatever would be interpreted as String. {@code Pair<T>} will be

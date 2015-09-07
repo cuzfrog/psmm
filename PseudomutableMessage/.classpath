@@ -22,7 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry including="system/**/*.java|messages/**/*.java|factory/**/*.java|annotations/**/*.java" kind="src" output="target/classes" path="*">
+	<classpathentry kind="src" output="target/classes" path="*">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

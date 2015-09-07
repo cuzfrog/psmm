@@ -63,9 +63,8 @@ public abstract class Messages implements MessageCommonInterface {
 		boolean isCached(){
 			return this.isCached;
 		}
-		
-		@Override
-		public String toString(){
+	
+		String getName(){
 			return name;
 		}
 	}

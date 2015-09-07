@@ -107,48 +107,9 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<includes>
-						<include>system/**/*.java</include>
-						<include>messages/**/*.java</include>
-						<include>factory/**/*.java</include>
-						<include>annotations/**/*.java</include>
-					</includes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<includes>
-						<include>system/**/*.java</include>
-						<include>messages/**/*.java</include>
-						<include>factory/**/*.java</include>
-						<include>annotations/**/*.java</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<includes>
-						<include>system/**/*.java</include>
-						<include>messages/**/*.java</include>
-						<include>factory/**/*.java</include>
-						<include>annotations/**/*.java</include>
-					</includes>
-				</configuration>
-			</plugin>
+
 		</plugins>
 
 	</build>
