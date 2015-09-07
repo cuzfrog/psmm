@@ -25,9 +25,9 @@ class SenderModuleMessage implements SenderModule {
 		for (Pair<T> pair : dataPairs) {
 			T value = pair.getValue();
 			if (value instanceof Integer) {
-				newRawMessage.set(pair.getKey(), (int) pair.getValue());
+				newRawMessage.set(pair.getKey(), (Integer) pair.getValue());
 			} else if (value instanceof Double) {
-				newRawMessage.set(pair.getKey(), (double) pair.getValue());
+				newRawMessage.set(pair.getKey(), (Integer) pair.getValue());
 			} else {
 				newRawMessage.set(pair.getKey(), (String) pair.getValue());
 			}

@@ -47,8 +47,8 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 * Return a single value by a specified key. If the value cannot be found by
 	 * the key, it'll return null.
 	 * 
-	 * @param key
-	 * @return T value associated with key.
+	 * @param key key with which the specified value is associated
+	 * @return T value associated with the specified key
 	 */
 	public abstract T get(String key);
 

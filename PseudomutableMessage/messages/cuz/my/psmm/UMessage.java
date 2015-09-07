@@ -24,8 +24,8 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 * Return a single value by a specified key. If the value cannot be found by
 	 * the key, it'll return null.
 	 * 
-	 * @param key
-	 * @return Object value associated with key.
+	 * @param key key with which the specified value is associated
+	 * @return Object value associated with the specified key
 	 */
 	public abstract Object get(String key);
 

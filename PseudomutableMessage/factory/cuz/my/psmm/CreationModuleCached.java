@@ -43,7 +43,7 @@ final class CreationModuleCached extends Module {
 		return message;
 	}
 	
-	private <T> Signature calculateSignature(Message<T> messageBeingWrapped, Data data){
+	private static <T> Signature calculateSignature(Message<T> messageBeingWrapped, Data data){
 		Data parentData=messageBeingWrapped.readData();
 		Data newData;
 		if(parentData!=null){

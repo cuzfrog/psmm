@@ -25,46 +25,43 @@ public abstract class Messages implements MessageCommonInterface {
 	 *
 	 */
 	public static enum Style {
-		LINKED_MAP ,
-		FLAT_MAP ,
-		CACHED_LINKED_MAP ,
-		CACHED_FLAT_MAP ;
+		LINKED_MAP, FLAT_MAP, CACHED_LINKED_MAP, CACHED_FLAT_MAP;
 
 		private boolean isCached;
 		private String name;
-				
-		private Style(){
-			this.isCached=this.toString().contains("CACHED");
+
+		private Style() {
+			this.isCached = this.toString().contains("CACHED");
 			this.initiateName();
 		}
-		
-		private void initiateName(){
-			StringBuilder nameBuilder=new StringBuilder();
-			String originalName=this.toString();
-			if(originalName.contains("CACHED")){
+
+		private void initiateName() {
+			StringBuilder nameBuilder = new StringBuilder();
+			String originalName = this.toString();
+			if (originalName.contains("CACHED")) {
 				nameBuilder.append("Cached");
-			}else{
+			} else {
 				nameBuilder.append("Uncached");
-			} //creation attribute
-			
-			if(originalName.contains("LINKED")){
+			} // creation attribute
+
+			if (originalName.contains("LINKED")) {
 				nameBuilder.append("Linked");
-			}else if(originalName.contains("FLAT")){
+			} else if (originalName.contains("FLAT")) {
 				nameBuilder.append("Flat");
-			} //structure attribute
-			
-			if(originalName.contains("MAP")){
+			} // structure attribute
+
+			if (originalName.contains("MAP")) {
 				nameBuilder.append("Map");
-			} //data attribute
-			
-			this.name=nameBuilder.toString();
+			} // data attribute
+
+			this.name = nameBuilder.toString();
 		}
-		
-		boolean isCached(){
+
+		boolean isCached() {
 			return this.isCached;
 		}
-	
-		String getName(){
+
+		String getName() {
 			return name;
 		}
 	}
@@ -81,8 +78,7 @@ public abstract class Messages implements MessageCommonInterface {
 	 */
 	public static UntypedRawMessage create(Messages.Style messageType) {
 		Message<Object> rootMessage = RootMessage.getInstance();
-		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(
-				messageType, rootMessage);
+		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}
 
@@ -109,14 +105,14 @@ public abstract class Messages implements MessageCommonInterface {
 	 *            instructing factory how to generate this message.
 	 * @param c
 	 *            type parameter
+	 * @param <T>
+	 *            TMessage's type.
 	 * @return RawMessage.
 	 */
-	public static <T> TypedRawMessage<T> create(Messages.Style messageType,
-			Class<T> c) {
+	public static <T> TypedRawMessage<T> create(Messages.Style messageType, Class<T> c) {
 
-		Message<T> rootMessage =  RootMessage.getInstance();
-		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType,
-				rootMessage);
+		Message<T> rootMessage = RootMessage.getInstance();
+		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}
 
@@ -128,6 +124,8 @@ public abstract class Messages implements MessageCommonInterface {
 	 * 
 	 * @param c
 	 *            type parameter
+	 * @param <T>
+	 *            TMessage's type.
 	 * @return RawMessage.
 	 */
 	public static <T> TypedRawMessage<T> create(Class<T> c) {

@@ -13,6 +13,6 @@ public class Timer {
 	}
 	
 	public void stop(){
-		logger.info("recorded {}ms.",System.currentTimeMillis()-beginTime);
+		logger.info("recorded {}ms.",String.valueOf(System.currentTimeMillis()-beginTime));
 	}
 }

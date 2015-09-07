@@ -10,13 +10,8 @@ import cuz.my.psmm.data.Data;
 /**
  * Class for configuring psmm when initiating.
  * <p>
- * Methods to setup (see each for details):<br>
- * {@link #PsmmConfiguration(Integer)} to set message pool size.<br>
- * {@link #PsmmConfiguration(FactoryPoolType)} to set factory pool type.<br>
- * {@link #PsmmConfiguration(Integer, FactoryPoolType)} to set above together.
- * <br>
- * {@link #setFactoryPoolSize(int)} to set message pool size.<br>
- * Psmm will create a default one, if you don't specify it.
+ * Constructor or set-method both do configuration work.
+ * Psmm will create a default PsmmConfiguration if you don't specify one.
  * <p>
  * Default message pool size configuration is 0, which means there will not be
  * any message being cached. See {@link MessagePool} for details. Default
@@ -49,6 +44,11 @@ public class PsmmConfiguration {
 	private int factoryPoolSize = DEFAULT_FACTORY_POOL_SIZE;
 
 	// constructors:
+	/**
+	 * Default constructor.
+	 * 
+	 * <p>Provide a way to setup it after construction.
+	 */
 	public PsmmConfiguration() {
 		this(DEFAULT_MESSAGE_POOL_SIZE);
 	}
@@ -56,7 +56,7 @@ public class PsmmConfiguration {
 	/**
 	 * Create PsmmConfiguration.
 	 * 
-	 * @param messagePoolSize
+	 * @param messagePoolSize specify initial pool size.
 	 */
 	public PsmmConfiguration(int messagePoolSize) {
 		this(messagePoolSize, DEFAULT_FACTORYPOOL_TYPE);
@@ -65,7 +65,7 @@ public class PsmmConfiguration {
 	/**
 	 * Create PsmmConfiguration.
 	 * 
-	 * @param factoryPoolChoseType
+	 * @param factoryPoolChoseType specify concrete factory pool.
 	 */
 	public PsmmConfiguration(FactoryPoolType factoryPoolChoseType) {
 		this(DEFAULT_MESSAGE_POOL_SIZE, factoryPoolChoseType);
@@ -74,8 +74,8 @@ public class PsmmConfiguration {
 	/**
 	 * Create PsmmConfiguration.
 	 * 
-	 * @param messagePoolSize
-	 * @param factoryPoolChoseType
+	 * @param messagePoolSize specify initial pool size.
+	 * @param factoryPoolChoseType specify concrete factory pool.
 	 */
 	public PsmmConfiguration(int messagePoolSize, FactoryPoolType factoryPoolChoseType) {
 		this.messagePoolSize = messagePoolSize;

@@ -39,7 +39,7 @@ class Listener extends UntypedActor {
 		} else if (arg0 instanceof InstructionStopConfirmed) {
 			if (--actorWorkingCount == 0) {
 				threadTrigger.threadFinished();
-				logger.info("{} messages sent,Actors stopped!",messageCount);
+				logger.info("{} messages sent,Actors stopped!",String.valueOf(messageCount));
 			}
 			//logger.info("working senders:{}",actorWorkingCount);
 		} else {
