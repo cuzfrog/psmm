@@ -2,7 +2,7 @@ package cuz.my.psmm;
 
 /**
  * Interface that contains set methods for untyped message.
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 interface UntypedMessageSetInterface {

@@ -2,7 +2,7 @@ package cuz.my.psmm;
 
 /**
  * Do nothing.
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 class NullMessagePool implements MessagePool {

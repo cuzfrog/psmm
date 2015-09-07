@@ -10,7 +10,7 @@ import cuz.my.psmm.data.Data;
  * facade, to which you access when you set new data. And PsmmFactory is what
  * under the facade performing most works.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 @NotThreadSafe

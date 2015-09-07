@@ -3,7 +3,7 @@ package cuz.my.psmm;
 import cuz.my.psmm.data.Data;
 
 /**
- * Singleton class that manages FactoryPool and MessagePool and provides static
+ * Class that manages FactoryPool and MessagePool and provides static
  * methods.
  * 
  * <p>
@@ -13,7 +13,7 @@ import cuz.my.psmm.data.Data;
  * or there'll be NullPointerException. It doesn't support lazy initiation, due
  * to performance concerns.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  * @see PsmmConfiguration
  */
 public final class PsmmSystem {

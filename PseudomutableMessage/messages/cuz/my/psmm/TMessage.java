@@ -24,12 +24,12 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * <p>
  * When you want to store variant types of data, use {@code Object} as
  * parameter,but be ware of the mutability.To make sure data stored is
- * immutable, use {@link Object} which only accepts immutable basic types such
+ * immutable, use {@link Message} which only accepts immutable basic types such
  * as {@code String}, {@code Integer}.If you only send one value per message,
  * use {@link SMessage} which take that value directly as inner datum instead of
  * data structure.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  * @param <T>
  *            The type of data this message carries. <br>
@@ -38,7 +38,7 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * 
  * 
  *
- * @see Object
+ * @see UMessage
  */
 @ThreadSafe
 public interface TMessage<T> extends MessageCommonInterface {

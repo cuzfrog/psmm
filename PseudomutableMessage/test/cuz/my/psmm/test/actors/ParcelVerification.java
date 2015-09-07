@@ -11,7 +11,7 @@ import cuz.my.psmm.UntypedRawMessage;
 
 /**
  * Immutable when message inside is immutable.
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 class ParcelVerification<T> implements Parcel<T> {

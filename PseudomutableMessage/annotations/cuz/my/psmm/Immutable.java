@@ -5,7 +5,7 @@ package cuz.my.psmm;
 
 /**
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 @interface Immutable {

@@ -10,8 +10,8 @@ package cuz.my.psmm;
  * <p>
  * The factory wrapped is fetched from factory pool.
  * 
- * @author cuzfrog
- * @see Object
+ * @author Cause Chung
+ * @see UMessage
  */
 public interface UntypedRawMessage extends UntypedMessageSetInterface {
 	/**

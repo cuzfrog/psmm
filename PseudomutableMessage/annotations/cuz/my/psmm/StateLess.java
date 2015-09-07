@@ -5,7 +5,7 @@ package cuz.my.psmm;
 
 /**
  * Thread safe in common situation.
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 @interface StateLess {

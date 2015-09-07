@@ -26,7 +26,7 @@ import cuz.my.psmm.data.Data;
  * However these configurations are not vital. They're for optimization like big
  * enough pool size to prevent Map rehash.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 @NotThreadSafe

@@ -13,7 +13,7 @@ import cuz.my.psmm.data.Data;
  * careful designing your message, since TypedMessage doesn't check the
  * mutability of the datum you set in.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 public abstract class Messages implements MessageCommonInterface {
@@ -21,7 +21,7 @@ public abstract class Messages implements MessageCommonInterface {
 	/**
 	 * Message types indicating the structures of messages.
 	 * 
-	 * @author cuzfrog
+	 * @author Cause Chung
 	 *
 	 */
 	public static enum Style {

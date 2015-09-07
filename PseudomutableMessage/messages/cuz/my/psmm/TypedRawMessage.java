@@ -12,7 +12,7 @@ import cuz.my.psmm.PsmmFactory;
  * <p>
  * The factory wrapped is fetched from factory pool.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  * @see TMessage
  */
 @NotThreadSafe

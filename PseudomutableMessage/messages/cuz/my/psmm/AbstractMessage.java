@@ -9,7 +9,7 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 /**
  * In this abstract message, only signature has not been implemented.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  * @param <T>
  *            The Message<T> it contains.

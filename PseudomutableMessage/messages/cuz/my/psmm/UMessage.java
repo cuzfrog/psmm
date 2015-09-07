@@ -16,7 +16,7 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * the key to infer its value's type.(Since method get return Object, value that 
  * has been set will be boxed anyway, so method set doesn't take primitives.)
  * 
- * @author cuzfrog
+ * @author Cause Chung
  * @see TMessage
  */
 public interface UMessage extends MessageCommonInterface, UntypedMessageSetInterface {

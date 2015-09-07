@@ -8,7 +8,7 @@ package cuz.my.psmm;
  * objects to reduce object creating overhead. For specific algorithm, see each
  * FactoryPool implementation.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  * @see MapFactoryPool
  */
 @ThreadSafe

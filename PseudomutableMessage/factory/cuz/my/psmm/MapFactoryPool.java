@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * its factory's reference through this {@code ConcurrentHashMap}, they're free of worrying about concurrency. Plus
  * there's no key conflicting, thus seeking and fetching factory concurrently only affects very little performance.
  * 
- * @author cuzfrog
+ * @author Cause Chung
  *
  */
 class MapFactoryPool implements FactoryPool {

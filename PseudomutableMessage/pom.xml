@@ -5,12 +5,12 @@
 	<artifactId>psmm</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>Psmm</name>
-	<url>http://cuzfrog.github.io/psmm/</url>
-	
+	<url>http://Cause Chung.github.io/psmm/</url>
+
 	<properties>
 
 		<!-- Generic properties -->
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
