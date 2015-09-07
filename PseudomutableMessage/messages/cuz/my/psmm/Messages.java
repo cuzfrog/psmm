@@ -25,33 +25,48 @@ public abstract class Messages implements MessageCommonInterface {
 	 *
 	 */
 	public static enum Style {
-		LINKED_MAP {
-			@Override
-			public String toString() {
-				return "UncachedLinkedMap";
-			}
-		},
-		FLAT_MAP {
-			@Override
-			public String toString() {
-				return "UncachedFlatMap";
-			}
-		},
-		CACHED_LINKED_MAP {
-			@Override
-			public String toString() {
-				return "CachedLinkedMap";
-			}
-		},
-		CACHED_FLAT_MAP {
-			@Override
-			public String toString() {
-				return "CachedFlatMap";
-			}
-		};
+		LINKED_MAP ,
+		FLAT_MAP ,
+		CACHED_LINKED_MAP ,
+		CACHED_FLAT_MAP ;
 
+		private boolean isCached;
+		private String name;
+				
+		private Style(){
+			this.isCached=this.toString().contains("CACHED");
+			this.initiateName();
+		}
+		
+		private void initiateName(){
+			StringBuilder nameBuilder=new StringBuilder();
+			String originalName=this.toString();
+			if(originalName.contains("CACHED")){
+				nameBuilder.append("Cached");
+			}else{
+				nameBuilder.append("Uncached");
+			} //creation attribute
+			
+			if(originalName.contains("LINKED")){
+				nameBuilder.append("Linked");
+			}else if(originalName.contains("FLAT")){
+				nameBuilder.append("Flat");
+			} //structure attribute
+			
+			if(originalName.contains("MAP")){
+				nameBuilder.append("Map");
+			} //data attribute
+			
+			this.name=nameBuilder.toString();
+		}
+		
 		boolean isCached(){
-			return this.toString().contains("CACHED");
+			return this.isCached;
+		}
+		
+		@Override
+		public String toString(){
+			return name;
 		}
 	}
 
