@@ -8,26 +8,23 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * A typed message interface.
  * 
  * <p>
- * This is the interface for psmm(PSeudoMutableMessage). It provides
- * mutable-like behavior, but remain immutable by wrapping a psmm or completely
- * create a new data structure.
+ * This is the interface for psmm. It provides mutable-like behavior, but remain
+ * immutable by wrapping a psmm or completely create a new data structure.
  * 
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations. However, you can only create them via
  * static method {@link Messages#create}.<br>
- * Message type is used for instructing how to assemble the factory with a
- * specified message-generating behavior. Type of a message is stored inside a
- * message as an enum {@link Messages.Style} , so that it can get a factory of
- * the same type without telling it the type.
+ * Message Style is used for instructing how to assemble the factory with a
+ * specified message-generating behavior.
  * 
  * <p>
- * When you want to store variant types of data, use {@code Object} as
+ * When you want to store variant types of data, use {@code Object} as type
  * parameter,but be ware of the mutability.To make sure data stored is
- * immutable, use {@link Message} which only accepts immutable basic types such
+ * immutable, use {@link UMessage} which only accepts immutable basic types such
  * as {@code String}, {@code Integer}.If you only send one value per message,
- * use {@link SMessage} which take that value directly as inner datum instead of
- * data structure.
+ * use {@link SMessage}(not ready in version 1.0) which take that value directly
+ * as inner datum instead of data structure.
  * 
  * @author Cause Chung
  *
@@ -35,9 +32,6 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  *            The type of data this message carries. <br>
  *            There's no check for T's mutability. You have to ensure T is
  *            immutable.<br>
- * 
- * 
- *
  * @see UMessage
  */
 @ThreadSafe
@@ -47,7 +41,8 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 * Return a single value by a specified key. If the value cannot be found by
 	 * the key, it'll return null.
 	 * 
-	 * @param key key with which the specified value is associated
+	 * @param key
+	 *            key with which the specified value is associated
 	 * @return T value associated with the specified key
 	 */
 	public abstract T get(String key);

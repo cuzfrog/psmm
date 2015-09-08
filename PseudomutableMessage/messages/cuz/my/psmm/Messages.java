@@ -1,30 +1,35 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.data.Data;
-
 /**
- * An abstract class that has message creation methods and the definition of
- * message type.
+ * An abstract API class that has message creation methods and the definition of
+ * message styles.
  * <p>
  * There are several message interfaces<br>
- * {@link UMessage} only accept primitives and Strings, which ensures its data's
- * immutability. However bad {@link Data} implementation could violate it.<br>
- * {@link TMessage} gives flexibility to data carried, but you have to be very
- * careful designing your message, since TypedMessage doesn't check the
- * mutability of the datum you set in.
+ * {@link UMessage} only accept primitives' boxes and Strings, which ensures its
+ * data's immutability. <br>
+ * {@link TMessage} gives more flexibility, but when you set parameter type to
+ * your custom object, you have to be very careful designing your message data,
+ * since TypedMessage doesn't check the mutability of the datum you set in.
  * 
  * @author Cause Chung
  *
  */
 public abstract class Messages implements MessageCommonInterface {
 
+	private static final long serialVersionUID = 1L;
+
+	private Messages() {
+		throw new AssertionError();
+	}
+
 	/**
-	 * Message types indicating the structures of messages.
+	 * Message styles indicating the structures of messages. See document for
+	 * details.
 	 * 
 	 * @author Cause Chung
 	 *
 	 */
-	public static enum Style {
+	public enum Style {
 		LINKED_MAP, FLAT_MAP, CACHED_LINKED_MAP, CACHED_FLAT_MAP;
 
 		private boolean isCached;
@@ -69,15 +74,15 @@ public abstract class Messages implements MessageCommonInterface {
 	/**
 	 * Create a new {@link UntypedRawMessage}.
 	 * <p>
-	 * There are several {@link Messages.Style}s of message you can choose for
-	 * different usage.
+	 * There are several {@link Messages.Style}s of messages you can choose for
+	 * different scenarios.
 	 * 
 	 * @param messageType
 	 *            instructing factory how to generate this message.
 	 * @return UntypedRawMessage.
 	 */
 	public static UntypedRawMessage create(Messages.Style messageType) {
-		Message<Object> rootMessage = RootMessage.getInstance();
+		MessageAdaptorInterface<Object> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}
@@ -98,7 +103,7 @@ public abstract class Messages implements MessageCommonInterface {
 	 * Create a new {@link TypedRawMessage} with class parameter type specified.
 	 * <p>
 	 * There are several {@link Messages.Style}s of message you can choose for
-	 * different usage.
+	 * different scenarios.
 	 * 
 	 * 
 	 * @param messageType
@@ -111,7 +116,7 @@ public abstract class Messages implements MessageCommonInterface {
 	 */
 	public static <T> TypedRawMessage<T> create(Messages.Style messageType, Class<T> c) {
 
-		Message<T> rootMessage = RootMessage.getInstance();
+		MessageAdaptorInterface<T> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}

@@ -3,7 +3,6 @@ package cuz.my.psmm;
 import java.util.HashMap;
 import java.util.Map;
 
-import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
@@ -14,14 +13,18 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * @param <T>
  *            The Message<T> it contains.
  */
-abstract class AbstractMessage<T> implements Message<T> {
+abstract class AbstractMessage<T> implements MessageAdaptorInterface<T> {
 
-	protected final Message<T> parent;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected final MessageAdaptorInterface<T> parent;
 	protected final Data data;
 	protected final int depth;
 	protected final Messages.Style type;
 
-	protected AbstractMessage(Messages.Style type, Message<T> parent, Data data) {
+	protected AbstractMessage(Messages.Style type, MessageAdaptorInterface<T> parent, Data data) {
 		super();
 		this.parent = parent;
 		this.data = data;
@@ -93,7 +96,7 @@ abstract class AbstractMessage<T> implements Message<T> {
 	// ------------UntypedMessage behaviors:
 
 	@Override
-	public Message<T> regress() throws PsmmCannotRegressExeption {
+	public MessageAdaptorInterface<T> regress() throws PsmmCannotRegressExeption {
 		if (depth == 1) {
 			throw new PsmmCannotRegressExeption();
 		}

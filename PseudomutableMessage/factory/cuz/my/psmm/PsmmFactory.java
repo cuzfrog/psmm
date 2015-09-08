@@ -1,7 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.data.Data;
-
 /**
  * Factory that behaves in the whole process of create message or "change" data.
  * <p>
@@ -34,7 +32,7 @@ interface PsmmFactory {
 	 * @param messageBeingWrapped
 	 * @return new message.
 	 */
-	public abstract <T> Message<T> commit(Message<T> messageBeingWrapped);
+	public abstract <T> MessageAdaptorInterface<T> commit(MessageAdaptorInterface<T> messageBeingWrapped);
 
 	/**
 	 * Set datum to the factory, prepare for a new message.

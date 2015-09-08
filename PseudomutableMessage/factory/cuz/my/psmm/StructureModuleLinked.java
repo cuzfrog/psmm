@@ -1,7 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.data.Data;
-
 @StateLess
 final class StructureModuleLinked extends Module {
 
@@ -12,7 +10,7 @@ final class StructureModuleLinked extends Module {
 	}
 
 	@Override
-	public <T> Message<T> createMessage(Messages.Style type,Message<T> messageBeingWrapped,
+	public <T> MessageAdaptorInterface<T> createMessage(Messages.Style type,MessageAdaptorInterface<T> messageBeingWrapped,
 			Data data) {
 		// TODO Auto-generated method stub
 		return this.getCollaberativeModule().createMessage(type,messageBeingWrapped, data);

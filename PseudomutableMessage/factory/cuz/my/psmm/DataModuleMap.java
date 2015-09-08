@@ -1,7 +1,6 @@
 package cuz.my.psmm;
 
 import cuz.my.psmm.PsmmFactory;
-import cuz.my.psmm.data.Data;
 
 final class DataModuleMap extends Module {
 

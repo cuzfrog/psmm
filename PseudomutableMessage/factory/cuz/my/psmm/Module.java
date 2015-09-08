@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmFactoryModuleChainErrorException;
 
 abstract class Module {
@@ -30,7 +29,7 @@ abstract class Module {
 	 * @param data
 	 * @return new concrete message
 	 */
-	protected <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
+	protected <T> MessageAdaptorInterface<T> createMessage(Messages.Style type, MessageAdaptorInterface<T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
 			return collaberativeModule.createMessage(type, messageBeingWrapped, data);
 		}

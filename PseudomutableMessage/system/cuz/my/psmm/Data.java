@@ -1,4 +1,4 @@
-package cuz.my.psmm.data;
+package cuz.my.psmm;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Cause Chung
  *
  */
-public abstract class Data {
+abstract class Data {
 	public <T> void set(String key, T datum) {
 	}
 

@@ -1,6 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
@@ -12,10 +11,10 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  *
  * @param <T>
  */
-interface Message<T> extends TMessage<T>, UMessage {
+interface MessageAdaptorInterface<T> extends TMessage<T>, UMessage {
 	AbstractRawMessage<T> raw();
 	
-	Message<T> regress() throws PsmmCannotRegressExeption;
+	MessageAdaptorInterface<T> regress() throws PsmmCannotRegressExeption;
 	
 	/**
 	 * Read all data in a message. And return one Data object.

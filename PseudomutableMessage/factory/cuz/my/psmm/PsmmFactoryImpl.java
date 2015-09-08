@@ -1,7 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.data.Data;
-
 //assume Factory is run by single thread.
 @NotThreadSafe
 final class PsmmFactoryImpl implements PsmmFactory {
@@ -15,10 +13,10 @@ final class PsmmFactoryImpl implements PsmmFactory {
 	private final AbstractRawMessage<?> rawMessageRefr=new RawMessageImpl<>(this);
 
 	@Override
-	public <T> Message<T> commit(Message<T> messageBeingWrapped) {
+	public <T> MessageAdaptorInterface<T> commit(MessageAdaptorInterface<T> messageBeingWrapped) {
 		// TODO Auto-generated method stub
 
-		Message<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
+		MessageAdaptorInterface<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
 
 		// once a new message has been created, delete this.data reference
 		// for safety.

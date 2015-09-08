@@ -1,4 +1,4 @@
-package cuz.my.psmm.data;
+package cuz.my.psmm;
 
 final class SimpleData extends Data {
 

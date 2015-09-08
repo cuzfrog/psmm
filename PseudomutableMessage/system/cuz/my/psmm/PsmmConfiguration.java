@@ -5,20 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cuz.my.psmm.data.Data;
-
 /**
  * Class for configuring psmm when initiating.
  * <p>
- * Constructor or set-method both do configuration work.
- * Psmm will create a default PsmmConfiguration if you don't specify one.
+ * Constructor or set-method both do configuration work. PsmmSystem will create
+ * a default PsmmConfiguration if you don't specify one.
  * <p>
- * Default message pool size configuration is 0, which means there will not be
- * any message being cached. See {@link MessagePool} for details. Default
- * factory pool size configuration is 16, taking MapFactoryPool as an example,
- * this is according to how many threads ID there'll be.
+ * Default message pool initial size is 0, which means there will
+ * not be any message being cached. Default factory pool initial size is
+ * 16, this should be set more than the
+ * threads ID there'll be.
  * <p>
- * However these configurations are not vital. They're for optimization like big
+ * However these configurations are not vital. They're for optimization, like big
  * enough pool size to prevent Map rehash.
  * 
  * @author Cause Chung
@@ -27,7 +25,7 @@ import cuz.my.psmm.data.Data;
 @NotThreadSafe
 public class PsmmConfiguration {
 
-	public static enum FactoryPoolType {
+	public enum FactoryPoolType {
 		MAP
 	}
 
@@ -47,7 +45,8 @@ public class PsmmConfiguration {
 	/**
 	 * Default constructor.
 	 * 
-	 * <p>Provide a way to setup it after construction.
+	 * <p>
+	 * Provide a way to setup it after construction.
 	 */
 	public PsmmConfiguration() {
 		this(DEFAULT_MESSAGE_POOL_SIZE);
@@ -56,7 +55,8 @@ public class PsmmConfiguration {
 	/**
 	 * Create PsmmConfiguration.
 	 * 
-	 * @param messagePoolSize specify initial pool size.
+	 * @param messagePoolSize
+	 *            specify initial pool size.
 	 */
 	public PsmmConfiguration(int messagePoolSize) {
 		this(messagePoolSize, DEFAULT_FACTORYPOOL_TYPE);
@@ -65,7 +65,8 @@ public class PsmmConfiguration {
 	/**
 	 * Create PsmmConfiguration.
 	 * 
-	 * @param factoryPoolChoseType specify concrete factory pool.
+	 * @param factoryPoolChoseType
+	 *            specify concrete factory pool.
 	 */
 	public PsmmConfiguration(FactoryPoolType factoryPoolChoseType) {
 		this(DEFAULT_MESSAGE_POOL_SIZE, factoryPoolChoseType);
@@ -74,8 +75,10 @@ public class PsmmConfiguration {
 	/**
 	 * Create PsmmConfiguration.
 	 * 
-	 * @param messagePoolSize specify initial pool size.
-	 * @param factoryPoolChoseType specify concrete factory pool.
+	 * @param messagePoolSize
+	 *            specify initial pool size.
+	 * @param factoryPoolChoseType
+	 *            specify concrete factory pool.
 	 */
 	public PsmmConfiguration(int messagePoolSize, FactoryPoolType factoryPoolChoseType) {
 		this.messagePoolSize = messagePoolSize;
@@ -124,6 +127,7 @@ public class PsmmConfiguration {
 		this.factoryPoolSize = factoryPoolSize;
 		return this;
 	}
+
 	public PsmmConfiguration setMessagePoolSize(int messagePoolSize) {
 		this.messagePoolSize = messagePoolSize;
 		return this;

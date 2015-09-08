@@ -1,4 +1,4 @@
-package cuz.my.psmm.data;
+package cuz.my.psmm;
 
 import java.io.IOException;
 import java.util.HashMap;

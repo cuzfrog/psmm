@@ -1,11 +1,13 @@
 package cuz.my.psmm;
 
+import java.io.Serializable;
+
 /**
  * Common method interface.
  * @author Cause Chung
  *
  */
-interface MessageCommonInterface {
+interface MessageCommonInterface extends Serializable {
 	/**
 	 * Psmm are not supporting signature right now.
 	 * <p>

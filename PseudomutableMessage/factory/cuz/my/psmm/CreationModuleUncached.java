@@ -1,7 +1,5 @@
 package cuz.my.psmm;
 
-import cuz.my.psmm.data.Data;
-
 final class CreationModuleUncached extends Module {
 
 	public CreationModuleUncached() {
@@ -10,7 +8,7 @@ final class CreationModuleUncached extends Module {
 	}
 
 	@Override
-	public <T> Message<T> createMessage(Messages.Style type,Message<T> messageBeingWrapped, Data data) {
+	public <T> MessageAdaptorInterface<T> createMessage(Messages.Style type,MessageAdaptorInterface<T> messageBeingWrapped, Data data) {
 		// TODO Auto-generated method stub
 		return PsmmSystem.getConcretMessage(type, messageBeingWrapped, data);
 	}

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import cuz.my.psmm.data.Data;
 import cuz.my.psmm.exceptions.PsmmMessageConstructionFailedException;
 
 /**
@@ -32,10 +31,10 @@ final class CreationModuleCached extends Module {
 	}
 
 	@Override
-	public <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data)
+	public <T> MessageAdaptorInterface<T> createMessage(Messages.Style type, MessageAdaptorInterface<T> messageBeingWrapped, Data data)
 			 {
 		Signature signature=calculateSignature(messageBeingWrapped, data);
-		Message<T> message;
+		MessageAdaptorInterface<T> message;
 		if ((message = PsmmSystem.seekMessage(signature)) == null) {
 			message = PsmmSystem.getConcretMessage(type, messageBeingWrapped, data,signature);
 		}
@@ -43,7 +42,7 @@ final class CreationModuleCached extends Module {
 		return message;
 	}
 	
-	private static <T> Signature calculateSignature(Message<T> messageBeingWrapped, Data data){
+	private static <T> Signature calculateSignature(MessageAdaptorInterface<T> messageBeingWrapped, Data data){
 		Data parentData=messageBeingWrapped.readData();
 		Data newData;
 		if(parentData!=null){
