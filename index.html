@@ -87,6 +87,8 @@
             <span class="pl-c">//tell actor message only has one level</span>
         }</pre></div>
 
+<p>Regression is very useful when actors work in pipeline, e.g. actor can simply check and regress a message to redo rather than resend one. </p>
+
 <p>Code example:</p>
 
 <div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.Messages</span>;
@@ -214,7 +216,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 
 <ul>
 <li>
-<strong>Factory</strong> do the real job to store user data and create message. Factory has a final reference of raw message, which means they're paired when their instance are created. The reason to do so is because only factories are store in Factory Pool.</li>
+<strong>Factory</strong> do the real job to store user data and create message. It utilizes the (Builder Pattern)[<a href="https://en.wikipedia.org/wiki/Builder_pattern">https://en.wikipedia.org/wiki/Builder_pattern</a>]. Factory has a final reference of raw message, which means they're paired when their instance are created. The reason to do so is because only factories are store in Factory Pool.</li>
 </ul>
 
 <h4>
@@ -233,7 +235,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is very efficient. When fetching factory, module is assembled into factory according to message's style. </p></li>
+<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient. When fetching factory, module is assembled into factory according to message's style. </p></li>
 <li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
 </ul>
 
@@ -270,14 +272,14 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <h4>
 <a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Javadoc</h4>
 
-<p>I have written complete javadoc, and I'll  upload it.</p>
+<p>I have written complete javadoc.</p>
 
 <h2>
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h2>
 
 <p>Authors:Cause Chung (<a href="https://github.com/cuzfrog" class="user-mention">@cuzfrog</a>)</p>
 
-<p>Any problem, please hit on GitHub or mail me: <a href="mailto:cuzfrog@139.com">cuzfrog@139.com</a> /cuzfrog@gamil.com</p>
+<p>Any problem, please hit me on GitHub or mail me: <a href="mailto:cuzfrog@139.com">cuzfrog@139.com</a> / <a href="mailto:cuzfrog@gamil.com">cuzfrog@gamil.com</a></p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
