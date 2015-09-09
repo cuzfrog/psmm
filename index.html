@@ -181,7 +181,7 @@ B2. <strong>Untyped</strong>: only takes basic immutable object, such as String,
 C1. <strong>Retained</strong>: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. What I'm thinking about is there should be some situation where pool.</em>)
 C2. <strong>Free</strong>(default): Oppose to Retained.
 D1. <strong>Value</strong> (not available now): One message equals another depending on their values.
-D2. <strong>Unique</strong> (not available now): No override to equals() method, message only equals itself.</p>
+D2. <strong>Unique</strong> (default): No override to equals() method, message only equals itself.</p>
 
 <p><em>The word *Style is used for distinguishing from Parameter Type.</em></p>
 
