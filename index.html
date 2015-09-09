@@ -34,7 +34,7 @@
         <h2>
 <a id="project-developing-progress" class="anchor" href="#project-developing-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project developing progress:</h2>
 
-<p>General tests passed, so far actors work fine. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project.</p>
+<p>General tests passed, so far actors work fine, but there are still bunch of flaws. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project, and enlighten me.</p>
 
 <ul>
 <li>[x] Most coding work.</li>
@@ -174,19 +174,14 @@
 
 <p>Psmm includes different *Styles of messages standing for different structures.</p>
 
-<ol>
-<li>
-<strong>Linked</strong>(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.</li>
-<li>
-<strong>Flat</strong>: no decoration, read data from old message and merge them into new message.</li>
-<li>Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.</li>
-<li>
-<strong>Untyped</strong>: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.</li>
-<li>
-<strong>Cached</strong>: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Maybe you can tell me more</em>.)</li>
-<li>
-<strong>Uncached</strong>(default): Oppose to cached.</li>
-</ol>
+<p>A1. <strong>Linked</strong>(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.
+A2. <strong>Flat</strong>: no decoration, read data from old message and merge them into new message.
+B1. Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.
+B2. <strong>Untyped</strong>: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.
+C1. <strong>Retained</strong>: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. What I'm thinking about is there should be some situation where pool.</em>)
+C2. <strong>Free</strong>(default): Oppose to Retained.
+D1. <strong>Value</strong> (not available now): One message equals another depending on their values.
+D2. <strong>Unique</strong> (not available now): No override to equals() method, message only equals itself.</p>
 
 <p><em>The word *Style is used for distinguishing from Parameter Type.</em></p>
 
@@ -235,7 +230,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient. When fetching factory, module is assembled into factory according to message's style. </p></li>
+<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(While there is an unattested debate that cost of pooling and retrieving factories is less than create new factories?). When fetching factory, module is assembled into factory according to message's style. </p></li>
 <li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
 </ul>
 
