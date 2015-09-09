@@ -1,9 +1,9 @@
 package cuz.my.psmm;
 
-final class CreationModuleUncached extends Module {
+final class CreationModuleFree extends Module {
 
-	public CreationModuleUncached() {
-		super(null,"Uncached");
+	public CreationModuleFree() {
+		super(null,"Free");
 		// TODO Auto-generated constructor stub
 	}
 

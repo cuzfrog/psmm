@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import cuz.my.psmm.exceptions.PsmmMessageConstructionFailedException;
 
 /**
- * Factory module for creating cached message.
+ * Factory module for creating retained message.
  * <p>
  * When its createMessage method is called, it first checks if there is message
  * with the same Signature in the message pool. If there's not, it creates one
@@ -23,10 +23,10 @@ import cuz.my.psmm.exceptions.PsmmMessageConstructionFailedException;
  * @author Cause Chung
  *
  */
-final class CreationModuleCached extends Module {
+final class CreationModuleRetained extends Module {
 
-	public CreationModuleCached() {
-		super(null, "Cached");
+	public CreationModuleRetained() {
+		super(null, "Retained");
 		// CreationModule is at the bottom of the chain.
 	}
 

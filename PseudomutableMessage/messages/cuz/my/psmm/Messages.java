@@ -30,23 +30,23 @@ public abstract class Messages implements MessageCommonInterface {
 	 *
 	 */
 	public enum Style {
-		LINKED_MAP, FLAT_MAP, CACHED_LINKED_MAP, CACHED_FLAT_MAP;
+		LINKED_MAP, FLAT_MAP, RETAINED_LINKED_MAP, RETAINED_FLAT_MAP;
 
 		private boolean isCached;
 		private String name;
 
 		private Style() {
-			this.isCached = this.toString().contains("CACHED");
+			this.isCached = this.toString().contains("RETAINED");
 			this.initiateName();
 		}
 
 		private void initiateName() {
 			StringBuilder nameBuilder = new StringBuilder();
 			String originalName = this.toString();
-			if (originalName.contains("CACHED")) {
-				nameBuilder.append("Cached");
+			if (originalName.contains("RETAINED")) {
+				nameBuilder.append("Retained");
 			} else {
-				nameBuilder.append("Uncached");
+				nameBuilder.append("Free");
 			} // creation attribute
 
 			if (originalName.contains("LINKED")) {

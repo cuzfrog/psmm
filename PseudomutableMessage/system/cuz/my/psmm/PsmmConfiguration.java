@@ -11,10 +11,10 @@ import java.util.Map;
  * Constructor or set-method both do configuration work. PsmmSystem will create
  * a default PsmmConfiguration if you don't specify one.
  * <p>
- * Default message pool initial size is 0, which means there will
- * not be any message being cached. Default factory pool initial size is
+ * Default message pool size is 0, which means there will
+ * not be any message being pooled. Default factory pool size is
  * 16, this should be set more than the
- * threads ID there'll be.
+ * threads ID there'll be. 
  * <p>
  * However these configurations are not vital. They're for optimization, like big
  * enough pool size to prevent Map rehash.

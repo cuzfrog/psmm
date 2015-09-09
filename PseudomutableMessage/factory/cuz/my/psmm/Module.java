@@ -64,8 +64,8 @@ abstract class Module {
 		Set<Module> creationSet = new HashSet<>();
 		Set<Module> structureSet = new HashSet<>();
 		Set<Module> dataSet = new HashSet<>();
-		creationSet.add(new CreationModuleCached());
-		creationSet.add(new CreationModuleUncached());
+		creationSet.add(new CreationModuleRetained());
+		creationSet.add(new CreationModuleFree());
 		// new creation module add here
 
 		for (Module creation : creationSet) {

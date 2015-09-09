@@ -81,7 +81,7 @@ public final class PsmmSystem {
 	 */
 	static <T> MessageAdaptorInterface<T> getConcretMessage(Messages.Style type,
 			MessageAdaptorInterface<T> messageBeingWrapped, Data data) {
-		return new UncachedMessage<>(type, messageBeingWrapped, data);
+		return new FreeMessage<>(type, messageBeingWrapped, data);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public final class PsmmSystem {
 	 */
 	static <T> MessageAdaptorInterface<T> getConcretMessage(Messages.Style type,
 			MessageAdaptorInterface<T> messageBeingWrapped, Data data, Signature signature) {
-		MessageAdaptorInterface<T> message = new CachedMessage<>(type, messageBeingWrapped,
+		MessageAdaptorInterface<T> message = new RetainedMessage<>(type, messageBeingWrapped,
 				data, signature);
 		instance.messagePool.put(signature, message);
 		return message;
