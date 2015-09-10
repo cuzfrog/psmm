@@ -287,58 +287,71 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <td>± 1.462</td>
 <td>ns/op</td>
 </tr>
+</tbody>
+</table>
+
+<p>testCreateControlMessage | avgt  | 20 | 235.448 | ± 0.094 | ns/op
+testCreateTypedFlat    |   avgt |  20 | 168.050 | ± 1.087 | ns/op
+testCreateTypedLinked  |   avgt  | 20 | 213.511 | ± 2.694 | ns/op
+testCreateUntypedFlat  |   avgt |  20 | 191.293 | ± 0.881 | ns/op
+testCreateUntypedLinked |  avgt |  20 | 181.576 | ± 0.567 | ns/op</p>
+
+<p><strong><a href="https://github.com/creating" class="user-mention">@creating</a> new factory</strong>(20 round tests are approximately the same)</p>
+
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Mode</th>
+<th>Cnt</th>
+<th>Score</th>
+<th>Error</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td>testCreateControlMessage</td>
 <td>avgt</td>
-<td>20</td>
-<td>235.448</td>
-<td>± 0.094</td>
+<td>10</td>
+<td>237.776</td>
+<td>± 0.188</td>
 <td>ns/op</td>
 </tr>
 <tr>
 <td>testCreateTypedFlat</td>
 <td>avgt</td>
-<td>20</td>
-<td>168.050</td>
-<td>± 1.087</td>
+<td>10</td>
+<td>213.812</td>
+<td>± 1.271</td>
 <td>ns/op</td>
 </tr>
 <tr>
 <td>testCreateTypedLinked</td>
 <td>avgt</td>
-<td>20</td>
-<td>213.511</td>
-<td>± 2.694</td>
+<td>10</td>
+<td>212.814</td>
+<td>± 0.105</td>
 <td>ns/op</td>
 </tr>
 <tr>
 <td>testCreateUntypedFlat</td>
 <td>avgt</td>
-<td>20</td>
-<td>191.293</td>
-<td>± 0.881</td>
+<td>10</td>
+<td>213.675</td>
+<td>± 2.062</td>
 <td>ns/op</td>
 </tr>
 <tr>
 <td>testCreateUntypedLinked</td>
 <td>avgt</td>
-<td>20</td>
-<td>181.576</td>
-<td>± 0.567</td>
+<td>10</td>
+<td>212.700</td>
+<td>± 0.143</td>
 <td>ns/op</td>
 </tr>
 </tbody>
 </table>
-
-<p><strong><a href="https://github.com/creating" class="user-mention">@creating</a> new factory</strong>(20 round tests are approximately the same)</p>
-
-<p>Benchmark                 Mode  Cnt    Score   Error  Units
------------- | ------------- | ------------- | -------------  | -------------  | -------------<br>
-testCreateControlMessage | avgt  | 10 | 237.776 | ± 0.188 | ns/op
-testCreateTypedFlat    |   avgt  | 10 | 213.812 | ± 1.271 | ns/op
-testCreateTypedLinked  |   avgt |  10 | 212.814 | ± 0.105 | ns/op
-testCreateUntypedFlat   |  avgt  | 10 | 213.675 | ± 2.062 | ns/op
-testCreateUntypedLinked |  avgt  | 10 | 212.700 | ± 0.143 | ns/op</p>
 
 <p><em>Tested with jmh: 10-20 warmups, 10-20 rounds, 8 threads. Tests simple create a new message and set a pair of random key and Integer. Control message(immutable) is created via two Maps, one as temporary data vehicle when creating, another as data field. HW: xeon E3 1230v2, 16G DDR3 1600. OS: Windows, Oracle JDK 1.8.0_51. See source file for more detail.</em></p>
 
