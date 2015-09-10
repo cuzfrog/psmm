@@ -233,26 +233,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </li>
 </ul>
 
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content from cell 1</td>
-<td>Content from cell 2</td>
-</tr>
-<tr>
-<td>Content in the first column</td>
-<td>Content in the second column</td>
-</tr>
-</tbody>
-</table>
-
-<p><strong>with factory pooled:</strong></p>
+<p><strong><a href="https://github.com/with" class="user-mention">@with</a> factory pooled:</strong></p>
 
 <table>
 <thead>
@@ -306,18 +287,60 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <td>± 1.462</td>
 <td>ns/op</td>
 </tr>
+<tr>
+<td>testCreateControlMessage</td>
+<td>avgt</td>
+<td>20</td>
+<td>235.448</td>
+<td>± 0.094</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedFlat</td>
+<td>avgt</td>
+<td>20</td>
+<td>168.050</td>
+<td>± 1.087</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedLinked</td>
+<td>avgt</td>
+<td>20</td>
+<td>213.511</td>
+<td>± 2.694</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedFlat</td>
+<td>avgt</td>
+<td>20</td>
+<td>191.293</td>
+<td>± 0.881</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedLinked</td>
+<td>avgt</td>
+<td>20</td>
+<td>181.576</td>
+<td>± 0.567</td>
+<td>ns/op</td>
+</tr>
 </tbody>
 </table>
 
-<p><strong>creating new factory</strong>
-Benchmark                 Mode  Cnt    Score   Error  Units
-testCreateControlMessage  avgt   10  237.776 ± 0.188  ns/op
-testCreateTypedFlat       avgt   10  213.812 ± 1.271  ns/op
-testCreateTypedLinked     avgt   10  212.814 ± 0.105  ns/op
-testCreateUntypedFlat     avgt   10  213.675 ± 2.062  ns/op
-testCreateUntypedLinked   avgt   10  212.700 ± 0.143  ns/op</p>
+<p><strong><a href="https://github.com/creating" class="user-mention">@creating</a> new factory</strong>(20 round tests are approximately the same)</p>
 
-<p><em>10 warmups, 10 rounds, 8 threads. Tests simple create a new message and set a pair of random key and Integer. Control message(immutable) is created via two Maps, one as temporary data vehicle when creating, another as data field.  See source file for more detail.</em></p>
+<p>Benchmark                 Mode  Cnt    Score   Error  Units
+------------ | ------------- | ------------- | -------------  | -------------  | -------------<br>
+testCreateControlMessage | avgt  | 10 | 237.776 | ± 0.188 | ns/op
+testCreateTypedFlat    |   avgt  | 10 | 213.812 | ± 1.271 | ns/op
+testCreateTypedLinked  |   avgt |  10 | 212.814 | ± 0.105 | ns/op
+testCreateUntypedFlat   |  avgt  | 10 | 213.675 | ± 2.062 | ns/op
+testCreateUntypedLinked |  avgt  | 10 | 212.700 | ± 0.143 | ns/op</p>
+
+<p><em>Tested with jmh: 10-20 warmups, 10-20 rounds, 8 threads. Tests simple create a new message and set a pair of random key and Integer. Control message(immutable) is created via two Maps, one as temporary data vehicle when creating, another as data field. HW: xeon E3 1230v2, 16G DDR3 1600. OS: Windows, Oracle JDK 1.8.0_51. See source file for more detail.</em></p>
 
 <ul>
 <li>
@@ -342,8 +365,7 @@ testCreateUntypedLinked   avgt   10  212.700 ± 0.143  ns/op</p>
 <p>How to setup:</p>
 
 <div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmConfiguration</span> config<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">PsmmConfiguration</span>()
-                        .setMessagePoolSize(<span class="pl-c1">6000</span>)
-                        .setFactoryPoolSize(<span class="pl-c1">24</span>)
+                            .setFactoryPoolChoseType(<span class="pl-smi">FactoryPoolType</span><span class="pl-c1"><span class="pl-k">.</span>NULL</span>) <span class="pl-c">//no factory pooling</span>
                         <span class="pl-c1">...</span>
         <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(config);</pre></div>
 
