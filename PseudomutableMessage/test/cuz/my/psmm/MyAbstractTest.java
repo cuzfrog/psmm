@@ -94,7 +94,7 @@ public abstract class MyAbstractTest {
 	 * initiate PsmmSystem.
 	 */
 	public static void initiate(int messagePoolSize) {
-		PsmmSystem.initiate(new PsmmConfiguration(messagePoolSize));
+		PsmmSystem.initiate(new PsmmConfiguration());
 
 	}
 

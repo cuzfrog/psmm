@@ -1,8 +1,7 @@
 package cuz.my.psmm;
 
 /**
- * Class that manages FactoryPool and MessagePool and provides static
- * methods.
+ * Class that manages FactoryPool and MessagePool and provides static methods.
  * 
  * <p>
  * Before using Psmm, You need to explicitly call static methods
@@ -23,15 +22,20 @@ public final class PsmmSystem {
 
 	// pool members:
 	private FactoryPool factoryPool;
-	private MessagePool messagePool;
 
 	private PsmmSystem(PsmmConfiguration config) {
-		factoryPool = new MapFactoryPool(config.getFactoryPoolSize());
-		if (config.getMessagePoolSize() > 0) {
-			messagePool = new MapMessagePool(config.getMessagePoolSize());
-		} else {
-			messagePool = new NullMessagePool();
+		switch (config.getFactoryPoolChoseType()) {
+		case MAP:
+			factoryPool = new MapFactoryPool(config);
+			break;
+		case NULL:
+			factoryPool = new NullFactoryPool(config);
+			break;
+		default:
+			break;
 		}
+
+		
 	}
 
 	/**
@@ -54,17 +58,11 @@ public final class PsmmSystem {
 
 	// utility methods:----------------
 	// create raw message:
-	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type,
-			MessageAdaptorInterface<T> messageBeingWrapped) {
+	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, MessageAdaptorInterface<T> messageBeingWrapped) {
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractRawMessage<T> rawMessage = factory.getRawMessage();
 		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
 		return rawMessage;
-	}
-
-	@SuppressWarnings("unchecked")
-	static <T> MessageAdaptorInterface<T> seekMessage(Signature signature) {
-		return (MessageAdaptorInterface<T>) instance.messagePool.get(signature);
 	}
 
 	static <T> MessageAdaptorInterface<T> getRootMessage() {
@@ -72,7 +70,7 @@ public final class PsmmSystem {
 	}
 
 	/**
-	 * Create and return a uncached message. 
+	 * Create and return a uncached message.
 	 * 
 	 * @param type
 	 * @param messageBeingWrapped
@@ -82,24 +80,6 @@ public final class PsmmSystem {
 	static <T> MessageAdaptorInterface<T> getConcretMessage(Messages.Style type,
 			MessageAdaptorInterface<T> messageBeingWrapped, Data data) {
 		return new FreeMessage<>(type, messageBeingWrapped, data);
-	}
-
-	/**
-	 * Create and return a cached message. An
-	 * instance will be created and put into message pool.
-	 * 
-	 * @param type
-	 * @param messageBeingWrapped
-	 * @param data
-	 * @param signature message's pseudo-unique signature that for pool check
-	 * @return a new cached message
-	 */
-	static <T> MessageAdaptorInterface<T> getConcretMessage(Messages.Style type,
-			MessageAdaptorInterface<T> messageBeingWrapped, Data data, Signature signature) {
-		MessageAdaptorInterface<T> message = new RetainedMessage<>(type, messageBeingWrapped,
-				data, signature);
-		instance.messagePool.put(signature, message);
-		return message;
 	}
 
 	// factory bridge:

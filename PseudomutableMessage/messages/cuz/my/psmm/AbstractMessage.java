@@ -11,7 +11,7 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * @author Cause Chung
  *
  * @param <T>
- *            The Message<T> it contains.
+ *            parameter type.
  */
 abstract class AbstractMessage<T> implements MessageAdaptorInterface<T> {
 

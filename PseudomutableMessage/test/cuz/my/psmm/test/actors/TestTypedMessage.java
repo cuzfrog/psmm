@@ -38,17 +38,4 @@ public class TestTypedMessage extends TestAbstractActorSimulation {
 		assertFalse(threadFailKey.get());
 	}
 
-	@Test
-	public void testTypedCachedLinkedMap() {
-		threadFailKey.set(false);
-		typedTest(Style.RETAINED_LINKED_MAP,Integer.class);
-		assertFalse(threadFailKey.get());
-	}
-
-	@Test
-	public void testTypedCachedFlatMap() {
-		threadFailKey.set(false);
-		typedTest(Style.RETAINED_FLAT_MAP,Integer.class);
-		assertFalse(threadFailKey.get());
-	}
 }

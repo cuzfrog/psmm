@@ -14,34 +14,34 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Cause Chung
  *
  */
-class MapFactoryPool implements FactoryPool {
+final class MapFactoryPool extends AbstractFactoryPool {
 
 	private final Map<Long, PsmmFactory> pool;
-	private final Map<String, Module> modules;
+	
 
-	MapFactoryPool(int initialSize) {
-		pool = new ConcurrentHashMap<>(initialSize);
-		modules = Module.createModuleMap();
+	MapFactoryPool(PsmmConfiguration config) {
+		super(config);
+		pool = new ConcurrentHashMap<>(config.getFactoryPoolSize());
 
 		// modules.putAll(config.getCustomModules());
-		// because I want factory invisible from outside,it doesn't support
-		// custom module for now.
+				// because I want factory invisible from outside,it doesn't support
+				// custom module for now.
 	}
 
 	// Functionalities:
 	@Override
-	public PsmmFactory seekFactory(Messages.Style type) {
+	protected PsmmFactory createOrFetch() {
 		@SuppressWarnings("boxing") 
 		Long threadId = Thread.currentThread().getId();
 		PsmmFactory psmmFactory;
-		String name = type.getName();
+		
 		if (pool.containsKey(threadId)) {
 			psmmFactory = pool.get(threadId);
 		} else {
 			psmmFactory = new PsmmFactoryImpl();
 			pool.put(threadId, psmmFactory);
 		}
-		psmmFactory.assemble(modules.get(name), type);
+		
 		return psmmFactory;
 	}
 }

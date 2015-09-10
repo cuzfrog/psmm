@@ -38,19 +38,6 @@ public class TestUntypedMessage extends TestAbstractActorSimulation {
 		assertFalse(threadFailKey.get());
 	}
 
-	@Test
-	public void testUntypedCachedLinkedMap() {
-		threadFailKey.set(false);
-		untypedTest(Style.RETAINED_LINKED_MAP);
-		assertFalse(threadFailKey.get());
-	}
-
-	@Test
-	public void testUntypedCachedFlatMap() {
-		threadFailKey.set(false);
-		untypedTest(Style.RETAINED_FLAT_MAP);
-		assertFalse(threadFailKey.get());
-	}
 	
 	
 }

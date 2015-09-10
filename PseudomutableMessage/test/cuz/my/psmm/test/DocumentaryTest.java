@@ -24,7 +24,6 @@ class DocumentaryTest {
 		
 		
 		PsmmConfiguration config=new PsmmConfiguration()
-						.setMessagePoolSize(6000)
 						.setFactoryPoolSize(24);
 		PsmmSystem.initiate(config);
 	}

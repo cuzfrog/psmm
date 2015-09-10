@@ -30,7 +30,7 @@ public abstract class Messages implements MessageCommonInterface {
 	 *
 	 */
 	public enum Style {
-		LINKED_MAP, FLAT_MAP, RETAINED_LINKED_MAP, RETAINED_FLAT_MAP;
+		LINKED_MAP, FLAT_MAP;
 
 		private boolean isCached;
 		private String name;
