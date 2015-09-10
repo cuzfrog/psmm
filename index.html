@@ -178,8 +178,7 @@
 A2. <strong>Flat</strong>: no decoration, read data from old message and merge them into new message.
 B1. Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.
 B2. <strong>Untyped</strong>: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.
-C1. <strong>Retained</strong>: references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to cache small object in modern JVM? I'm working on this issue and refactoring this algorithm. Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. What I'm thinking about is there should be some situation where pool.</em>)
-C2. <strong>Free</strong>(default): Oppose to Retained.
+C. Retained(deprecated): references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to retain small object in modern JVM? Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. For now I deprecated this feature. All message will be newly created.</em>)
 D1. <strong>Value</strong> (not available now): One message equals another depending on their values.
 D2. <strong>Unique</strong> (default): No override to equals() method, message only equals itself.</p>
 
@@ -230,8 +229,99 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(While there is an unattested debate that cost of pooling and retrieving factories is less than create new factories?). When fetching factory, module is assembled into factory according to message's style. </p></li>
-<li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
+<li>
+<strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content from cell 1</td>
+<td>Content from cell 2</td>
+</tr>
+<tr>
+<td>Content in the first column</td>
+<td>Content in the second column</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>with factory pooled:</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Mode</th>
+<th>Cnt</th>
+<th>Score</th>
+<th>Error</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCreateControlMessage</td>
+<td>avgt</td>
+<td>10</td>
+<td>235.594</td>
+<td>± 0.153</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedFlat</td>
+<td>avgt</td>
+<td>10</td>
+<td>236.712</td>
+<td>± 3.648</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedLinked</td>
+<td>avgt</td>
+<td>10</td>
+<td>201.881</td>
+<td>± 1.246</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedFlat</td>
+<td>avgt</td>
+<td>10</td>
+<td>229.547</td>
+<td>± 2.261</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedLinked</td>
+<td>avgt</td>
+<td>10</td>
+<td>186.735</td>
+<td>± 1.462</td>
+<td>ns/op</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>creating new factory</strong>
+Benchmark                 Mode  Cnt    Score   Error  Units
+testCreateControlMessage  avgt   10  237.776 ± 0.188  ns/op
+testCreateTypedFlat       avgt   10  213.812 ± 1.271  ns/op
+testCreateTypedLinked     avgt   10  212.814 ± 0.105  ns/op
+testCreateUntypedFlat     avgt   10  213.675 ± 2.062  ns/op
+testCreateUntypedLinked   avgt   10  212.700 ± 0.143  ns/op</p>
+
+<p><em>10 warmups, 10 rounds, 8 threads. Tests simple create a new message and set a pair of random key and Integer. Control message(immutable) is created via two Maps, one as temporary data vehicle when creating, another as data field.  See source file for more detail.</em></p>
+
+<ul>
+<li>
+<strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</li>
 </ul>
 
 <h4>
