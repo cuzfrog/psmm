@@ -17,6 +17,9 @@ import cuz.my.psmm.Messages;
 import cuz.my.psmm.Messages.Style;
 import cuz.my.psmm.MyAbstractTest;
 import cuz.my.psmm.Pair;
+import cuz.my.psmm.PsmmConfiguration;
+import cuz.my.psmm.PsmmConfiguration.FactoryPoolType;
+import cuz.my.psmm.PsmmSystem;
 import cuz.my.psmm.TMessage;
 import cuz.my.psmm.UMessage;
 import cuz.my.psmm.UntypedRawMessage;
@@ -96,7 +99,9 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 
 	// before
 	public void setUp() throws Exception {
-		initiate(60000);
+		PsmmConfiguration config=new PsmmConfiguration();
+		config.setFactoryPoolChoseType(FactoryPoolType.NULL); //test no factory pool
+		PsmmSystem.initiate(config);
 		//initiate Psmm with message cache capacity.
 		threadFinishKey.set(false);
 		system.actorSelection("/user/listener").tell(this, ActorRef.noSender());

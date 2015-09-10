@@ -2,6 +2,7 @@ package cuz.my.psmm.test;
 
 import cuz.my.psmm.Messages;
 import cuz.my.psmm.PsmmConfiguration;
+import cuz.my.psmm.PsmmConfiguration.FactoryPoolType;
 import cuz.my.psmm.PsmmSystem;
 import cuz.my.psmm.TMessage;
 import cuz.my.psmm.UMessage;
@@ -24,6 +25,7 @@ class DocumentaryTest {
 		
 		
 		PsmmConfiguration config=new PsmmConfiguration()
+				        .setFactoryPoolChoseType(FactoryPoolType.NULL)
 						.setFactoryPoolSize(24);
 		PsmmSystem.initiate(config);
 	}
