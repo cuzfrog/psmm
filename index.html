@@ -229,12 +229,11 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </p></li>
+<li>
+<strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </li>
 </ul>
 
-<ol>
-<li><strong>with factory pooled:(10 rounds)</strong></li>
-</ol>
+<p><strong>1. with factory pooled:(10 rounds)</strong></p>
 
 <table>
 <thead>
@@ -291,9 +290,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 </tbody>
 </table>
 
-<ol>
-<li><strong>with factory pooled:(20 rounds)</strong></li>
-</ol>
+<p><strong>2. with factory pooled:(20 rounds)</strong></p>
 
 <table>
 <thead>
@@ -350,10 +347,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 </tbody>
 </table>
 
-<ol>
-<li>
-<strong><a href="https://github.com/creating" class="user-mention">@creating</a> new factory</strong>(20 round tests are approximately the same)</li>
-</ol>
+<p><strong>3. creating new factory</strong>(20 round tests are approximately the same)</p>
 
 <table>
 <thead>
@@ -434,10 +428,10 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 
 <p>How to setup:</p>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmConfiguration</span> config<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">PsmmConfiguration</span>()
-                            .setFactoryPoolChoseType(<span class="pl-smi">FactoryPoolType</span><span class="pl-c1"><span class="pl-k">.</span>NULL</span>) <span class="pl-c">//no factory pooling</span>
-                        <span class="pl-c1">...</span>
-        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(config);</pre></div>
+<div class="highlight highlight-java"><pre><span class="pl-smi">PsmmConfiguration</span> config<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">PsmmConfiguration</span>()
+            .setFactoryPoolChoseType(<span class="pl-smi">FactoryPoolType</span><span class="pl-c1"><span class="pl-k">.</span>NULL</span>) <span class="pl-c">//no factory pooling</span>
+            <span class="pl-c1">...</span>
+<span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(config);</pre></div>
 
 <h4>
 <a id="performance" class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance</h4>
