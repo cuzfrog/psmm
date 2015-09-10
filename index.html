@@ -229,11 +229,12 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li>
-<strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </li>
+<li><p><strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </p></li>
 </ul>
 
-<p><strong><a href="https://github.com/with" class="user-mention">@with</a> factory pooled:</strong></p>
+<ol>
+<li><strong>with factory pooled:(10 rounds)</strong></li>
+</ol>
 
 <table>
 <thead>
@@ -290,13 +291,69 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 </tbody>
 </table>
 
-<p>testCreateControlMessage | avgt  | 20 | 235.448 | ± 0.094 | ns/op
-testCreateTypedFlat    |   avgt |  20 | 168.050 | ± 1.087 | ns/op
-testCreateTypedLinked  |   avgt  | 20 | 213.511 | ± 2.694 | ns/op
-testCreateUntypedFlat  |   avgt |  20 | 191.293 | ± 0.881 | ns/op
-testCreateUntypedLinked |  avgt |  20 | 181.576 | ± 0.567 | ns/op</p>
+<ol>
+<li><strong>with factory pooled:(20 rounds)</strong></li>
+</ol>
 
-<p><strong><a href="https://github.com/creating" class="user-mention">@creating</a> new factory</strong>(20 round tests are approximately the same)</p>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Mode</th>
+<th>Cnt</th>
+<th>Score</th>
+<th>Error</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCreateControlMessage</td>
+<td>avgt</td>
+<td>20</td>
+<td>235.448</td>
+<td>± 0.094</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedFlat</td>
+<td>avgt</td>
+<td>20</td>
+<td>168.050</td>
+<td>± 1.087</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedLinked</td>
+<td>avgt</td>
+<td>20</td>
+<td>213.511</td>
+<td>± 2.694</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedFlat</td>
+<td>avgt</td>
+<td>20</td>
+<td>191.293</td>
+<td>± 0.881</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedLinked</td>
+<td>avgt</td>
+<td>20</td>
+<td>181.576</td>
+<td>± 0.567</td>
+<td>ns/op</td>
+</tr>
+</tbody>
+</table>
+
+<ol>
+<li>
+<strong><a href="https://github.com/creating" class="user-mention">@creating</a> new factory</strong>(20 round tests are approximately the same)</li>
+</ol>
 
 <table>
 <thead>
