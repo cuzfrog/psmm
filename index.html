@@ -174,13 +174,19 @@
 
 <p>Psmm includes different *Styles of messages standing for different structures.</p>
 
-<p>A1. <strong>Linked</strong>(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.
-A2. <strong>Flat</strong>: no decoration, read data from old message and merge them into new message.
-B1. Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.
-B2. <strong>Untyped</strong>: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.
-C. Retained(deprecated): references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to retain small object in modern JVM? Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. For now I deprecated this feature. All message will be newly created.</em>)
-D1. <strong>Value</strong> (not available now): One message equals another depending on their values.
-D2. <strong>Unique</strong> (default): No override to equals() method, message only equals itself.</p>
+<p>A1. <strong>Linked</strong>(default): decorate old message when every setting. When getting data, first check keys in newest message, then the last one. This is the fast way to create new object, because when you create it, you don't care about the old data.But when the chain is long, it'll be slower to fetch some data. It also provides a way to regress a message: shell the outermost message, return the inner one.</p>
+
+<p>A2. <strong>Flat</strong>: no decoration, read data from old message and merge them into new message.</p>
+
+<p>B1. Typed: need to explicitly indicate Generic parameter Type. Thus gives flexibility to put user defined data object into message.</p>
+
+<p>B2. <strong>Untyped</strong>: only takes basic immutable object, such as String, Integer etc. When retrieving data, need to cast.</p>
+
+<p>C. Retained(deprecated): references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to retain small object in modern JVM? Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. For now I deprecated this feature. All message will be newly created.</em>)</p>
+
+<p>D1. <strong>Value</strong> (not available now): One message equals another depending on their values.</p>
+
+<p>D2. <strong>Unique</strong> (default): No override to equals() method, message only equals itself.</p>
 
 <p><em>The word *Style is used for distinguishing from Parameter Type.</em></p>
 
@@ -210,7 +216,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 
 <ul>
 <li>
-<strong>Factory</strong> do the real job to store user data and create message. It utilizes the (Builder Pattern)[<a href="https://en.wikipedia.org/wiki/Builder_pattern">https://en.wikipedia.org/wiki/Builder_pattern</a>]. Factory has a final reference of raw message, which means they're paired when their instance are created. The reason to do so is because only factories are store in Factory Pool.</li>
+<strong>Factory</strong> do the real job to store user data and create message. It utilizes the <a href="https://en.wikipedia.org/wiki/Builder_pattern">Builder Pattern</a>. Factory has a final reference of raw message, which means they're paired when their instance are created. The reason to do so is because only factories are store in Factory Pool.</li>
 </ul>
 
 <h4>
