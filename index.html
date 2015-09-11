@@ -239,6 +239,8 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </li>
 </ul>
 
+<p>I eliminated the possibility that factory pool could cause memory leak by using a background thread to periodically check the map size and empty it. However this adds overhead, though you can configure the size limitation and period. Think about how many thread ids could be accumulated? If not worth considering, turn off the size check.</p>
+
 <p><strong>1. with factory pooled:(10 rounds)</strong></p>
 
 <table>
