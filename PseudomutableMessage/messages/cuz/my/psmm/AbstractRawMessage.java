@@ -11,14 +11,14 @@ abstract class AbstractRawMessage<T> implements TypedRawMessage<T>, UntypedRawMe
 		this.psmmFactory = psmmFactory;
 	}
 
-	protected MessageAdaptorInterface<T> messageBeingWrapped;
+	protected Message<T> messageBeingWrapped;
 
 	@Override
 	public AbstractMessage<T> cook() {
 		return (AbstractMessage<T>) psmmFactory.commit(messageBeingWrapped);
 	}
 
-	void setMessageBeingWrapped(MessageAdaptorInterface<T> messageBeingWrapped) {
+	void setMessageBeingWrapped(Message<T> messageBeingWrapped) {
 		this.messageBeingWrapped = messageBeingWrapped;
 	}
 

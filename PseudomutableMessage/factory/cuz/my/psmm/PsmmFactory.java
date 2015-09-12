@@ -32,7 +32,7 @@ interface PsmmFactory {
 	 * @param messageBeingWrapped
 	 * @return new message.
 	 */
-	public abstract <T> MessageAdaptorInterface<T> commit(MessageAdaptorInterface<T> messageBeingWrapped);
+	public abstract <T> Message<T> commit(Message<T> messageBeingWrapped);
 
 	/**
 	 * Set datum to the factory, prepare for a new message.

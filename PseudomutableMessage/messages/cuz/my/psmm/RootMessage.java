@@ -3,7 +3,7 @@ package cuz.my.psmm;
 import java.util.Map;
 
 @StateLess
-enum RootMessage implements MessageAdaptorInterface<Object> {
+enum RootMessage implements Message<Object> {
 
 	INSTANCE;
 	private static final long serialVersionUID = 1L;
@@ -11,8 +11,8 @@ enum RootMessage implements MessageAdaptorInterface<Object> {
 	// -------------------utility behavior:
 
 	@SuppressWarnings("unchecked")
-	public static <T> MessageAdaptorInterface<T> getInstance() {
-		return (MessageAdaptorInterface<T>) INSTANCE;
+	public static <T> Message<T> getInstance() {
+		return (Message<T>) INSTANCE;
 	}
 
 	// -------------------message behavior:
@@ -37,7 +37,7 @@ enum RootMessage implements MessageAdaptorInterface<Object> {
 	}
 
 	@Override
-	public MessageAdaptorInterface<Object> regress() {		
+	public Message<Object> regress() {		
 		return null;
 	}
 

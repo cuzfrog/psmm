@@ -82,7 +82,7 @@ public abstract class Messages implements MessageCommonInterface {
 	 * @return UntypedRawMessage.
 	 */
 	public static UntypedRawMessage create(Messages.Style messageType) {
-		MessageAdaptorInterface<Object> rootMessage = RootMessage.getInstance();
+		Message<Object> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}
@@ -116,7 +116,7 @@ public abstract class Messages implements MessageCommonInterface {
 	 */
 	public static <T> TypedRawMessage<T> create(Messages.Style messageType, Class<T> c) {
 
-		MessageAdaptorInterface<T> rootMessage = RootMessage.getInstance();
+		Message<T> rootMessage = RootMessage.getInstance();
 		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}

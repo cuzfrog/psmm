@@ -9,7 +9,7 @@ final class StructureModuleFlat extends Module {
 	}
 
 	@Override
-	public <T> MessageAdaptorInterface<T> createMessage(Messages.Style type, MessageAdaptorInterface<T> messageBeingWrapped, Data data) {
+	public <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
 		Data parentData = messageBeingWrapped.readData();
 		Data newDataToPutInto;
 		if (parentData != null) {
@@ -17,7 +17,7 @@ final class StructureModuleFlat extends Module {
 		}else{
 			newDataToPutInto=data;
 		}
-		MessageAdaptorInterface<T> rootMessage = PsmmSystem.getRootMessage();
+		Message<T> rootMessage = PsmmSystem.getRootMessage();
 		return this.getCollaberativeModule().createMessage(type, rootMessage, newDataToPutInto);
 	}
 

@@ -58,14 +58,14 @@ public final class PsmmSystem {
 
 	// utility methods:----------------
 	// create raw message:
-	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, MessageAdaptorInterface<T> messageBeingWrapped) {
+	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, Message<T> messageBeingWrapped) {
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractRawMessage<T> rawMessage = factory.getRawMessage();
 		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
 		return rawMessage;
 	}
 
-	static <T> MessageAdaptorInterface<T> getRootMessage() {
+	static <T> Message<T> getRootMessage() {
 		return RootMessage.getInstance();
 	}
 
@@ -77,8 +77,8 @@ public final class PsmmSystem {
 	 * @param data
 	 * @return a new cached message
 	 */
-	static <T> MessageAdaptorInterface<T> getConcretMessage(Messages.Style type,
-			MessageAdaptorInterface<T> messageBeingWrapped, Data data) {
+	static <T> Message<T> getConcretMessage(Messages.Style type,
+			Message<T> messageBeingWrapped, Data data) {
 		return new FreeMessage<>(type, messageBeingWrapped, data);
 	}
 

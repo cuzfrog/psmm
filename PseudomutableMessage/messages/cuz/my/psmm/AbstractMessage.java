@@ -13,18 +13,18 @@ import cuz.my.psmm.exceptions.PsmmCannotRegressExeption;
  * @param <T>
  *            parameter type.
  */
-abstract class AbstractMessage<T> implements MessageAdaptorInterface<T> {
+abstract class AbstractMessage<T> implements Message<T> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected final MessageAdaptorInterface<T> parent;
+	protected final Message<T> parent;
 	protected final Data data;
 	protected final int depth;
 	protected final Messages.Style type;
 
-	protected AbstractMessage(Messages.Style type, MessageAdaptorInterface<T> parent, Data data) {
+	protected AbstractMessage(Messages.Style type, Message<T> parent, Data data) {
 		super();
 		this.parent = parent;
 		this.data = data;
@@ -96,7 +96,7 @@ abstract class AbstractMessage<T> implements MessageAdaptorInterface<T> {
 	// ------------UntypedMessage behaviors:
 
 	@Override
-	public MessageAdaptorInterface<T> regress() throws PsmmCannotRegressExeption {
+	public Message<T> regress() throws PsmmCannotRegressExeption {
 		if (depth == 1) {
 			throw new PsmmCannotRegressExeption();
 		}
