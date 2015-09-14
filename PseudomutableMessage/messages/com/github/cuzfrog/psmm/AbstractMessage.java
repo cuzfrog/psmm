@@ -112,45 +112,45 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Short value) {
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Long value) {
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Boolean value) {
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Float value) {
 
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Double value) {
 
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Character value) {
 
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, Byte value) {
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	@Override
 	public AbstractRawMessage<T> set(String key, String value) {
-		return PsmmSystem.fetchRaw(this.type, this).set(key, value);
+		return raw().set(key, value);
 	}
 
 	// ----------------------------hashcode and equals:

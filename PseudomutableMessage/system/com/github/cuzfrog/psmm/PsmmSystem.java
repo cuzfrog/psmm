@@ -1,14 +1,10 @@
 package com.github.cuzfrog.psmm;
 
-import com.github.cuzfrog.psmm.AbstractRawMessage;
-import com.github.cuzfrog.psmm.FactoryPool;
-import com.github.cuzfrog.psmm.FreeMessage;
-import com.github.cuzfrog.psmm.MapFactoryPool;
-import com.github.cuzfrog.psmm.Message;
-import com.github.cuzfrog.psmm.Messages;
-import com.github.cuzfrog.psmm.NullFactoryPool;
-import com.github.cuzfrog.psmm.PsmmFactory;
-import com.github.cuzfrog.psmm.RootMessage;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import com.github.cuzfrog.psmm.exceptions.PsmmReachMaxDepthException;
 
 /**
  * Class that manages FactoryPool and MessagePool and provides static methods.
@@ -27,11 +23,14 @@ import com.github.cuzfrog.psmm.RootMessage;
  */
 public final class PsmmSystem {
 
-	// singleton reference
+	// self reference
 	private static PsmmSystem instance;
 
-	// pool members:
-	private FactoryPool factoryPool;
+	// members:
+	private volatile FactoryPool factoryPool;
+	private int messageMaxDepth;
+	private int factoryPoolCheckInterval;
+	private volatile ScheduledExecutorService lastExecutor;
 
 	private PsmmSystem(PsmmConfiguration config) {
 		switch (config.getFactoryPoolChoseType()) {
@@ -44,8 +43,33 @@ public final class PsmmSystem {
 		default:
 			break;
 		}
+		messageMaxDepth = config.getMessageMaxDepth();
+		factoryPoolCheckInterval = config.getFactoryPoolCheckInterval();
+		checkFactoryService();
+	}
 
-		
+	private static void trimFactory() {
+		instance.factoryPool.checkAndTrim(instance.factoryPoolCheckInterval);
+	}
+
+	private void checkFactoryService() {
+		// check and trim factory
+		if (this.lastExecutor != null) {
+			lastExecutor.shutdown();
+			// for re-initiation
+		}
+		if (factoryPoolCheckInterval > 0) {
+			ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+			scheduler.scheduleWithFixedDelay(new Runnable() {
+
+				@Override
+				public void run() {
+					// periodically do:
+					PsmmSystem.trimFactory();
+				}
+			}, factoryPoolCheckInterval, factoryPoolCheckInterval, TimeUnit.SECONDS);
+			lastExecutor = scheduler;
+		}
 	}
 
 	/**
@@ -55,20 +79,23 @@ public final class PsmmSystem {
 	 *            user defined Configuration.
 	 * @see PsmmConfiguration
 	 */
-	public static void initiate(PsmmConfiguration config) {
+	public static synchronized void initiate(PsmmConfiguration config) {
 		instance = new PsmmSystem(config);
 	}
 
 	/**
 	 * Initiate with default Configuration.
 	 */
-	public static void initiate() {
+	public static synchronized void initiate() {
 		initiate(new PsmmConfiguration()); // default initiate
 	}
 
 	// utility methods:----------------
 	// create raw message:
 	static <T> AbstractRawMessage<T> fetchRaw(Messages.Style type, Message<T> messageBeingWrapped) {
+		if (messageBeingWrapped.depth() >= instance.messageMaxDepth) {
+			throw new PsmmReachMaxDepthException();
+		}
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractRawMessage<T> rawMessage = factory.getRawMessage();
 		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
@@ -87,8 +114,7 @@ public final class PsmmSystem {
 	 * @param data
 	 * @return a new cached message
 	 */
-	static <T> Message<T> getConcretMessage(Messages.Style type,
-			Message<T> messageBeingWrapped, Data data) {
+	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
 		return new FreeMessage<>(type, messageBeingWrapped, data);
 	}
 

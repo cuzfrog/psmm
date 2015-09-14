@@ -3,8 +3,6 @@ package com.github.cuzfrog.psmm;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.github.cuzfrog.psmm.PsmmConfiguration;
-
 /**
  * FactoryPool that uses a {@code ConcurrentHashMap} for caching PsmmFactory.
  * 
@@ -45,5 +43,14 @@ final class MapFactoryPool extends AbstractFactoryPool {
 		}
 		
 		return psmmFactory;
+	}
+
+	@Override
+	public int checkAndTrim(int sizeLimit) {
+		int beforeSize=pool.size();
+		if(sizeLimit>0&&pool.size()>sizeLimit){
+			pool.clear();
+		}
+		return beforeSize;
 	}
 }

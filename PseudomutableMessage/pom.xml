@@ -51,7 +51,7 @@
 
 		<!-- AspectJ -->
 		<aspectj.version>1.7.4</aspectj.version>
-
+		
 	</properties>
 
 	<dependencies>
@@ -139,8 +139,8 @@
 				<version>2.18.1</version>
 				<configuration>
 					<includes>
-						<include>**/SimpleTest.java</include>
 						<include>**/TestSuite.java</include>
+						<include>**/MessageFunctionTest.java</include>
 					</includes>
 				</configuration>
 			</plugin>
@@ -194,6 +194,7 @@
 						</goals>
 					</execution>
 				</executions>
+				
 			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>

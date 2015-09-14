@@ -21,7 +21,6 @@ final class PsmmFactoryImpl implements PsmmFactory {
 
 	@Override
 	public <T> Message<T> commit(Message<T> messageBeingWrapped) {
-		// TODO Auto-generated method stub
 
 		Message<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
 

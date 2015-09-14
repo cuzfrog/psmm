@@ -4,22 +4,21 @@ import com.github.cuzfrog.psmm.PsmmFactory;
 
 abstract class AbstractRawMessage<T> implements TypedRawMessage<T>, UntypedRawMessage {
 
-	protected final PsmmFactory psmmFactory;
+	private final PsmmFactory psmmFactory;
+	private Message<T> messageBeingWrapped;
 
 	protected AbstractRawMessage(PsmmFactory psmmFactory) {
 		super();
 		this.psmmFactory = psmmFactory;
 	}
 
-	protected Message<T> messageBeingWrapped;
-
-	@Override
-	public AbstractMessage<T> cook() {
-		return (AbstractMessage<T>) psmmFactory.commit(messageBeingWrapped);
-	}
-
 	void setMessageBeingWrapped(Message<T> messageBeingWrapped) {
 		this.messageBeingWrapped = messageBeingWrapped;
+	}
+
+	@Override
+	public Message<T> cook() {
+		return psmmFactory.commit(messageBeingWrapped);
 	}
 
 	@Override

@@ -12,6 +12,7 @@ class DocumentaryTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		PsmmSystem.initiate();
 		UMessage message=
 				Messages.create(Messages.Style.FLAT_MAP)
 				.set("key1", "string value")
