@@ -1,2 +1,7 @@
 before_install: cd PseudomutableMessage
 language: java
+
+branches:
+  only:
+    - master
+    
