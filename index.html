@@ -34,7 +34,7 @@
         <h2>
 <a id="project-developing-progress" class="anchor" href="#project-developing-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project developing progress:</h2>
 
-<p>General tests passed, so far actors work fine, but there are still bunch of flaws. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project, and enlighten me.</p>
+<p>General tests passed, so far actors work fine, but there are still a bunch of flaws. Now I'm working hard on refactoring and refining. Hope those of you who're interested could contribute to this project, and enlighten me.</p>
 
 <ul>
 <li>[x] Most coding work.</li>
@@ -59,11 +59,11 @@
 
 <p>First needing to initiate PsmmSystem:</p>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(); <span class="pl-c">//only invoke once in your main thread</span></pre></div>
+<div class="highlight highlight-source-java"><pre>        <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(); <span class="pl-c">//only invoke once in your main thread</span></pre></div>
 
 <p>Creating a new message</p>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> message <span class="pl-k">=</span> 
+<div class="highlight highlight-source-java"><pre>        <span class="pl-smi">UMessage</span> message <span class="pl-k">=</span> 
                 <span class="pl-smi">Messages</span><span class="pl-k">.</span>create() <span class="pl-c">//create a raw message</span>
                 .set(key1, value1) 
                 .set(key2, value2) <span class="pl-c">//add some data</span>
@@ -72,7 +72,7 @@
 
 <p>Modifying an existed one:</p>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-smi">UMessage</span> messageAfter <span class="pl-k">=</span> 
+<div class="highlight highlight-source-java"><pre>        <span class="pl-smi">UMessage</span> messageAfter <span class="pl-k">=</span> 
                 messageBefore 
                 .set(key1, value1) 
                 .set(key2, value2) <span class="pl-c">//add or reset some data</span>
@@ -81,7 +81,7 @@
 
 <p>Regressing a message:</p>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-k">try</span> {
+<div class="highlight highlight-source-java"><pre>        <span class="pl-k">try</span> {
             <span class="pl-smi">UMessage</span> message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
         } <span class="pl-k">catch</span> (<span class="pl-smi">PsmmCannotRegressExeption</span> e) {
             <span class="pl-c">//tell actor message only has one level</span>
@@ -91,7 +91,7 @@
 
 <p>Code example:</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.Messages</span>;
+<div class="highlight highlight-source-java"><pre><span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.Messages</span>;
 <span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.PsmmSystem</span>;
 <span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.UMessage</span>;
 
@@ -151,7 +151,7 @@
 
 <p>Using typed message (others are the same):</p>
 
-<div class="highlight highlight-java"><pre>        <span class="pl-k">TMessage&lt;<span class="pl-smi">Integer</span>&gt;</span> message2<span class="pl-k">=</span>
+<div class="highlight highlight-source-java"><pre>        <span class="pl-k">TMessage&lt;<span class="pl-smi">Integer</span>&gt;</span> message2<span class="pl-k">=</span>
                 <span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Integer</span><span class="pl-k">.</span>class)
                 .set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)
                 <span class="pl-c">//.set("key2", "string value") //compile time error</span>
@@ -192,7 +192,7 @@
 
 <p>How to choose style:</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Messages</span><span class="pl-k">.</span><span class="pl-smi">Style</span><span class="pl-c1"><span class="pl-k">.</span>FLAT_MAP</span>)</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Messages</span><span class="pl-k">.</span><span class="pl-smi">Style</span><span class="pl-c1"><span class="pl-k">.</span>FLAT_MAP</span>)</pre></div>
 
 <h4>
 <a id="raw-message-and-factory-model" class="anchor" href="#raw-message-and-factory-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raw Message and Factory model</h4>
@@ -202,7 +202,7 @@
 <strong>Raw Message</strong> is a concept helper class which is exposed to user instead of a factory, and to ensure message is actually created. It's a <a href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy</a> of a factory. Consider situation below:</li>
 </ul>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
         message1
         .set(key2, <span class="pl-c1">45</span>)  <span class="pl-c">//when first call set(), it turns to a raw message</span>
         .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
@@ -436,7 +436,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 
 <p>How to setup:</p>
 
-<div class="highlight highlight-java"><pre><span class="pl-smi">PsmmConfiguration</span> config<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">PsmmConfiguration</span>()
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">PsmmConfiguration</span> config<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">PsmmConfiguration</span>()
             .setFactoryPoolChoseType(<span class="pl-smi">FactoryPoolType</span><span class="pl-c1"><span class="pl-k">.</span>NULL</span>) <span class="pl-c">//no factory pooling</span>
             <span class="pl-c1">...</span>
 <span class="pl-smi">PsmmSystem</span><span class="pl-k">.</span>initiate(config);</pre></div>
