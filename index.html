@@ -159,6 +159,17 @@
 
 <p><em>NOTE:When use typed message, you must ensure type's immutability.</em></p>
 
+<p><strong>Anti-patterns:</strong> Be careful!</p>
+
+<div class="highlight highlight-source-java"><pre>    <span class="pl-c">//now you received a message.</span>
+    message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>cook();  <span class="pl-c">//you think you updated it.</span>
+        <span class="pl-c">//then send the message. ERROR, the message you sent is not the new one</span>
+
+        <span class="pl-c">//right version - must give a new reference:</span>
+        <span class="pl-smi">UMessage</span> newMessage<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>cook(); 
+        <span class="pl-c">//or use the old reference:</span>
+        message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>cook(); </pre></div>
+
 <h2>
 <a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document</h2>
 
