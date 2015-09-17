@@ -195,7 +195,7 @@ message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span cl
 
 <p>C. Retained(deprecated): references of messages created are stored in a pool. Why not reuse immutable object? (<em>But there might be a pitfall, is it really necessary to retain small object in modern JVM? Generally speaking, this is a bad idea and likely to cause other undesirable potential problems. For now I deprecated this feature. All message will be newly created.</em>)</p>
 
-<p>D1. <strong>Value</strong> (not available now): One message equals another depending on their values.</p>
+<p>D1. <strong>Value</strong>: One message equals another depending on their values that they exhibit.</p>
 
 <p>D2. <strong>Unique</strong> (default): No override to equals() method, message only equals itself.</p>
 
@@ -235,7 +235,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 
 <ul>
 <li>
-<strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to assemble same Module instances.</li>
+<strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to reuse same Module instances. Modules are created once when PsmmSystem initiates and stored into an EnumMap. When needed, they are dynamically assembled into factory calling them.</li>
 </ul>
 
 <p>There are three kinds of Modules:</p>
