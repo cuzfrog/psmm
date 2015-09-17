@@ -13,6 +13,7 @@ final class DataModuleMap extends Module {
 	public void setup(PsmmFactory psmmFactory) {
 		super.setup(psmmFactory);
 		psmmFactory.setData(Data.newData(Data.Structure.MAP));
+		psmmFactory.setModule(this);
 	}
 
 }

@@ -18,9 +18,4 @@ final class StructureModuleLinked extends Module {
 			Data data) {
 		return this.getCollaberativeModule().createMessage(type,messageBeingWrapped, data);
 	}
-
-	@Override
-	public void setup(PsmmFactory psmmFactory) {
-		psmmFactory.setModule(this);
-	}
 }

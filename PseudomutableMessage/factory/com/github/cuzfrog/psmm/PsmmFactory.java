@@ -1,11 +1,5 @@
 package com.github.cuzfrog.psmm;
 
-import com.github.cuzfrog.psmm.AbstractRawMessage;
-import com.github.cuzfrog.psmm.Data;
-import com.github.cuzfrog.psmm.Message;
-import com.github.cuzfrog.psmm.Messages;
-import com.github.cuzfrog.psmm.NotThreadSafe;
-
 /**
  * Factory that behaves in the whole process of create message or "change" data.
  * <p>
@@ -31,6 +25,11 @@ interface PsmmFactory {
 	public abstract void assemble(Module module, Messages.Style type);
 
 	/**
+	 * Help method to assemble the factory with its own module. Simply to recreate a new Data implementation.
+	 */
+	public abstract void assemble();
+	
+	/**
 	 * Commit all the data previously set to generate a new message.
 	 * <p>
 	 * If message is cached, the message returned may not be new.
@@ -52,15 +51,25 @@ interface PsmmFactory {
 
 	/**
 	 * Method for modules to access.
-	 * @param data the Data designated.
+	 * 
+	 * @param data
+	 *            the Data designated.
 	 */
 	abstract void setData(Data data);
 
 	/**
 	 * Designate a module that has createMessage method to the factory.
-	 * @param module module with creatMessage method.
+	 * 
+	 * @param module
+	 *            module with creatMessage method.
 	 */
 	abstract void setModule(Module module);
+
+	/**
+	 * 
+	 * @return true if the module's style matches the style demanded.
+	 */
+	abstract boolean isModuleReady(Messages.Style style);
 
 	/**
 	 * 

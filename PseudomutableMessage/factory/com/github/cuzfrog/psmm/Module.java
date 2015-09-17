@@ -8,10 +8,16 @@ import java.util.Set;
 import com.github.cuzfrog.psmm.Messages.Style;
 import com.github.cuzfrog.psmm.exceptions.PsmmFactoryModuleChainErrorException;
 
+/**
+ *
+ * @author Cause Chung
+ *
+ */
 abstract class Module {
 
 	private final Module collaberativeModule;
 	private final String name;
+	private final Messages.Style style;
 
 	protected Module(Module collaberativeModule, String name) {
 		this.collaberativeModule = collaberativeModule;
@@ -20,10 +26,12 @@ abstract class Module {
 		} else {
 			this.name = name;
 		}
+		this.style = Style.fromString(this.name); //only data module has style
 	}
 
 	/**
-	 * Method for factory to invoke. Create new concrete message depending on specific module.
+	 * Method for factory to invoke. Create new concrete message depending on
+	 * specific module.
 	 * 
 	 * @param type
 	 * @param messageBeingWrapped
@@ -52,18 +60,22 @@ abstract class Module {
 		return this.name;
 	}
 
+	Style getStyle() {
+		return this.style;
+	}
+
 	Module getCollaberativeModule() {
 		return collaberativeModule;
 	}
 
 	// static methods:
-	static Map<Style, Module> createModuleMap() {
+	static synchronized Map<Style, Module> createModuleMap() {
 		Map<Style, Module> moduleList = new EnumMap<>(Style.class);
 
 		Set<Module> creationSet = new HashSet<>();
 		Set<Module> structureSet = new HashSet<>();
 		Set<Module> dataSet = new HashSet<>();
-		//creationSet.add(new CreationModuleRetained());
+		// creationSet.add(new CreationModuleRetained());
 		creationSet.add(new CreationModule("Unique"));
 		creationSet.add(new CreationModule("Value"));
 		// new creation module add here
@@ -79,8 +91,9 @@ abstract class Module {
 			// new data module add here
 		}
 
+		// only data set is as the outer module
 		for (Module data : dataSet) {
-			moduleList.put(Style.fromString(data.getName()), data);
+			moduleList.put(data.getStyle(), data);
 		}
 
 		return moduleList;

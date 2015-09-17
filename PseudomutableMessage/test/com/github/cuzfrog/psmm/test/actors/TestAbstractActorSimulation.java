@@ -101,7 +101,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	// before
 	public void setUp() throws Exception {
 		PsmmConfiguration config=new PsmmConfiguration();
-		config.setFactoryPoolChoseType(FactoryPoolType.NULL); //test no factory pool
+		//config.setFactoryPoolChoseType(FactoryPoolType.NULL); //test no factory pool
 		PsmmSystem.initiate(config);
 		//initiate Psmm with message cache capacity.
 		threadFinishKey.set(false);

@@ -26,11 +26,4 @@ final class StructureModuleFlat extends Module {
 		Message<T> rootMessage = PsmmSystem.getRootMessage();
 		return this.getCollaberativeModule().createMessage(type, rootMessage, newDataToPutInto);
 	}
-
-	@Override
-	public void setup(PsmmFactory psmmFactory) {
-		// TODO Auto-generated method stub
-		psmmFactory.setModule(this);
-	}
-
 }
