@@ -1,6 +1,5 @@
 package com.github.cuzfrog.psmm;
 
-import com.github.cuzfrog.psmm.Data;
 import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**

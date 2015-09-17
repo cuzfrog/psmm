@@ -1,5 +1,8 @@
 package com.github.cuzfrog.psmm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.github.cuzfrog.psmm.PsmmSystem;
 
 /**
@@ -33,23 +36,28 @@ public abstract class Messages implements MessageCommonInterface {
 	 *
 	 */
 	public enum Style {
-		LINKED_MAP, FLAT_MAP;
+		LINKED_MAP, FLAT_MAP, VALUE_LINKED_MAP, VALUE_FLAT_MAP;
 
-		private boolean isCached;
 		private String name;
-
+		private boolean isValue;
+		private static final Map<String,Style> stringToStyleMap=new HashMap<>();
+		static{
+			for(Style style:Style.values()){
+			stringToStyleMap.put(generateName(style), style);
+			}
+		}
 		private Style() {
-			this.isCached = this.toString().contains("RETAINED");
-			this.initiateName();
+			this.name=generateName(this);
+			this.isValue=this.toString().contains("VALUE");
 		}
 
-		private void initiateName() {
+		private static String generateName(Style style) {
 			StringBuilder nameBuilder = new StringBuilder();
-			String originalName = this.toString();
-			if (originalName.contains("RETAINED")) {
-				nameBuilder.append("Retained");
+			String originalName = style.toString();
+			if (originalName.contains("VALUE")) {
+				nameBuilder.append("Value");
 			} else {
-				nameBuilder.append("Free");
+				nameBuilder.append("Unique");
 			} // creation attribute
 
 			if (originalName.contains("LINKED")) {
@@ -62,15 +70,19 @@ public abstract class Messages implements MessageCommonInterface {
 				nameBuilder.append("Map");
 			} // data attribute
 
-			this.name = nameBuilder.toString();
-		}
-
-		boolean isCached() {
-			return this.isCached;
+			return nameBuilder.toString();
 		}
 
 		String getName() {
 			return name;
+		}
+		
+		boolean isValue() {
+			return isValue;
+		}
+		
+		static Style fromString(String name){
+			return stringToStyleMap.get(name);
 		}
 	}
 

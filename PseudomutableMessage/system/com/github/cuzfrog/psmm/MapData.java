@@ -46,7 +46,7 @@ final class MapData extends Data {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = 17;
 		result = prime * result + ((map == null) ? 0 : map.hashCode());
 		return result;
 	}

@@ -1,13 +1,11 @@
 package com.github.cuzfrog.psmm;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.github.cuzfrog.psmm.Data;
-import com.github.cuzfrog.psmm.Message;
-import com.github.cuzfrog.psmm.Messages;
+import com.github.cuzfrog.psmm.Messages.Style;
 import com.github.cuzfrog.psmm.exceptions.PsmmFactoryModuleChainErrorException;
 
 abstract class Module {
@@ -59,16 +57,15 @@ abstract class Module {
 	}
 
 	// static methods:
-	// there's still room for optimization: change Map to Array, use predefined
-	// order to find module.
-	static Map<String, Module> createModuleMap() {
-		Map<String, Module> moduleList = new HashMap<>();
+	static Map<Style, Module> createModuleMap() {
+		Map<Style, Module> moduleList = new EnumMap<>(Style.class);
 
 		Set<Module> creationSet = new HashSet<>();
 		Set<Module> structureSet = new HashSet<>();
 		Set<Module> dataSet = new HashSet<>();
 		//creationSet.add(new CreationModuleRetained());
-		creationSet.add(new CreationModuleFree());
+		creationSet.add(new CreationModule("Unique"));
+		creationSet.add(new CreationModule("Value"));
 		// new creation module add here
 
 		for (Module creation : creationSet) {
@@ -83,7 +80,7 @@ abstract class Module {
 		}
 
 		for (Module data : dataSet) {
-			moduleList.put(data.getName(), data);
+			moduleList.put(Style.fromString(data.getName()), data);
 		}
 
 		return moduleList;

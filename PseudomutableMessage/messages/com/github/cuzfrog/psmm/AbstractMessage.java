@@ -153,38 +153,6 @@ abstract class AbstractMessage<T> implements Message<T> {
 		return raw().set(key, value);
 	}
 
-	// ----------------------------hashcode and equals:
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		Data mergedData=readData();
-//		result = prime * result + (( mergedData== null) ? 0 : mergedData.hashCode());
-//		// read all data including those stored in parents as a whole
-//		return result;
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj) {
-//			return true;
-//		}
-//		if (obj == null) {
-//			return false;
-//		}
-//		if (getClass() != obj.getClass()) {
-//			return false;
-//		}
-//		@SuppressWarnings("rawtypes")
-//		AbstractMessage other = (AbstractMessage) obj;
-//		Data otherData=other.readData();
-//		Data thisData=this.readData();
-//		if (otherData == null) {
-//			return false;
-//		} else if (!thisData.equals(otherData)) {
-//			return false;
-//		}
-//		return true;
-//	}
+
 
 }

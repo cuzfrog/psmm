@@ -1,5 +1,7 @@
 package com.github.cuzfrog.psmm;
 
+import java.util.Map;
+
 import com.github.cuzfrog.psmm.MessageCommonInterface;
 import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
 
@@ -41,6 +43,18 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 */
 	public abstract UntypedRawMessage raw();
 
+	/**
+	 * Return message's whole data as a Map. The Map is newly created and not
+	 * involved in the data structure in the message. As long as each element of
+	 * the data is immutable (and this is assumed principle), you can do
+	 * whatever to the returned Map.
+	 * <p>
+	 * If the message doesn't contain any value, this will return an empty Map.
+	 * 
+	 * @return data stored in this message as a {@code Map<String, Object>}.
+	 */
+	public abstract Map<String, ? extends Object> getAll();
+	
 	/**
 	 * Try to regain last message before last cook.
 	 * <p>

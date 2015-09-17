@@ -109,13 +109,17 @@ public final class PsmmSystem {
 	/**
 	 * Create and return a uncached message.
 	 * 
-	 * @param type
+	 * @param style
 	 * @param messageBeingWrapped
 	 * @param data
 	 * @return a new cached message
 	 */
-	static <T> Message<T> getConcretMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
-		return new FreeMessage<>(type, messageBeingWrapped, data);
+	static <T> Message<T> getConcretMessage(Messages.Style style, Message<T> messageBeingWrapped, Data data) {
+		if (style.isValue()) {
+			return new ValueMessage<>(style, messageBeingWrapped, data);
+		} else {
+			return new UniqueMessage<>(style, messageBeingWrapped, data);
+		}
 	}
 
 	// factory bridge:

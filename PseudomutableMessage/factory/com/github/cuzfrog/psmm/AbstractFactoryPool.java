@@ -7,7 +7,7 @@ import com.github.cuzfrog.psmm.Messages.Style;
 
 abstract class AbstractFactoryPool implements FactoryPool {
 
-	protected final Map<String, Module> modules=Module.createModuleMap();  //read only after created.
+	protected final Map<Style, Module> modules=Module.createModuleMap();  //read only after created.
 	
 	AbstractFactoryPool(PsmmConfiguration config) {
 
@@ -19,8 +19,7 @@ abstract class AbstractFactoryPool implements FactoryPool {
 	@Override
 	public PsmmFactory seekFactory(Style type) {
 		PsmmFactory psmmFactory=createOrFetch();
-		String name = type.getName();
-		psmmFactory.assemble(modules.get(name), type);
+		psmmFactory.assemble(modules.get(type), type);
 		return psmmFactory;
 	}
 	
