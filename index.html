@@ -235,7 +235,7 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 
 <ul>
 <li>
-<strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to reuse same Module instances. Modules are created once when PsmmSystem initiates and stored into an EnumMap. When needed, they are dynamically assembled into factory calling them.</li>
+<strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to reuse same Module instances. Modules are created once when PsmmSystem initiates and stored into an EnumMap. When needed, they are dynamically assembled into factory calling them. If a factory is about to create a second message with the same Style as the last one, module inside will not change which avoids module-map re-searching. Hence better performance with consistent Style throughout your application.</li>
 </ul>
 
 <p>There are three kinds of Modules:</p>
