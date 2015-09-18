@@ -249,188 +249,8 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <p>Modules work in combine, taking advantage of <a href="https://en.wikipedia.org/wiki/Decorator_pattern">Decorator Pattern</a>.</p>
 
 <ul>
-<li>
-<strong>Factory Pool</strong> stores created factories in it. The concrete factory pool MapFactoryPool implements a ConcurrentHashMap. Since thread id is unique (at one time in one JVM), fetching factory in actors is efficient(See tests below). When fetching factory, module is assembled into factory according to message's style. </li>
-</ul>
-
-<p>I eliminated the possibility that factory pool could cause memory leak by using a background thread to periodically check the map size and empty it. However this adds overhead, though you can configure the size limitation and period. Think about how many thread ids could be accumulated? If not worth considering, turn off the size check.</p>
-
-<p><strong>1. with factory pooled:(10 rounds)</strong></p>
-
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Mode</th>
-<th>Cnt</th>
-<th>Score</th>
-<th>Error</th>
-<th>Units</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>testCreateControlMessage</td>
-<td>avgt</td>
-<td>10</td>
-<td>235.594</td>
-<td>± 0.153</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateTypedFlat</td>
-<td>avgt</td>
-<td>10</td>
-<td>236.712</td>
-<td>± 3.648</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateTypedLinked</td>
-<td>avgt</td>
-<td>10</td>
-<td>201.881</td>
-<td>± 1.246</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateUntypedFlat</td>
-<td>avgt</td>
-<td>10</td>
-<td>229.547</td>
-<td>± 2.261</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateUntypedLinked</td>
-<td>avgt</td>
-<td>10</td>
-<td>186.735</td>
-<td>± 1.462</td>
-<td>ns/op</td>
-</tr>
-</tbody>
-</table>
-
-<p><strong>2. with factory pooled:(20 rounds)</strong></p>
-
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Mode</th>
-<th>Cnt</th>
-<th>Score</th>
-<th>Error</th>
-<th>Units</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>testCreateControlMessage</td>
-<td>avgt</td>
-<td>20</td>
-<td>235.448</td>
-<td>± 0.094</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateTypedFlat</td>
-<td>avgt</td>
-<td>20</td>
-<td>168.050</td>
-<td>± 1.087</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateTypedLinked</td>
-<td>avgt</td>
-<td>20</td>
-<td>213.511</td>
-<td>± 2.694</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateUntypedFlat</td>
-<td>avgt</td>
-<td>20</td>
-<td>191.293</td>
-<td>± 0.881</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateUntypedLinked</td>
-<td>avgt</td>
-<td>20</td>
-<td>181.576</td>
-<td>± 0.567</td>
-<td>ns/op</td>
-</tr>
-</tbody>
-</table>
-
-<p><strong>3. creating new factory</strong>(20 round tests are approximately the same)</p>
-
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Mode</th>
-<th>Cnt</th>
-<th>Score</th>
-<th>Error</th>
-<th>Units</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>testCreateControlMessage</td>
-<td>avgt</td>
-<td>10</td>
-<td>237.776</td>
-<td>± 0.188</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateTypedFlat</td>
-<td>avgt</td>
-<td>10</td>
-<td>213.812</td>
-<td>± 1.271</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateTypedLinked</td>
-<td>avgt</td>
-<td>10</td>
-<td>212.814</td>
-<td>± 0.105</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateUntypedFlat</td>
-<td>avgt</td>
-<td>10</td>
-<td>213.675</td>
-<td>± 2.062</td>
-<td>ns/op</td>
-</tr>
-<tr>
-<td>testCreateUntypedLinked</td>
-<td>avgt</td>
-<td>10</td>
-<td>212.700</td>
-<td>± 0.143</td>
-<td>ns/op</td>
-</tr>
-</tbody>
-</table>
-
-<p><em>Tested with jmh: 10-20 warmups, 10-20 rounds, 8 threads. Tests simple create a new message and set a pair of random key and Integer. Control message(immutable) is created via two Maps, one as temporary data vehicle when creating, another as data field. HW: xeon E3 1230v2, 16G DDR3 1600. OS: Windows, Oracle JDK 1.8.0_51. See source file for more detail.</em></p>
-
-<ul>
-<li>
-<strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</li>
+<li><p><strong>Factory Pool</strong> stores created factories in it, which implements a ThreadLocal to attach a new factory instance to every thread.  When fetching factory, module is assembled into factory according to message's style. </p></li>
+<li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
 </ul>
 
 <h4>
@@ -459,6 +279,65 @@ There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
 <a id="performance" class="anchor" href="#performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance</h4>
 
 <p>I've prepared some performance test data, and I'll upload them, and explain in detail.</p>
+
+<p><strong>1. creating new message and set one pair of data with factory pooled:(20 rounds warm up and tests)</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Mode</th>
+<th>Cnt</th>
+<th>Score</th>
+<th>Error</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>testCreateControlMessage</td>
+<td>avgt</td>
+<td>20</td>
+<td>237.161</td>
+<td>± 0.889</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedFlat</td>
+<td>avgt</td>
+<td>20</td>
+<td>174.108</td>
+<td>± 3.171</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateTypedLinked</td>
+<td>avgt</td>
+<td>20</td>
+<td>179.215</td>
+<td>± 3.695</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedFlat</td>
+<td>avgt</td>
+<td>20</td>
+<td>175.835</td>
+<td>± 2.523</td>
+<td>ns/op</td>
+</tr>
+<tr>
+<td>testCreateUntypedLinked</td>
+<td>avgt</td>
+<td>20</td>
+<td>172.466</td>
+<td>± 1.766</td>
+<td>ns/op</td>
+</tr>
+</tbody>
+</table>
+
+<p><em>Tested with jmh: 10-20 warmups, 10-20 rounds, 8 threads. Tests simple create a new message and set a pair of random key and Integer. Control message(immutable) is created via two HashMaps, one as temporary data vehicle when creating, another as data field. HW: xeon E3 1230v2, 16G DDR3 1600. OS: Windows, Oracle JDK 1.8.0_51. See source file for more detail.</em></p>
 
 <p>It's very important to know that generating message, in most cases, only takes a fraction of application time. Sometimes, it's really not necessary to worry about their performance. When I did micro-benchmark test, yeah, disparity could be huge. However, when I did actual actor interaction test, performances are in the same scale.</p>
 
