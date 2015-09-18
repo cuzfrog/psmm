@@ -27,22 +27,19 @@ import com.github.cuzfrog.psmm.NotThreadSafe;
 public final class PsmmConfiguration {
 
 	public enum FactoryPoolType {
-		MAP, NULL
+		THREAD_LOCAL, NULL
 	}
 
 	// constants:
-	private static final FactoryPoolType DEFAULT_FACTORYPOOL_TYPE = FactoryPoolType.MAP;
-	private static final int DEFAULT_FACTORY_CHECK_INTERVAL= 5*60; //5 minutes
-	private static final int DEFAULT_FACTORY_POOL_SIZE = 16;
+	private static final FactoryPoolType DEFAULT_FACTORYPOOL_TYPE = FactoryPoolType.THREAD_LOCAL;
+
 	private static final int DEFAULT_MESSAGE_MAX_DEPTH = 256;
 
 	// configuration members:
 	private Map<String, Module> customModules = new HashMap<>();
 	private List<Data> customData = new ArrayList<>();
 	private FactoryPoolType factoryPoolChoseType = DEFAULT_FACTORYPOOL_TYPE;
-	private int factoryPoolSize = DEFAULT_FACTORY_POOL_SIZE;
-	private int factoryPoolCheckInterval=DEFAULT_FACTORY_CHECK_INTERVAL;
-	private int messageMaxDepth=DEFAULT_MESSAGE_MAX_DEPTH;
+	private int messageMaxDepth = DEFAULT_MESSAGE_MAX_DEPTH;
 
 	// custom methods:
 	PsmmConfiguration addModule(Module module) {
@@ -67,15 +64,6 @@ public final class PsmmConfiguration {
 		return factoryPoolChoseType;
 	}
 
-	public int getFactoryPoolSize() {
-		return factoryPoolSize;
-	}
-
-	public PsmmConfiguration setFactoryPoolSize(int factoryPoolSize) {
-		this.factoryPoolSize = factoryPoolSize;
-		return this;
-	}
-
 	public PsmmConfiguration setFactoryPoolChoseType(FactoryPoolType factoryPoolChoseType) {
 		this.factoryPoolChoseType = factoryPoolChoseType;
 		return this;
@@ -85,15 +73,8 @@ public final class PsmmConfiguration {
 		return messageMaxDepth;
 	}
 
-	public void setMessageMaxDepth(int messageMaxDepth) {
+	public PsmmConfiguration setMessageMaxDepth(int messageMaxDepth) {
 		this.messageMaxDepth = messageMaxDepth;
-	}
-
-	public int getFactoryPoolCheckInterval() {
-		return factoryPoolCheckInterval;
-	}
-
-	public void setFactoryPoolCheckInterval(int factoryPoolCheckInterval) {
-		this.factoryPoolCheckInterval = factoryPoolCheckInterval;
+		return this;
 	}
 }

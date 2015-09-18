@@ -20,11 +20,4 @@ interface FactoryPool {
 	// Functionalities:
 	PsmmFactory seekFactory(Messages.Style type);
 	
-	/**
-	 * limit pool size
-	 * @param sizeLimit pool's max size
-	 * @return size of the pool before trim.
-	 */
-	int checkAndTrim(int sizeLimit);
-
 }

@@ -29,5 +29,9 @@ abstract class AbstractFactoryPool implements FactoryPool {
 		return psmmFactory;
 	}
 
+	/**
+	 * Return new created or fetched concrete factory
+	 * @return new created or fetched concrete factory
+	 */
 	protected abstract PsmmFactory createOrFetch();
 }

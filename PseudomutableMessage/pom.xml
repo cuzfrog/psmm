@@ -141,6 +141,7 @@
 					<includes>
 						<include>**/TestSuite.java</include>
 						<include>**/MessageFunctionTest.java</include>
+						<include>**/ValueMessageTest.java</include>
 					</includes>
 				</configuration>
 			</plugin>

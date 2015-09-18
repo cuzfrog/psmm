@@ -1,9 +1,6 @@
 package com.github.cuzfrog.psmm;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
+import com.github.cuzfrog.psmm.exceptions.PsmmNoFactoryPoolTypeException;
 import com.github.cuzfrog.psmm.exceptions.PsmmReachMaxDepthException;
 
 /**
@@ -29,47 +26,19 @@ public final class PsmmSystem {
 	// members:
 	private volatile FactoryPool factoryPool;
 	private int messageMaxDepth;
-	private int factoryPoolCheckInterval;
-	private volatile ScheduledExecutorService lastExecutor;
 
 	private PsmmSystem(PsmmConfiguration config) {
 		switch (config.getFactoryPoolChoseType()) {
-		case MAP:
-			factoryPool = new MapFactoryPool(config);
+		case THREAD_LOCAL:
+			factoryPool = new ThreadLocalFactoryPool(config);
 			break;
 		case NULL:
 			factoryPool = new NullFactoryPool(config);
 			break;
 		default:
-			break;
+			throw new PsmmNoFactoryPoolTypeException();
 		}
 		messageMaxDepth = config.getMessageMaxDepth();
-		factoryPoolCheckInterval = config.getFactoryPoolCheckInterval();
-		checkFactoryService();
-	}
-
-	private static void trimFactory() {
-		instance.factoryPool.checkAndTrim(instance.factoryPoolCheckInterval);
-	}
-
-	private void checkFactoryService() {
-		// check and trim factory
-		if (this.lastExecutor != null) {
-			lastExecutor.shutdown();
-			// for re-initiation
-		}
-		if (factoryPoolCheckInterval > 0) {
-			ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-			scheduler.scheduleWithFixedDelay(new Runnable() {
-
-				@Override
-				public void run() {
-					// periodically do:
-					PsmmSystem.trimFactory();
-				}
-			}, factoryPoolCheckInterval, factoryPoolCheckInterval, TimeUnit.SECONDS);
-			lastExecutor = scheduler;
-		}
 	}
 
 	/**

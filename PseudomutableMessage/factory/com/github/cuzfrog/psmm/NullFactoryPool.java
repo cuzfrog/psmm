@@ -13,8 +13,4 @@ final class NullFactoryPool extends AbstractFactoryPool {
 		return new PsmmFactoryImpl();
 	}
 
-	@Override
-	public int checkAndTrim(int sizeLimit) {
-		return 0;
-	}
 }

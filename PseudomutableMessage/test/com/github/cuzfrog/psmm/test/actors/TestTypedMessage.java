@@ -37,5 +37,19 @@ public class TestTypedMessage extends TestAbstractActorSimulation {
 		typedTest(Style.FLAT_MAP,Integer.class);
 		assertFalse(threadFailKey.get());
 	}
+	
+	@Test
+	public void testValueTypedLinkedMap() {
+		threadFailKey.set(false);
+		typedTest(Style.VALUE_LINKED_MAP, Integer.class);
+		assertFalse(threadFailKey.get());
+	}
+	
+	@Test
+	public void testValueTypedFlatMap() {
+		threadFailKey.set(false);
+		typedTest(Style.VALUE_FLAT_MAP,Integer.class);
+		assertFalse(threadFailKey.get());
+	}
 
 }

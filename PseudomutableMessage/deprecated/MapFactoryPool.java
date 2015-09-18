@@ -22,10 +22,6 @@ final class MapFactoryPool extends AbstractFactoryPool {
 	MapFactoryPool(PsmmConfiguration config) {
 		super(config);
 		pool = new ConcurrentHashMap<>(config.getFactoryPoolSize());
-
-		// modules.putAll(config.getCustomModules());
-				// because I want factory invisible from outside,it doesn't support
-				// custom module for now.
 	}
 
 	// Functionalities:
