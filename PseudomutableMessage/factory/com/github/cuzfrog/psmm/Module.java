@@ -38,7 +38,7 @@ abstract class Module {
 	 * @param data
 	 * @return new concrete message
 	 */
-	protected <T> Message<T> createMessage(Messages.Style type, Message<T> messageBeingWrapped, Data data) {
+	protected <K,T> Message<K,T> createMessage(Messages.Style type, Message<K,T> messageBeingWrapped, Data data) {
 		if (collaberativeModule != null) {
 			return collaberativeModule.createMessage(type, messageBeingWrapped, data);
 		}

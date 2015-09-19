@@ -66,6 +66,7 @@ public abstract class MyAbstractTest {
 		names = Collections.unmodifiableList(keyList(name, amount));
 	}
 
+	@SuppressWarnings("boxing")
 	public static List<Pair<?>> initiatePairList(String keyName, int keyAmount, int pairsAmount,int randomBound) {
 		List<Pair<?>> valuePairs = new ArrayList<>();
 		List<String> keys = keyList(keyName, keyAmount);

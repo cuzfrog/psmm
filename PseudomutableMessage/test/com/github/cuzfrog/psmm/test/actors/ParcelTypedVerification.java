@@ -5,14 +5,14 @@ import java.util.List;
 
 import com.github.cuzfrog.psmm.Pair;
 import com.github.cuzfrog.psmm.TMessage;
-import com.github.cuzfrog.psmm.TypedRawMessage;
-import com.github.cuzfrog.psmm.UntypedRawMessage;
+import com.github.cuzfrog.psmm.TBuilder;
+import com.github.cuzfrog.psmm.UBuilder;
 
 class ParcelTypedVerification<T> implements Parcel<T> {
-	private final TMessage<T> message;
+	private final TMessage<String,T> message;
 	private final List<Pair<T>> expectedData;
 
-	ParcelTypedVerification(TMessage<T> message, List<Pair<T>> expectedData) {
+	ParcelTypedVerification(TMessage<String,T> message, List<Pair<T>> expectedData) {
 		super();
 		this.message = message;
 		this.expectedData = new ArrayList<>(expectedData);
@@ -20,14 +20,14 @@ class ParcelTypedVerification<T> implements Parcel<T> {
 
 
 	@Override
-	public UntypedRawMessage getMessage() {
+	public UBuilder getMessage() {
 		return null;
 	}
 
 	@Override
-	public TypedRawMessage<T> getTypedMessage() {
+	public TBuilder<String,T> getTypedMessage() {
 		// TODO Auto-generated method stub
-		return message.raw();
+		return message.builder();
 	}
 
 	@Override

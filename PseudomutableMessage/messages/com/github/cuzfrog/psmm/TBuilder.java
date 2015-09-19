@@ -4,10 +4,10 @@ import com.github.cuzfrog.psmm.NotThreadSafe;
 import com.github.cuzfrog.psmm.PsmmFactory;
 
 /**
- * An interface for hiding {@link PsmmFactory}, and to ensure you've invoked {@link #cook()}
+ * An interface for hiding {@link PsmmFactory}, and to ensure you've invoked {@link #build()}
  * with cascading method calls.
  * <p>
- * So do not grab a reference of it. Implementation {@link RawMessageImpl} of
+ * So do not grab a reference of it. Implementation {@link BuilderImpl} of
  * this interface contains two references, of which are binded factory and
  * stored the last Message as new Message to wrap.
  * <p>
@@ -17,7 +17,7 @@ import com.github.cuzfrog.psmm.PsmmFactory;
  * @see TMessage
  */
 @NotThreadSafe
-public interface TypedRawMessage<T> {
+public interface TBuilder<K,T> {
 
 	/**
 	 * Return a cooked {@code TypedMessage} with the data previously set.
@@ -32,13 +32,13 @@ public interface TypedRawMessage<T> {
 	 * @see PsmmFactory
 	 * @see TMessage
 	 * @see Object
-	 * @see UntypedRawMessage
+	 * @see UBuilder
 	 */
-	public abstract TMessage<T> cook();
+	public abstract TMessage<K,T> build();
 
 	/**
 	 * Set a value into the message by an associated key, and return a reference
-	 * to {@link TypedRawMessage} which is itself for cascading calling.
+	 * to {@link TBuilder} which is itself for cascading calling.
 	 * 
 	 * <p>
 	 * The method invokes its inner {@link PsmmFactory}'s homonymous method to
@@ -50,6 +50,6 @@ public interface TypedRawMessage<T> {
 	 *            value to be associated with the specified key
 	 * @return RawMessage object which is itself.
 	 */
-	public abstract TypedRawMessage<T> set(String key, T datum);
+	public abstract TBuilder<K,T> set(K key, T datum);
 
 }

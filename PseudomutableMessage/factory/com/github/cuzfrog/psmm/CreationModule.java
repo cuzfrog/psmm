@@ -12,7 +12,7 @@ final class CreationModule extends Module {
 	}
 
 	@Override
-	public <T> Message<T> createMessage(Messages.Style type,Message<T> messageBeingWrapped, Data data) {
+	public <K,T> Message<K,T> createMessage(Messages.Style type,Message<K,T> messageBeingWrapped, Data data) {
 		return PsmmSystem.getConcretMessage(type, messageBeingWrapped, data);
 	}
 }

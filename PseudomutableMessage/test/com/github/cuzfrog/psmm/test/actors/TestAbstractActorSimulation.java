@@ -11,15 +11,15 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 
 import com.github.cuzfrog.psmm.Messages;
+import com.github.cuzfrog.psmm.Messages.Style;
 import com.github.cuzfrog.psmm.MyAbstractTest;
 import com.github.cuzfrog.psmm.Pair;
 import com.github.cuzfrog.psmm.PsmmConfiguration;
 import com.github.cuzfrog.psmm.PsmmSystem;
+import com.github.cuzfrog.psmm.TBuilder;
 import com.github.cuzfrog.psmm.TMessage;
+import com.github.cuzfrog.psmm.UBuilder;
 import com.github.cuzfrog.psmm.UMessage;
-import com.github.cuzfrog.psmm.UntypedRawMessage;
-import com.github.cuzfrog.psmm.Messages.Style;
-import com.github.cuzfrog.psmm.PsmmConfiguration.FactoryPoolType;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -142,7 +142,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	protected <T> void untypedTest(Style type) {
 		@SuppressWarnings("unchecked")
 		Pair<T> pair = (Pair<T>) randomPair();
-		UntypedRawMessage newRawMessage = Messages.create(type);
+		UBuilder newRawMessage = Messages.create(type);
 		T value = pair.getValue();
 		if (value instanceof Integer) {
 			newRawMessage.set(pair.getKey(), (Integer) pair.getValue());
@@ -152,7 +152,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 			newRawMessage.set(pair.getKey(), (String) pair.getValue());
 		}
 
-		UMessage newMessage = newRawMessage.cook();
+		UMessage newMessage = newRawMessage.build();
 		List<Pair<T>> dataPairs = new ArrayList<>();
 		dataPairs.add(pair);
 		Parcel<T> startVp = new ParcelVerification<>(newMessage, dataPairs);
@@ -162,7 +162,8 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	protected <T> void typedTest(Style type, Class<T> c) {
 		@SuppressWarnings("unchecked")
 		Pair<T> pair = (Pair<T>) randomPair();
-		TMessage<T> message = Messages.create(type, c).set(pair.getKey(), pair.getValue()).cook();
+		TBuilder<String,T> builder=Messages.createTyped(type);
+		TMessage<String,T> message = builder.set(pair.getKey(), pair.getValue()).build();
 		List<Pair<T>> dataPairs = new ArrayList<>();
 		dataPairs.add(pair);
 		Parcel<T> startVp = new ParcelTypedVerification<>(message, dataPairs);

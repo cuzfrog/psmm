@@ -6,14 +6,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.github.cuzfrog.psmm.Messages;
 import com.github.cuzfrog.psmm.Pair;
 import com.github.cuzfrog.psmm.UMessage;
-import com.github.cuzfrog.psmm.UntypedRawMessage;
+import com.github.cuzfrog.psmm.UBuilder;
 
 class SenderModuleMessage implements SenderModule {
 
 	@Override
 	public <T> Parcel<T> parcel(List<Pair<T>> dataPairs, Parcel<T> receivedParcel) {
 		// TODO Auto-generated method stub
-		UntypedRawMessage newRawMessage;
+		UBuilder newRawMessage;
 		int odds = ThreadLocalRandom.current().nextInt(100);
 		// 30% possibility to new
 		if (odds < 30) {
@@ -32,7 +32,7 @@ class SenderModuleMessage implements SenderModule {
 				newRawMessage.set(pair.getKey(), (String) pair.getValue());
 			}
 		}
-		UMessage newMessage = newRawMessage.cook(); // set and cook raw message
+		UMessage newMessage = newRawMessage.build(); // set and cook raw message
 
 		return new ParcelVerification<>(newMessage, dataPairs);
 	}

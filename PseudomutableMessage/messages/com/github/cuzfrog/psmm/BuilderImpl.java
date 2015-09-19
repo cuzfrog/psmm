@@ -2,9 +2,9 @@ package com.github.cuzfrog.psmm;
 
 import com.github.cuzfrog.psmm.PsmmFactory;
 
-final class RawMessageImpl<T> extends AbstractRawMessage<T> {
+final class BuilderImpl<K,T> extends AbstractBuilder<K,T> {
 
-	protected RawMessageImpl(PsmmFactory psmmFactory) {
+	protected BuilderImpl(PsmmFactory psmmFactory) {
 		super(psmmFactory);
 	}
 

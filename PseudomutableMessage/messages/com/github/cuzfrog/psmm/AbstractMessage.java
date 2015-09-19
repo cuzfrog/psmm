@@ -15,18 +15,18 @@ import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
  * @param <T>
  *            parameter type.
  */
-abstract class AbstractMessage<T> implements Message<T> {
+abstract class AbstractMessage<K,T> implements Message<K,T> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected final Message<T> parent;
+	protected final Message<K,T> parent;
 	protected final Data data;
 	protected final int depth;
 	protected final Messages.Style type;
 
-	protected AbstractMessage(Messages.Style type, Message<T> parent, Data data) {
+	protected AbstractMessage(Messages.Style type, Message<K,T> parent, Data data) {
 		super();
 		this.parent = parent;
 		this.data = data;
@@ -46,7 +46,7 @@ abstract class AbstractMessage<T> implements Message<T> {
 	}
 
 	@Override
-	public T get(String key) {
+	public T get(K key) {
 		T result = null;
 		if ((result = data.get(key)) == null) {
 			result = parent.get(key);
@@ -55,9 +55,9 @@ abstract class AbstractMessage<T> implements Message<T> {
 	}
 
 	@Override
-	public Map<String, T> getAll() {
-		Map<String, T> resultMap;
-		Map<String, T> parentResult = parent.getAll();
+	public Map<K, T> getAll() {
+		Map<K, T> resultMap;
+		Map<K, T> parentResult = parent.getAll();
 		if (parentResult != null) {
 			resultMap = parentResult;
 		} else {
@@ -67,6 +67,12 @@ abstract class AbstractMessage<T> implements Message<T> {
 		parentResult = data.getAll();
 		resultMap.putAll(parentResult);
 		return resultMap; // return a new instance from root.
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Object> getUntypedAll() {
+		return (Map<String, Object>) getAll();
 	}
 
 	// package interface method to facilitate internal function.
@@ -87,70 +93,82 @@ abstract class AbstractMessage<T> implements Message<T> {
 
 	// ------------factory behaviors:
 	@Override
-	public AbstractRawMessage<T> set(String key, T datum) {
+	public AbstractBuilder<K,T> set(K key, T datum) {
 		return PsmmSystem.fetchRaw(this.type, this).set(key, datum);
 	}
 
 	@Override
-	public AbstractRawMessage<T> raw() {
+	public AbstractBuilder<K,T> builder() {
 		return PsmmSystem.fetchRaw(this.type, this);
 	}
-	// ------------UntypedMessage behaviors:
-
+	
 	@Override
-	public Message<T> regress() throws PsmmCannotRegressExeption {
+	public Message<K,T> regress() throws PsmmCannotRegressExeption {
 		if (depth == 1) {
 			throw new PsmmCannotRegressExeption();
 		}
 		return parent;
 	}
-
+	
+	
+	
+	
+	// ------------UntypedMessage behaviors:
 	@Override
-	public AbstractRawMessage<T> set(String key, Integer value) {
-		return raw().set(key, value);
+	public Object get(String key) {
+		Object result = null;
+		if ((result = data.get(key)) == null) {
+			result = parent.get(key);
+		}
+		return result;
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Short value) {
-		return raw().set(key, value);
+	public AbstractBuilder<K,T> set(String key, Integer value) {
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Long value) {
-		return raw().set(key, value);
+	public AbstractBuilder<K,T> set(String key, Short value) {
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Boolean value) {
-		return raw().set(key, value);
+	public AbstractBuilder<K,T> set(String key, Long value) {
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Float value) {
-
-		return raw().set(key, value);
+	public AbstractBuilder<K,T> set(String key, Boolean value) {
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Double value) {
+	public AbstractBuilder<K,T> set(String key, Float value) {
 
-		return raw().set(key, value);
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Character value) {
+	public AbstractBuilder<K,T> set(String key, Double value) {
 
-		return raw().set(key, value);
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, Byte value) {
-		return raw().set(key, value);
+	public AbstractBuilder<K,T> set(String key, Character value) {
+
+		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractRawMessage<T> set(String key, String value) {
-		return raw().set(key, value);
+	public AbstractBuilder<K,T> set(String key, Byte value) {
+		return builder().set(key, value);
+	}
+
+	@Override
+	public AbstractBuilder<K,T> set(String key, String value) {
+		return builder().set(key, value);
 	}
 
 

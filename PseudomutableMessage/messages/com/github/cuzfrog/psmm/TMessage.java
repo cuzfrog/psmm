@@ -2,9 +2,6 @@ package com.github.cuzfrog.psmm;
 
 import java.util.Map;
 
-import com.github.cuzfrog.psmm.PsmmFactory;
-import com.github.cuzfrog.psmm.PsmmSystem;
-import com.github.cuzfrog.psmm.ThreadSafe;
 import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
@@ -17,7 +14,7 @@ import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations. However, you can only create them via
- * static method {@link Messages#create}.<br>
+ * static method {@link Messages#createTyped()}.<br>
  * Message Style is used for instructing how to assemble the factory with a
  * specified message-generating behavior.
  * 
@@ -31,14 +28,17 @@ import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
  * 
  * @author Cause Chung
  *
+ * @param <K>
+ *            The type of key.
  * @param <T>
  *            The type of data this message carries. <br>
  *            There's no check for T's mutability. You have to ensure T is
  *            immutable.<br>
+ * 
  * @see UMessage
  */
 @ThreadSafe
-public interface TMessage<T> extends MessageCommonInterface {
+public interface TMessage<K, T> extends MessageCommonInterface {
 
 	/**
 	 * Return a single value by a specified key. If the value cannot be found by
@@ -48,7 +48,7 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 *            key with which the specified value is associated
 	 * @return T value associated with the specified key
 	 */
-	public abstract T get(String key);
+	public abstract T get(K key);
 
 	/**
 	 * Return message's whole data as a Map. The Map is newly created and not
@@ -58,23 +58,14 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 * <p>
 	 * If the message doesn't contain any value, this will return an empty Map.
 	 * 
-	 * @return data stored in this message as a {@code Map<String, T>}.
+	 * @return data stored in this message as a {@code Map}.
 	 */
-	public abstract Map<String, T> getAll();
+	public abstract Map<K, T> getAll();
 
 	/**
-	 * Set a value into the message by an associated key, and return a reference
-	 * to {@link TypedRawMessage} for cascading calling. This simulates the fact
-	 * that if the message is modified, it'll turn into a raw message.
+	 * Set a value into the message with an associated key, and return a reference
+	 * to {@link TBuilder} for cascading calling. 
 	 * 
-	 * <p>
-	 * The method in Message actually does nothing. It first gives its own
-	 * reference to a newly created RawMessage which invokes the static method
-	 * {@link PsmmSystem#seekFactory(Messages.Style)} to get a
-	 * {@link PsmmFactory} reference , which is enveloped in the RawMessage, as
-	 * this only presents to you as a RawMessage. Then it invokes the factory's
-	 * homonymous method {@link PsmmFactory#set(String, Object)} to store datum
-	 * into the factory object.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -82,10 +73,10 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 *            value to be associated with the specified key
 	 * @return outer RawMessage object by which this message is wrapped.
 	 */
-	public abstract TypedRawMessage<T> set(String key, T datum);
+	public abstract TBuilder<K,T> set(K key, T datum);
 
 	/**
-	 * Change into a new raw message without setting data.
+	 * Return the builder without setting data.
 	 * 
 	 * <P>
 	 * Actually return a raw message that wraps this message.This method is
@@ -94,7 +85,7 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 * 
 	 * @return Raw message without setting data.
 	 */
-	public abstract TypedRawMessage<T> raw();
+	public abstract TBuilder<K,T> builder();
 
 	/**
 	 * Try to regain last message before last cook.
@@ -108,5 +99,5 @@ public interface TMessage<T> extends MessageCommonInterface {
 	 * @throws PsmmCannotRegressExeption
 	 *             when depth is one.
 	 */
-	public abstract TMessage<T> regress() throws PsmmCannotRegressExeption;
+	public abstract TMessage<K,T> regress() throws PsmmCannotRegressExeption;
 }

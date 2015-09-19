@@ -23,7 +23,7 @@ public abstract class Messages implements MessageCommonInterface {
 
 	private static final long serialVersionUID = 1L;
 
-	//prohibit inheritance
+	// prohibit inheritance
 	private Messages() {
 		throw new AssertionError();
 	}
@@ -40,15 +40,17 @@ public abstract class Messages implements MessageCommonInterface {
 
 		private String name;
 		private boolean isValue;
-		private static final Map<String,Style> stringToStyleMap=new HashMap<>();
-		static{
-			for(Style style:Style.values()){
-			stringToStyleMap.put(generateName(style), style);
+		private static final Map<String, Style> stringToStyleMap = new HashMap<>();
+
+		static {
+			for (Style style : Style.values()) {
+				stringToStyleMap.put(generateName(style), style);
 			}
 		}
+
 		private Style() {
-			this.name=generateName(this);
-			this.isValue=this.toString().contains("VALUE");
+			this.name = generateName(this);
+			this.isValue = this.toString().contains("VALUE");
 		}
 
 		private static String generateName(Style style) {
@@ -76,80 +78,80 @@ public abstract class Messages implements MessageCommonInterface {
 		String getName() {
 			return name;
 		}
-		
+
 		boolean isValue() {
 			return isValue;
 		}
-		
-		static Style fromString(String name){
+
+		static Style fromString(String name) {
 			return stringToStyleMap.get(name);
 		}
 	}
 
 	/**
-	 * Create a new {@link UntypedRawMessage}.
+	 * Create a new {@link UBuilder}.
 	 * <p>
 	 * There are several {@link Messages.Style}s of messages you can choose for
 	 * different scenarios.
 	 * 
 	 * @param messageType
 	 *            instructing factory how to generate this message.
-	 * @return UntypedRawMessage.
+	 * @return UBuilder.
 	 */
-	public static UntypedRawMessage create(Messages.Style messageType) {
-		Message<Object> rootMessage = RootMessage.getInstance();
-		AbstractRawMessage<Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
+	public static UBuilder create(Messages.Style messageType) {
+		Message<Object, Object> rootMessage = RootMessage.getInstance();
+		AbstractBuilder<Object, Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
 		return rawMessage;
 	}
 
 	/**
-	 * Create a new {@link UntypedRawMessage} .
+	 * Create a new {@link UBuilder} .
 	 * <p>
 	 * This is a helper method for {@link #create(Style)} with the default
 	 * message type of {@link Style#LINKED_MAP}.
 	 * 
 	 * @return RawMessage.
 	 */
-	public static UntypedRawMessage create() {
+	public static UBuilder create() {
 		return create(Style.LINKED_MAP);
 	}
 
 	/**
-	 * Create a new {@link TypedRawMessage} with class parameter type specified.
+	 * Create a new {@link TBuilder} with class parameter type specified.
 	 * <p>
 	 * There are several {@link Messages.Style}s of message you can choose for
 	 * different scenarios.
 	 * 
 	 * 
-	 * @param messageType
+	 * @param messageStyle
 	 *            instructing factory how to generate this message.
-	 * @param c
-	 *            type parameter
+	 * @param <K>
+	 *            Key's type.
 	 * @param <T>
 	 *            TMessage's type.
 	 * @return RawMessage.
 	 */
-	public static <T> TypedRawMessage<T> create(Messages.Style messageType, Class<T> c) {
+	public static <K, T> TBuilder<K, T> createTyped(Messages.Style messageStyle) {
 
-		Message<T> rootMessage = RootMessage.getInstance();
-		AbstractRawMessage<T> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
+		Message<K, T> rootMessage = RootMessage.getInstance();
+		AbstractBuilder<K, T> rawMessage = PsmmSystem.fetchRaw(messageStyle, rootMessage);
 		return rawMessage;
 	}
 
 	/**
-	 * Create a new {@link TypedRawMessage} with class parameter type specified.
+	 * Create a new {@link TBuilder} with class parameter type specified.
 	 * <p>
 	 * This is a helper method with the default message type of
 	 * {@link Style#LINKED_MAP}.
 	 * 
-	 * @param c
-	 *            type parameter
+	 * @param <K>
+	 *            Key's type.
 	 * @param <T>
 	 *            TMessage's type.
 	 * @return RawMessage.
 	 */
-	public static <T> TypedRawMessage<T> create(Class<T> c) {
+	public static <K, T> TBuilder<K, T> createTyped() {
 
-		return create(Style.LINKED_MAP, c);
+		return createTyped(Style.LINKED_MAP);
 	}
 }

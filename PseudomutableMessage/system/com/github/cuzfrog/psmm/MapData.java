@@ -6,23 +6,23 @@ import java.util.Map;
 
 final class MapData extends Data {
 
-	private Map<String, Object> map = new HashMap<>();
+	private Map<Object, Object> map = new HashMap<>();
 
 	@Override
-	public <T> void set(String key, T datum) {
+	public <T> void set(Object key, T datum) {
 		map.put(key, datum);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T get(String key) {
+	public <T> T get(Object key) {
 		return (T) map.get(key);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Map<String, T> getAll() {
-		return (Map<String, T>) map;
+	public <K,T> Map<K, T> getAll() {
+		return (Map<K, T>) map;
 	}
 
 	@Override
@@ -32,9 +32,8 @@ final class MapData extends Data {
 
 	@Override
 	public Data merge(Data data) {
-		//if (data != null && data.getStructure() == this.getStructure()) {
-			this.map.putAll(data.getAll());
-		//}  for performance's sake
+		assert data != null && data.getStructure() == this.getStructure();
+		this.map.putAll(data.getAll());
 		return this;
 	}
 

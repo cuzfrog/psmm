@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.cuzfrog.psmm.Pair;
-import com.github.cuzfrog.psmm.TypedRawMessage;
+import com.github.cuzfrog.psmm.TBuilder;
 import com.github.cuzfrog.psmm.UMessage;
-import com.github.cuzfrog.psmm.UntypedRawMessage;
+import com.github.cuzfrog.psmm.UBuilder;
 
 
 /**
@@ -25,8 +25,8 @@ class ParcelVerification<T> implements Parcel<T> {
 	}
 
 	@Override
-	public UntypedRawMessage getMessage() {
-		return message.raw();
+	public UBuilder getMessage() {
+		return message.builder();
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ class ParcelVerification<T> implements Parcel<T> {
 	}
 
 	@Override
-	public TypedRawMessage<T> getTypedMessage() {
+	public TBuilder<String,T> getTypedMessage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

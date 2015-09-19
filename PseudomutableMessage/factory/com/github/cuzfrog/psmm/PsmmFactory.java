@@ -37,7 +37,7 @@ interface PsmmFactory {
 	 * @param messageBeingWrapped
 	 * @return new message.
 	 */
-	public abstract <T> Message<T> commit(Message<T> messageBeingWrapped);
+	public abstract <K,T> Message<K,T> commit(Message<K,T> messageBeingWrapped);
 
 	/**
 	 * Set datum to the factory, prepare for a new message.
@@ -47,7 +47,7 @@ interface PsmmFactory {
 	 * @param datum
 	 *            value to be associated with the specified key
 	 */
-	public abstract <T> void set(String key, T datum);
+	public abstract <K,T> void set(K key, T datum);
 
 	/**
 	 * Method for modules to access.
@@ -75,5 +75,5 @@ interface PsmmFactory {
 	 * 
 	 * @return the Raw message binded with this factory.
 	 */
-	abstract <T> AbstractRawMessage<T> getRawMessage();
+	abstract <K,T> AbstractBuilder<K,T> getRawMessage();
 }

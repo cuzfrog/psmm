@@ -27,15 +27,15 @@ public class MessageFunctionTest {
 	@Test
 	public void testMaxDepth() {
 		Random random = new Random();
-		UMessage message = Messages.create().set("test1", random.nextInt(10000)).cook();
+		UMessage message = Messages.create().set("test1", random.nextInt(10000)).build();
 		for (int i = 0; i < 200; i++) {
-			message = message.set("test1", random.nextInt(10000)).cook();
+			message = message.set("test1", random.nextInt(10000)).build();
 		}
 		System.out.println(message.depth());
 
 		try {
 			for (int i = 0; i < 200; i++) {
-				message = message.set("test1", random.nextInt(10000)).cook();
+				message = message.set("test1", random.nextInt(10000)).build();
 			}
 		} catch (PsmmRuntimeException e) {
 			// OK
@@ -48,9 +48,9 @@ public class MessageFunctionTest {
 	@Test
 	public void testRegression() {
 		Random random = new Random();
-		UMessage message = Messages.create().set("test1", random.nextInt(10000)).cook();
+		UMessage message = Messages.create().set("test1", random.nextInt(10000)).build();
 		for (int i = 0; i < 200; i++) {
-			message = message.set("test1", random.nextInt(10000)).cook();
+			message = message.set("test1", random.nextInt(10000)).build();
 		}
 		System.out.println(message.depth());
 

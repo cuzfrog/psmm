@@ -12,12 +12,12 @@ final class PsmmFactoryImpl implements PsmmFactory {
 	/**
 	 * Raw message binded with this factory.
 	 */
-	private final AbstractRawMessage<?> rawMessageRefr = new RawMessageImpl<>(this);
+	private final AbstractBuilder<?,?> rawMessageRefr = new BuilderImpl<>(this);
 
 	@Override
-	public <T> Message<T> commit(Message<T> messageBeingWrapped) {
+	public <K,T> Message<K,T> commit(Message<K,T> messageBeingWrapped) {
 
-		Message<T> newMessage = module.createMessage(type, messageBeingWrapped, data);
+		Message<K,T> newMessage = module.createMessage(type, messageBeingWrapped, data);
 
 		// once a new message has been created, delete this.data reference
 		// for safety.
@@ -27,7 +27,7 @@ final class PsmmFactoryImpl implements PsmmFactory {
 	}
 
 	@Override
-	public <T> void set(String key, T datum) {
+	public <K,T> void set(K key, T datum) {
 		// TODO Auto-generated method stub
 		data.set(key, datum);
 	}
@@ -63,8 +63,8 @@ final class PsmmFactoryImpl implements PsmmFactory {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> AbstractRawMessage<T> getRawMessage() {
-		return (AbstractRawMessage<T>) rawMessageRefr;
+	public <K,T> AbstractBuilder<K,T> getRawMessage() {
+		return (AbstractBuilder<K,T>) rawMessageRefr;
 	}
 
 

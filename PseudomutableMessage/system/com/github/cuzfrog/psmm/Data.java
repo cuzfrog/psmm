@@ -19,13 +19,13 @@ import java.util.Map;
  *
  */
 abstract class Data {
-	public <T> void set(String key, T datum) {
+	public <T> void set(Object key, T datum) {
 	}
 
 	public void set(Object datum) {
 	}
 
-	public <T> T get(String key) {
+	public <T> T get(Object key) {
 		return null;
 	}
 
@@ -33,7 +33,7 @@ abstract class Data {
 		return null;
 	}
 
-	public <T> Map<String, T> getAll() {
+	public <K,T> Map<K, T> getAll() {
 		return null;
 	}
 

@@ -11,14 +11,16 @@ import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
  *
  * @param <T>
  */
-interface Message<T> extends TMessage<T>, UMessage {
-	AbstractRawMessage<T> raw();
+interface Message<K,T> extends TMessage<K,T>, UMessage {
 	
-	Message<T> regress() throws PsmmCannotRegressExeption;
+	Message<K,T> regress() throws PsmmCannotRegressExeption;
+	
+	AbstractBuilder<K,T> builder();
 	
 	/**
 	 * Read all data in a message. And return one Data object.
 	 * @return all data the message contains, including those stored in its parents
 	 */
 	Data readData();
+	
 }

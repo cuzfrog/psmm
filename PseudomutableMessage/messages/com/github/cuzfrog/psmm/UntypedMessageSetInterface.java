@@ -10,7 +10,7 @@ interface UntypedMessageSetInterface {
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -18,13 +18,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Integer value);
+	public abstract UBuilder set(String key, Integer value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -32,13 +32,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Short value);
+	public abstract UBuilder set(String key, Short value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -46,13 +46,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Long value);
+	public abstract UBuilder set(String key, Long value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -60,13 +60,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Boolean value);
+	public abstract UBuilder set(String key, Boolean value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -74,13 +74,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Float value);
+	public abstract UBuilder set(String key, Float value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -88,13 +88,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Double value);
+	public abstract UBuilder set(String key, Double value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -102,13 +102,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Character value);
+	public abstract UBuilder set(String key, Character value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -116,13 +116,13 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, Byte value);
+	public abstract UBuilder set(String key, Byte value);
 
 	/**
 	 * Set value and return a raw message.
 	 * 
 	 * <p>
-	 * see {@link TMessage#set(String, Object)} for details.
+	 * see {@link TMessage} for details.
 	 * 
 	 * @param key
 	 *            key with which the specified value is to be associated
@@ -130,5 +130,5 @@ interface UntypedMessageSetInterface {
 	 *            value to be associated with the specified key
 	 * @return outer Raw Message object by which this message is wrapped.
 	 */
-	public abstract UntypedRawMessage set(String key, String value);
+	public abstract UBuilder set(String key, String value);
 }

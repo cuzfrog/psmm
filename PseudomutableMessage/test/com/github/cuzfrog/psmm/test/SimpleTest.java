@@ -23,7 +23,7 @@ class SimpleTest {
 				.set(key1, 2)
 				.set(key2, 122)
 				.set(key3, "this is string") //add some data
-				.cook(); //without cook() compile time error.
+				.build(); //without cook() compile time error.
 		//after passed to another actor, fetch data:
 		System.out.println(message1.get(key1) 
 				+ "|" + message1.get(key2) 
@@ -37,7 +37,7 @@ class SimpleTest {
 				.set(key2, 45)
 				.set(key3, "this is another string")
 				.set(key4, 568.3d)
-				.cook();
+				.build();
 		//after passed to another actor, fetch data:
 		System.out.println(message2.get(key1) 
 				+ "|" + message2.get(key2) 

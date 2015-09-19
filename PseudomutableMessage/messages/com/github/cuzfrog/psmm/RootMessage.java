@@ -6,7 +6,7 @@ import com.github.cuzfrog.psmm.Data;
 import com.github.cuzfrog.psmm.StateLess;
 
 @StateLess
-enum RootMessage implements Message<Object> {
+enum RootMessage implements Message<Object, Object> {
 
 	INSTANCE;
 	private static final long serialVersionUID = 1L;
@@ -14,94 +14,104 @@ enum RootMessage implements Message<Object> {
 	// -------------------utility behavior:
 
 	@SuppressWarnings("unchecked")
-	public static <T> Message<T> getInstance() {
-		return (Message<T>) INSTANCE;
+	public static <K, T> Message<K, T> getInstance() {
+		return (Message<K, T>) INSTANCE;
 	}
 
 	// -------------------message behavior:
 	@Override
-	public Object get(String valuePath) {
+	public Object get(Object valuePath) {
 		return null;
 	}
 
 	@Override
-	public int depth() {		
+	public int depth() {
 		return 0;
 	}
 
 	@Override
-	public byte[] getSignature() {		
+	public byte[] getSignature() {
 		return new byte[] { Integer.valueOf(0).byteValue() };
 	}
 
 	@Override
-	public Map<String, Object> getAll() {		
+	public Map<Object, Object> getAll() {
 		return null;
 	}
 
 	@Override
-	public Message<Object> regress() {		
+	public Map<String, Object> getUntypedAll() {
 		return null;
 	}
 
 	@Override
-	public Data readData() {		
+	public Message<Object, Object> regress() {
+		return null;
+	}
+
+	@Override
+	public Data readData() {
 		return null;
 	}
 	// ---------------------factory behaviors:
 
 	@Override
-	public AbstractRawMessage<Object> set(String key, Object datum) {		
+	public AbstractBuilder<Object, Object> set(Object key, Object datum) {
 		return null;
 	}
 
 	@Override
-	public AbstractRawMessage<Object> raw() {		
+	public AbstractBuilder<Object, Object> builder() {
 		return null;
 	}
 
 	@Override
-	public AbstractRawMessage<Object> set(String key, String value) {		
+	public AbstractBuilder<Object, Object> set(String key, String value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Integer value) {		
+	public UBuilder set(String key, Integer value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Short value) {		
+	public UBuilder set(String key, Short value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Long value) {		
+	public UBuilder set(String key, Long value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Boolean value) {		
+	public UBuilder set(String key, Boolean value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Float value) {		
+	public UBuilder set(String key, Float value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Double value) {		
+	public UBuilder set(String key, Double value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Character value) {		
+	public UBuilder set(String key, Character value) {
 		return null;
 	}
 
 	@Override
-	public UntypedRawMessage set(String key, Byte value) {
+	public UBuilder set(String key, Byte value) {
+		return null;
+	}
+
+	@Override
+	public Object get(String key) {
 		return null;
 	}
 

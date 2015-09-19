@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.cuzfrog.psmm.Pair;
-import com.github.cuzfrog.psmm.TypedRawMessage;
-import com.github.cuzfrog.psmm.UntypedRawMessage;
+import com.github.cuzfrog.psmm.TBuilder;
+import com.github.cuzfrog.psmm.UBuilder;
 
 final class ParcelControl<T> implements Parcel<T> {
 	private final Map<String,T> message;
@@ -20,7 +20,7 @@ final class ParcelControl<T> implements Parcel<T> {
 	}
 
 	@Override
-	public UntypedRawMessage getMessage() {
+	public UBuilder getMessage() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -43,7 +43,7 @@ final class ParcelControl<T> implements Parcel<T> {
 	}
 
 	@Override
-	public TypedRawMessage<T> getTypedMessage() {
+	public TBuilder<String,T> getTypedMessage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

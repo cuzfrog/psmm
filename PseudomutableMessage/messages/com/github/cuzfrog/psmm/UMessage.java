@@ -41,7 +41,7 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 * 
 	 * @return Raw message without setting data.
 	 */
-	public abstract UntypedRawMessage raw();
+	public abstract UBuilder builder();
 
 	/**
 	 * Return message's whole data as a Map. The Map is newly created and not
@@ -53,7 +53,7 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 * 
 	 * @return data stored in this message as a {@code Map<String, Object>}.
 	 */
-	public abstract Map<String, ? extends Object> getAll();
+	public abstract Map<String, Object> getUntypedAll();
 	
 	/**
 	 * Try to regain last message before last cook.

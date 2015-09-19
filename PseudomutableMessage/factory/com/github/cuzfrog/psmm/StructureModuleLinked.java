@@ -14,7 +14,7 @@ final class StructureModuleLinked extends Module {
 	}
 
 	@Override
-	public <T> Message<T> createMessage(Messages.Style type,Message<T> messageBeingWrapped,
+	public <K,T> Message<K,T> createMessage(Messages.Style type,Message<K,T> messageBeingWrapped,
 			Data data) {
 		return this.getCollaberativeModule().createMessage(type,messageBeingWrapped, data);
 	}

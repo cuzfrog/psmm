@@ -2,12 +2,12 @@ package com.github.cuzfrog.psmm;
 
 import com.github.cuzfrog.psmm.Messages.Style;
 
-final class ValueMessage<T> extends AbstractMessage<T> {
+final class ValueMessage<K,T> extends AbstractMessage<K,T> {
 
 	private static final long serialVersionUID = -8983638298883345411L;
 	private volatile int hashCode;
 
-	protected ValueMessage(Style type, Message<T> parent, Data data) {
+	protected ValueMessage(Style type, Message<K,T> parent, Data data) {
 		super(type, parent, data);
 		// TODO Auto-generated constructor stub
 	}
@@ -40,7 +40,7 @@ final class ValueMessage<T> extends AbstractMessage<T> {
 			return false;
 		}
 
-		Message<?> other = (Message<?>) obj;
+		Message<?,?> other = (Message<?,?>) obj;
 		Data otherData = other.readData();
 		if (otherData == null) {
 			return false;
