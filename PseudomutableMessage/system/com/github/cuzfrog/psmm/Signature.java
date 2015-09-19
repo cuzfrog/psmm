@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.github.cuzfrog.psmm.Immutable;
 
 @Immutable
+@Deprecated
 final class Signature {
 	private final byte[] signature;
 
