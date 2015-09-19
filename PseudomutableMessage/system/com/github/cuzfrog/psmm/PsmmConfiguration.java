@@ -7,18 +7,15 @@ import java.util.Map;
 
 import com.github.cuzfrog.psmm.Module;
 import com.github.cuzfrog.psmm.NotThreadSafe;
+import com.github.cuzfrog.psmm.exceptions.PsmmInvalidConfigurationException;
 
 /**
  * Class for configuring psmm when initiating.
  * <p>
- * Constructor or set-method both do configuration work. PsmmSystem will create
- * a default PsmmConfiguration if you don't specify one.
+ * PsmmSystem will create a default PsmmConfiguration if you don't specify one.
  * <p>
- * Default factory pool size is 16, this should be set more than the threads ID
- * there'll be. Default factory pool type is MAP, which implements a
- * ConcurrentHashMap. Default message linked max depth is 256, which means
- * there's no limitation on depth. Note that long message chain could occupy
- * large part of memory.
+ * Default message linked max depth is 256,  Note that long message chain could occupy
+ * chunks of memory.
  * 
  * @author Cause Chung
  *
@@ -26,8 +23,24 @@ import com.github.cuzfrog.psmm.NotThreadSafe;
 @NotThreadSafe
 public final class PsmmConfiguration {
 
+	/**
+	 * Factory pool type.
+	 * 
+	 * <p>Factory is what does the actual work for builder. 
+	 * @author Cause Chung
+	 *
+	 */
 	public enum FactoryPoolType {
-		THREAD_LOCAL, NULL
+		/** 
+		 * Builder and factory are attached to thread using ThreadLocal.
+		 * Every time calling a builder, builder and factory will be reused.
+		 * This is default type.
+		 */
+		THREAD_LOCAL, 
+		/**
+		 * Every time calling a builder, new instance will be created.
+		 */
+		NULL
 	}
 
 	// constants:
@@ -60,20 +73,44 @@ public final class PsmmConfiguration {
 		return customData;
 	}
 
+	/**
+	 * Return the type of factory pool now set.
+	 * 
+	 * @return type of factory pool.
+	 */
 	public FactoryPoolType getFactoryPoolChoseType() {
 		return factoryPoolChoseType;
 	}
 
+	/**
+	 * Set factory pool type and return reference to self.
+	 * 
+	 * @param factoryPoolChoseType
+	 * @return reference to self for cascading calling.
+	 */
 	public PsmmConfiguration setFactoryPoolChoseType(FactoryPoolType factoryPoolChoseType) {
 		this.factoryPoolChoseType = factoryPoolChoseType;
 		return this;
 	}
 
+	/**
+	 * Return maximum depth of message chain.
+	 * @return maximum depth of message chain.
+	 */
 	public int getMessageMaxDepth() {
 		return messageMaxDepth;
 	}
 
+	/**
+	 * Set maximum message chain depth.
+	 * @param messageMaxDepth depth of message chain.
+	 * @return reference to self for cascading calling.
+	 * @throws PsmmInvalidConfigurationException if parameter set is less than 1.
+	 */
 	public PsmmConfiguration setMessageMaxDepth(int messageMaxDepth) {
+		if(messageMaxDepth<1){
+			throw new PsmmInvalidConfigurationException();
+		}
 		this.messageMaxDepth = messageMaxDepth;
 		return this;
 	}
