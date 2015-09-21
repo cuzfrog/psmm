@@ -47,7 +47,7 @@ public final class PsmmConfiguration {
 	// configuration members:
 	private Map<String, Module> customModules = new HashMap<>();
 	private List<Data> customData = new ArrayList<>();
-	private FactoryPoolType factoryPoolChoseType = DEFAULT_FACTORYPOOL_TYPE;
+	private FactoryPoolType factoryPoolType = DEFAULT_FACTORYPOOL_TYPE;
 	private int messageMaxDepth = DEFAULT_MESSAGE_MAX_DEPTH;
 
 	// custom methods:
@@ -75,17 +75,17 @@ public final class PsmmConfiguration {
 	 * @return type of factory pool.
 	 */
 	public FactoryPoolType getFactoryPoolChoseType() {
-		return factoryPoolChoseType;
+		return factoryPoolType;
 	}
 
 	/**
 	 * Set factory pool type and return reference to self.
 	 * 
-	 * @param factoryPoolChoseType
+	 * @param factoryPoolType type of factory pool.
 	 * @return reference to self for cascading calling.
 	 */
-	public PsmmConfiguration setFactoryPoolChoseType(FactoryPoolType factoryPoolChoseType) {
-		this.factoryPoolChoseType = factoryPoolChoseType;
+	public PsmmConfiguration setFactoryPoolChoseType(FactoryPoolType factoryPoolType) {
+		this.factoryPoolType = factoryPoolType;
 		return this;
 	}
 
@@ -101,7 +101,7 @@ public final class PsmmConfiguration {
 	 * Set maximum message chain depth.
 	 * @param messageMaxDepth depth of message chain.
 	 * @return reference to self for cascading calling.
-	 * @throws PsmmInvalidConfigurationException if parameter set is less than 1.
+	 * @throws IllegalArgumentException if parameter set is less than 1.
 	 */
 	public PsmmConfiguration setMessageMaxDepth(int messageMaxDepth) {
 		if(messageMaxDepth<1){

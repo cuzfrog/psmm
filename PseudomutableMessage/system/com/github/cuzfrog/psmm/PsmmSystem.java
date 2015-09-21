@@ -15,14 +15,15 @@ package com.github.cuzfrog.psmm;
  * @author Cause Chung
  * @see PsmmConfiguration
  */
+@NotThreadSafe
 public final class PsmmSystem {
 
 	// self reference
-	private static PsmmSystem instance;
+	private volatile static PsmmSystem instance;
 
 	// members:
 	private volatile FactoryPool factoryPool;
-	private int messageMaxDepth;
+	private volatile int messageMaxDepth;
 
 	private PsmmSystem(PsmmConfiguration config) {
 		switch (config.getFactoryPoolChoseType()) {
@@ -55,18 +56,18 @@ public final class PsmmSystem {
 	}
 
 	// utility methods:----------------
-	// create raw message:
-	static <K,T> AbstractBuilder<K,T> fetchRaw(Messages.Style type, Message<K,T> messageBeingWrapped) {
+	// get builder:
+	static <K, T> AbstractBuilder<K, T> fetchBuilder(Messages.Style type, Message<K, T> messageBeingWrapped) {
 		if (messageBeingWrapped.depth() >= instance.messageMaxDepth) {
-			throw new  IllegalStateException("Message chain too long. Depth:"+messageBeingWrapped.depth());
+			throw new IllegalStateException("Message chain too long. Depth:" + messageBeingWrapped.depth());
 		}
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
-		AbstractBuilder<K,T> rawMessage = factory.getRawMessage();
-		rawMessage.setMessageBeingWrapped(messageBeingWrapped);
-		return rawMessage;
+		AbstractBuilder<K, T> builder = factory.getRawMessage();
+		builder.setMessageBeingWrapped(messageBeingWrapped);
+		return builder;
 	}
 
-	static <K,T> Message<K,T> getRootMessage() {
+	static <K, T> Message<K, T> getRootMessage() {
 		return RootMessage.getInstance();
 	}
 
@@ -78,7 +79,7 @@ public final class PsmmSystem {
 	 * @param data
 	 * @return a new cached message
 	 */
-	static <K,T> Message<K,T> getConcretMessage(Messages.Style style, Message<K,T> messageBeingWrapped, Data data) {
+	static <K, T> Message<K, T> getConcretMessage(Messages.Style style, Message<K, T> messageBeingWrapped, Data data) {
 		if (style.isValue()) {
 			return new ValueMessage<>(style, messageBeingWrapped, data);
 		} else {

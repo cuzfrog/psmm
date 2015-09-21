@@ -25,7 +25,7 @@ public class MessageFunctionTest {
 	@Test
 	public void testMaxDepth() {
 		Random random = new Random();
-		UMessage message = Messages.create().set("test1", random.nextInt(10000)).build();
+		UMessage message = Messages.builder().set("test1", random.nextInt(10000)).build();
 		for (int i = 0; i < 200; i++) {
 			message = message.set("test1", random.nextInt(10000)).build();
 		}
@@ -46,7 +46,7 @@ public class MessageFunctionTest {
 	@Test
 	public void testRegression() {
 		Random random = new Random();
-		UMessage message = Messages.create().set("test1", random.nextInt(10000)).build();
+		UMessage message = Messages.builder().set("test1", random.nextInt(10000)).build();
 		for (int i = 0; i < 200; i++) {
 			message = message.set("test1", random.nextInt(10000)).build();
 		}
@@ -66,8 +66,7 @@ public class MessageFunctionTest {
 				message = message.regress();
 			}
 		} catch (NullPointerException e) {
-			// OK
-			System.out.println(message.depth());
+			// OK, this is expected.
 		}
 	}
 

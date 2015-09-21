@@ -6,6 +6,7 @@ package com.github.cuzfrog.psmm;
  * @author Cause Chung
  * @see UMessage
  */
+@NotThreadSafe
 public interface UBuilder extends UntypedMessageSetInterface {
 	/**
 	 * Return an {@code UMessage} with the data previously set.

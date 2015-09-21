@@ -142,7 +142,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	protected <T> void untypedTest(Style type) {
 		@SuppressWarnings("unchecked")
 		Pair<T> pair = (Pair<T>) randomPair();
-		UBuilder newRawMessage = Messages.create(type);
+		UBuilder newRawMessage = Messages.builder(type);
 		T value = pair.getValue();
 		if (value instanceof Integer) {
 			newRawMessage.set(pair.getKey(), (Integer) pair.getValue());
@@ -162,7 +162,7 @@ public class TestAbstractActorSimulation extends MyAbstractTest implements Share
 	protected <T> void typedTest(Style type, Class<T> c) {
 		@SuppressWarnings("unchecked")
 		Pair<T> pair = (Pair<T>) randomPair();
-		TBuilder<String,T> builder=Messages.createTyped(type);
+		TBuilder<String,T> builder=Messages.typedBuilder(type);
 		TMessage<String,T> message = builder.set(pair.getKey(), pair.getValue()).build();
 		List<Pair<T>> dataPairs = new ArrayList<>();
 		dataPairs.add(pair);

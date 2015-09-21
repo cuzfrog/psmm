@@ -15,8 +15,8 @@ class DocumentaryTest {
 		// TODO Auto-generated method stub
 
 		PsmmSystem.initiate();
-		UMessage message = Messages.create(Messages.Style.FLAT_MAP).set("key1", "string value").build();
-		TBuilder<String, Integer> b2 = Messages.createTyped();
+		UMessage message = Messages.builder(Messages.Style.FLAT_MAP).set("key1", "string value").build();
+		TBuilder<String, Integer> b2 = Messages.typedBuilder();
 		TMessage<String, Integer> message2 = b2.set("key1", 583)
 				// .set("key2", "string value") //compile time error
 				.build();

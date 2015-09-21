@@ -17,7 +17,7 @@ class SenderModuleTypedMessage implements SenderModule {
 		int odds = ThreadLocalRandom.current().nextInt(100);
 		// 30% possibility to new
 		if (odds < 30) {
-			newRawMessage = Messages.createTyped();
+			newRawMessage = Messages.typedBuilder();
 		} else {
 			newRawMessage = receivedParcel.getTypedMessage();
 		} // prepare raw message

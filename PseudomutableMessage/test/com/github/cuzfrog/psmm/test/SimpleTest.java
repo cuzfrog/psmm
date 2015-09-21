@@ -18,11 +18,11 @@ class SimpleTest {
 		String key2 = "int2";
 		String key3 = "str1";
 		UMessage message1 = 
-				Messages.create() //create a raw message
+				Messages.builder() //get builder
 				.set(key1, 2)
 				.set(key2, 122)
 				.set(key3, "this is string") //add some data
-				.build(); //without cook() compile time error.
+				.build(); //without build() compile time error.
 		//after passed to another actor, fetch data:
 		System.out.println(message1.get(key1) 
 				+ "|" + message1.get(key2) 

@@ -17,7 +17,7 @@ class SenderModuleMessage implements SenderModule {
 		int odds = ThreadLocalRandom.current().nextInt(100);
 		// 30% possibility to new
 		if (odds < 30) {
-			newRawMessage = Messages.create();
+			newRawMessage = Messages.builder();
 		} else {
 			newRawMessage = receivedParcel.getMessage();
 		} // prepare raw message

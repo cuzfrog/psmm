@@ -20,18 +20,18 @@ public class ValueMessageTest {
 	@SuppressWarnings("boxing")
 	@Test
 	public void test() {
-		UMessage m1 = Messages.create(Style.VALUE_FLAT_MAP).set("int1", 3).set("int2", 12).build();
+		UMessage m1 = Messages.builder(Style.VALUE_FLAT_MAP).set("int1", 3).set("int2", 12).build();
 		assertTrue(m1.equals(m1)); // Reflective
 		printHashCode(m1, 1);
-		UMessage m2 = Messages.create(Style.VALUE_LINKED_MAP).set("int1", 3).set("int2", 12).build();
+		UMessage m2 = Messages.builder(Style.VALUE_LINKED_MAP).set("int1", 3).set("int2", 12).build();
 		printHashCode(m2, 2);
-		TBuilder<String, Integer> b3 = Messages.createTyped(Style.VALUE_FLAT_MAP);
+		TBuilder<String, Integer> b3 = Messages.typedBuilder(Style.VALUE_FLAT_MAP);
 		TMessage<String, Integer> m3 = b3.set("int1", 3).set("int2", 12).build();
 		printHashCode(m3, 3);
-		TBuilder<String, Integer> b4=Messages.createTyped(Style.VALUE_LINKED_MAP);
+		TBuilder<String, Integer> b4=Messages.typedBuilder(Style.VALUE_LINKED_MAP);
 		TMessage<String,Integer> m4 = b4.set("int1", 3).set("int2", 12).build();
 		printHashCode(m4, 4);
-
+		
 		Map<Integer, Object> ms = new HashMap<>();
 		ms.put(1, m1);
 		ms.put(2, m2);

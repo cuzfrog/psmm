@@ -88,12 +88,12 @@ abstract class AbstractMessage<K,V> implements Message<K,V> {
 	// ------------factory behaviors:
 	@Override
 	public AbstractBuilder<K,V> set(K key, V datum) {
-		return PsmmSystem.fetchRaw(this.type, this).set(key, datum);
+		return PsmmSystem.fetchBuilder(this.type, this).set(key, datum);
 	}
 
 	@Override
 	public AbstractBuilder<K,V> builder() {
-		return PsmmSystem.fetchRaw(this.type, this);
+		return PsmmSystem.fetchBuilder(this.type, this);
 	}
 	
 	@Override

@@ -20,6 +20,7 @@ import com.github.cuzfrog.psmm.MessageCommonInterface;
  * 
  * @author Cause Chung
  */
+@ThreadSafe
 public interface UMessage extends MessageCommonInterface, UntypedMessageSetInterface {
 	/**
 	 * Return a single value by a specified key. If the value cannot be found by
@@ -60,8 +61,8 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 * the encapsulated message.
 	 * 
 	 * 
-	 * @return last message before last cook.  Return <b>null</b> when depth is less
-	 *         than two, i.e. there is no valid message inside .
+	 * @return last message before last cook. Return <b>null</b> when {@code depth<=1},
+	 *         i.e. there is no valid message inside .
 	 */
 	public abstract UMessage regress();
 }

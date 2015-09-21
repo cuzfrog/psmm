@@ -6,7 +6,7 @@ import java.util.Map;
 import com.github.cuzfrog.psmm.PsmmSystem;
 
 /**
- * An abstract API class that has message creation methods and the definition of
+ * An abstract API class that has builder creation methods and the definition of
  * message styles.
  * <p>
  * There are several message interfaces<br>
@@ -17,7 +17,9 @@ import com.github.cuzfrog.psmm.PsmmSystem;
  * since TypedMessage doesn't check the mutability of the datum you set in.
  * 
  * <p>
- * Throw IllegalStateException when message chain is longer than message's max depth.
+ * Throw IllegalStateException when message chain is longer than message's max
+ * depth.
+ * 
  * @author Cause Chung
  */
 public abstract class Messages implements MessageCommonInterface {
@@ -30,11 +32,14 @@ public abstract class Messages implements MessageCommonInterface {
 	}
 
 	/**
-	 * Message styles indicating the structures of messages. See document for
-	 * details.
-	 * 
+	 * Message styles indicating the structures of messages. See documentation
+	 * http://cuzfrog.github.io/psmm for details.
+	 * <p>
+	 * MAP: message implements map as data structure.
+	 * <br>LINKED: new message decorate old message as chain.
+	 * <br>FLAT: new message merge old message's data.
+	 * <br>VALUE: message equals another when exhibiting same values.
 	 * @author Cause Chung
-	 *
 	 */
 	public enum Style {
 		LINKED_MAP, FLAT_MAP, VALUE_LINKED_MAP, VALUE_FLAT_MAP;
@@ -99,22 +104,22 @@ public abstract class Messages implements MessageCommonInterface {
 	 *            instructing factory how to generate this message.
 	 * @return UBuilder.
 	 */
-	public static UBuilder create(Messages.Style messageType) {
+	public static UBuilder builder(Messages.Style messageType) {
 		Message<Object, Object> rootMessage = RootMessage.getInstance();
-		AbstractBuilder<Object, Object> rawMessage = PsmmSystem.fetchRaw(messageType, rootMessage);
-		return rawMessage;
+		AbstractBuilder<Object, Object> builder = PsmmSystem.fetchBuilder(messageType, rootMessage);
+		return builder;
 	}
 
 	/**
 	 * Create a new {@link UBuilder} .
 	 * <p>
-	 * This is a helper method for {@link #create(Style)} with the default
+	 * This is a helper method for {@link #builder(Style)} with the default
 	 * message type of {@link Style#LINKED_MAP}.
 	 * 
-	 * @return RawMessage.
+	 * @return UBuilder.
 	 */
-	public static UBuilder create() {
-		return create(Style.LINKED_MAP);
+	public static UBuilder builder() {
+		return builder(Style.LINKED_MAP);
 	}
 
 	/**
@@ -130,13 +135,13 @@ public abstract class Messages implements MessageCommonInterface {
 	 *            Key's type.
 	 * @param <T>
 	 *            TMessage's type.
-	 * @return RawMessage.
+	 * @return TBuilder.
 	 */
-	public static <K, T> TBuilder<K, T> createTyped(Messages.Style messageStyle) {
+	public static <K, T> TBuilder<K, T> typedBuilder(Messages.Style messageStyle) {
 
 		Message<K, T> rootMessage = RootMessage.getInstance();
-		AbstractBuilder<K, T> rawMessage = PsmmSystem.fetchRaw(messageStyle, rootMessage);
-		return rawMessage;
+		AbstractBuilder<K, T> builder = PsmmSystem.fetchBuilder(messageStyle, rootMessage);
+		return builder;
 	}
 
 	/**
@@ -149,10 +154,10 @@ public abstract class Messages implements MessageCommonInterface {
 	 *            Key's type.
 	 * @param <T>
 	 *            TMessage's type.
-	 * @return RawMessage.
+	 * @return TBuilder.
 	 */
-	public static <K, T> TBuilder<K, T> createTyped() {
+	public static <K, T> TBuilder<K, T> typedBuilder() {
 
-		return createTyped(Style.LINKED_MAP);
+		return typedBuilder(Style.LINKED_MAP);
 	}
 }

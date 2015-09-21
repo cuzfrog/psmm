@@ -12,7 +12,7 @@ import java.util.Map;
  * <p>
  * There are several final implementations for different data structures and
  * performances in given situations. However, you can only create them via
- * static method {@link Messages#createTyped()}.<br>
+ * static method {@link Messages#typedBuilder()}.<br>
  * Message Style is used for instructing how to assemble the factory with a
  * specified message-generating behavior.
  * 
@@ -96,8 +96,8 @@ public interface TMessage<K, T> extends MessageCommonInterface {
 	 * message inside it. So it's able to provide a simulation of
 	 * "time regression" method to get that message.
 	 * 
-	 * @return last message before last build. Return <b>null</b> when depth is less
-	 *         than two, i.e. there is no valid message inside .
+	 * @return last message before last build. Return <b>null</b> when {@code depth<=1},
+	 *         i.e. there is no valid message inside .
 	 */
 	public abstract TMessage<K, T> regress();
 }
