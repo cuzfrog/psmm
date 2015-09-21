@@ -3,7 +3,6 @@ package com.github.cuzfrog.psmm;
 import java.util.Map;
 
 import com.github.cuzfrog.psmm.MessageCommonInterface;
-import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
 
 /**
  * An untyped version for {@link TMessage}.
@@ -61,9 +60,8 @@ public interface UMessage extends MessageCommonInterface, UntypedMessageSetInter
 	 * the encapsulated message.
 	 * 
 	 * 
-	 * @return last message before last cook.
-	 * @throws PsmmCannotRegressExeption
-	 *             when depth is less than two, i.e. there not valid message inside.
+	 * @return last message before last cook.  Return <b>null</b> when depth is less
+	 *         than two, i.e. there is no valid message inside .
 	 */
-	public abstract UMessage regress() throws PsmmCannotRegressExeption;
+	public abstract UMessage regress();
 }

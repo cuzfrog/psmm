@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.github.cuzfrog.psmm.Messages;
 import com.github.cuzfrog.psmm.PsmmSystem;
 import com.github.cuzfrog.psmm.UMessage;
-import com.github.cuzfrog.psmm.exceptions.PsmmException;
 import com.github.cuzfrog.psmm.exceptions.PsmmRuntimeException;
 
 public class MessageFunctionTest {
@@ -54,19 +53,20 @@ public class MessageFunctionTest {
 		}
 		System.out.println(message.depth());
 
-		try {
+
 			for (int i = 0; i < 200; i++) {
 				message = message.regress();
+				if(message==null){
+					fail("regress shoud be in bound");
+				}
 			}
-		} catch (PsmmException e) {
-			fail("regress shoud be in bound");
-		}
+
 		System.out.println(message.depth());
 		try {
 			for (int i = 0; i < 200; i++) {
 				message = message.regress();
 			}
-		} catch (PsmmException e) {
+		} catch (NullPointerException e) {
 			// OK
 			System.out.println(message.depth());
 		}

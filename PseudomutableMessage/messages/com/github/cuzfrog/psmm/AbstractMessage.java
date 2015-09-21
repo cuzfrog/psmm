@@ -3,10 +3,6 @@ package com.github.cuzfrog.psmm;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.cuzfrog.psmm.Data;
-import com.github.cuzfrog.psmm.PsmmSystem;
-import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
-
 /**
  * In this abstract message, only signature has not been implemented.
  * 
@@ -103,9 +99,9 @@ abstract class AbstractMessage<K,T> implements Message<K,T> {
 	}
 	
 	@Override
-	public Message<K,T> regress() throws PsmmCannotRegressExeption {
-		if (depth == 1) {
-			throw new PsmmCannotRegressExeption();
+	public Message<K,T> regress() {
+		if (depth <= 1) {
+			return null;
 		}
 		return parent;
 	}

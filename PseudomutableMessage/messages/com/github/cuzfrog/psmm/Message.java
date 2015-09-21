@@ -1,7 +1,5 @@
 package com.github.cuzfrog.psmm;
 
-import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
-
 /**
  * An mediate interface between low level class( {@link AbstractMessage},
  * {@link RootMessage}) and high level ones({@link TMessage},
@@ -13,7 +11,7 @@ import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
  */
 interface Message<K,T> extends TMessage<K,T>, UMessage {
 	
-	Message<K,T> regress() throws PsmmCannotRegressExeption;
+	Message<K,T> regress();
 	
 	AbstractBuilder<K,T> builder();
 	

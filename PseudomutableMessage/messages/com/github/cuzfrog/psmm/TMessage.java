@@ -2,8 +2,6 @@ package com.github.cuzfrog.psmm;
 
 import java.util.Map;
 
-import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
-
 /**
  * A typed message interface.
  * 
@@ -96,11 +94,10 @@ public interface TMessage<K, T> extends MessageCommonInterface {
 	 * <p>
 	 * As for linked message with depth more than one, there's always another
 	 * message inside it. So it's able to provide a simulation of
-	 * "time regression" method to get that message. 
+	 * "time regression" method to get that message.
 	 * 
-	 * @return last message before last build.
-	 * @throws PsmmCannotRegressExeption
-	 *             when depth is less than two, i.e. there not valid message inside.
+	 * @return last message before last build. Return <b>null</b> when depth is less
+	 *         than two, i.e. there is no valid message inside .
 	 */
-	public abstract TMessage<K, T> regress() throws PsmmCannotRegressExeption;
+	public abstract TMessage<K, T> regress();
 }

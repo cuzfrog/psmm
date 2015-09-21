@@ -3,7 +3,6 @@ package com.github.cuzfrog.psmm.test;
 import com.github.cuzfrog.psmm.Messages;
 import com.github.cuzfrog.psmm.PsmmSystem;
 import com.github.cuzfrog.psmm.UMessage;
-import com.github.cuzfrog.psmm.exceptions.PsmmCannotRegressExeption;
 
 class SimpleTest {
 
@@ -45,16 +44,13 @@ class SimpleTest {
 				+ "|" + message2.get(key4));
 		//result: 2|45|this is another string|568.3
 		
-		UMessage message3 = null;
-		try {
-			message3=message2.regress();
-		} catch (PsmmCannotRegressExeption e) {
-			e.printStackTrace();
+		UMessage message3 =message2.regress();
+		if(message3!=null){
+			System.out.println(message3.get(key1) 
+					+ "|" + message3.get(key2) 
+					+ "|" + message3.get(key3)
+					+ "|" + message3.get(key4));
 		}
-		System.out.println(message3.get(key1) 
-				+ "|" + message3.get(key2) 
-				+ "|" + message3.get(key3)
-				+ "|" + message3.get(key4));
 		//result: 2|122|this is string|null
 	}
 
