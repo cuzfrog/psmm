@@ -8,21 +8,19 @@ import java.util.Map;
  * 
  * @author Cause Chung
  *
- * @param <T>
- *            parameter type.
  */
-abstract class AbstractMessage<K,T> implements Message<K,T> {
+abstract class AbstractMessage<K,V> implements Message<K,V> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected final Message<K,T> parent;
+	protected final Message<K,V> parent;
 	protected final Data data;
 	protected final int depth;
 	protected final Messages.Style type;
 
-	protected AbstractMessage(Messages.Style type, Message<K,T> parent, Data data) {
+	protected AbstractMessage(Messages.Style type, Message<K,V> parent, Data data) {
 		super();
 		this.parent = parent;
 		this.data = data;
@@ -42,8 +40,8 @@ abstract class AbstractMessage<K,T> implements Message<K,T> {
 	}
 
 	@Override
-	public T get(K key) {
-		T result = null;
+	public V get(K key) {
+		V result = null;
 		if ((result = data.get(key)) == null) {
 			result = parent.get(key);
 		}
@@ -51,9 +49,9 @@ abstract class AbstractMessage<K,T> implements Message<K,T> {
 	}
 
 	@Override
-	public Map<K, T> getAll() {
-		Map<K, T> resultMap;
-		Map<K, T> parentResult = parent.getAll();
+	public Map<K, V> getAll() {
+		Map<K, V> resultMap;
+		Map<K, V> parentResult = parent.getAll();
 		if (parentResult != null) {
 			resultMap = parentResult;
 		} else {
@@ -89,17 +87,17 @@ abstract class AbstractMessage<K,T> implements Message<K,T> {
 
 	// ------------factory behaviors:
 	@Override
-	public AbstractBuilder<K,T> set(K key, T datum) {
+	public AbstractBuilder<K,V> set(K key, V datum) {
 		return PsmmSystem.fetchRaw(this.type, this).set(key, datum);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> builder() {
+	public AbstractBuilder<K,V> builder() {
 		return PsmmSystem.fetchRaw(this.type, this);
 	}
 	
 	@Override
-	public Message<K,T> regress() {
+	public Message<K,V> regress() {
 		if (depth <= 1) {
 			return null;
 		}
@@ -120,50 +118,50 @@ abstract class AbstractMessage<K,T> implements Message<K,T> {
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Integer value) {
+	public AbstractBuilder<K,V> set(String key, Integer value) {
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Short value) {
+	public AbstractBuilder<K,V> set(String key, Short value) {
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Long value) {
+	public AbstractBuilder<K,V> set(String key, Long value) {
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Boolean value) {
+	public AbstractBuilder<K,V> set(String key, Boolean value) {
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Float value) {
-
-		return builder().set(key, value);
-	}
-
-	@Override
-	public AbstractBuilder<K,T> set(String key, Double value) {
+	public AbstractBuilder<K,V> set(String key, Float value) {
 
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Character value) {
+	public AbstractBuilder<K,V> set(String key, Double value) {
 
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, Byte value) {
+	public AbstractBuilder<K,V> set(String key, Character value) {
+
 		return builder().set(key, value);
 	}
 
 	@Override
-	public AbstractBuilder<K,T> set(String key, String value) {
+	public AbstractBuilder<K,V> set(String key, Byte value) {
+		return builder().set(key, value);
+	}
+
+	@Override
+	public AbstractBuilder<K,V> set(String key, String value) {
 		return builder().set(key, value);
 	}
 

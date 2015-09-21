@@ -1,8 +1,5 @@
 package com.github.cuzfrog.psmm;
 
-import com.github.cuzfrog.psmm.exceptions.PsmmNoFactoryPoolTypeException;
-import com.github.cuzfrog.psmm.exceptions.PsmmReachMaxDepthException;
-
 /**
  * Class that manages FactoryPool and MessagePool and provides static methods.
  * 
@@ -29,14 +26,12 @@ public final class PsmmSystem {
 
 	private PsmmSystem(PsmmConfiguration config) {
 		switch (config.getFactoryPoolChoseType()) {
-		case THREAD_LOCAL:
-			factoryPool = new ThreadLocalFactoryPool(config);
-			break;
 		case NULL:
 			factoryPool = new NullFactoryPool(config);
 			break;
 		default:
-			throw new PsmmNoFactoryPoolTypeException();
+			factoryPool = new ThreadLocalFactoryPool(config);
+			break;
 		}
 		messageMaxDepth = config.getMessageMaxDepth();
 	}
@@ -63,7 +58,7 @@ public final class PsmmSystem {
 	// create raw message:
 	static <K,T> AbstractBuilder<K,T> fetchRaw(Messages.Style type, Message<K,T> messageBeingWrapped) {
 		if (messageBeingWrapped.depth() >= instance.messageMaxDepth) {
-			throw new PsmmReachMaxDepthException();
+			throw new  IllegalStateException("Message chain too long. Depth:"+messageBeingWrapped.depth());
 		}
 		PsmmFactory factory = PsmmSystem.seekFactory(type);
 		AbstractBuilder<K,T> rawMessage = factory.getRawMessage();

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.github.cuzfrog.psmm.Messages.Style;
-import com.github.cuzfrog.psmm.exceptions.PsmmFactoryModuleChainErrorException;
 
 /**
  *
@@ -42,7 +41,7 @@ abstract class Module {
 		if (collaberativeModule != null) {
 			return collaberativeModule.createMessage(type, messageBeingWrapped, data);
 		}
-		throw new PsmmFactoryModuleChainErrorException();
+		throw new NullPointerException("Factory module chain error.");
 	}
 
 	/**

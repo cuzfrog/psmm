@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.cuzfrog.psmm.Module;
-import com.github.cuzfrog.psmm.NotThreadSafe;
-import com.github.cuzfrog.psmm.exceptions.PsmmInvalidConfigurationException;
-
 /**
  * Class for configuring psmm when initiating.
  * <p>
@@ -109,7 +105,7 @@ public final class PsmmConfiguration {
 	 */
 	public PsmmConfiguration setMessageMaxDepth(int messageMaxDepth) {
 		if(messageMaxDepth<1){
-			throw new PsmmInvalidConfigurationException();
+			throw new IllegalArgumentException("Message max depth must be more than 0");
 		}
 		this.messageMaxDepth = messageMaxDepth;
 		return this;

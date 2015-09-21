@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.github.cuzfrog.psmm.Messages;
 import com.github.cuzfrog.psmm.PsmmSystem;
 import com.github.cuzfrog.psmm.UMessage;
-import com.github.cuzfrog.psmm.exceptions.PsmmRuntimeException;
 
 public class MessageFunctionTest {
     Logger logger=LoggerFactory.getLogger(this.getClass().getSimpleName());
@@ -36,7 +35,7 @@ public class MessageFunctionTest {
 			for (int i = 0; i < 200; i++) {
 				message = message.set("test1", random.nextInt(10000)).build();
 			}
-		} catch (PsmmRuntimeException e) {
+		} catch (Exception e) {
 			// OK
 			System.out.println(message.depth());
 		}

@@ -16,8 +16,9 @@ import com.github.cuzfrog.psmm.PsmmSystem;
  * your custom object, you have to be very careful designing your message data,
  * since TypedMessage doesn't check the mutability of the datum you set in.
  * 
+ * <p>
+ * Throw IllegalStateException when message chain is longer than message's max depth.
  * @author Cause Chung
- *
  */
 public abstract class Messages implements MessageCommonInterface {
 
