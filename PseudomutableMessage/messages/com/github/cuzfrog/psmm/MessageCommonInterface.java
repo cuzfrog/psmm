@@ -1,13 +1,11 @@
 package com.github.cuzfrog.psmm;
 
-import java.io.Serializable;
-
 /**
  * Common method interface.
  * @author Cause Chung
  *
  */
-interface MessageCommonInterface extends Serializable {
+interface MessageCommonInterface {
 	/**
 	 * Psmm are not supporting signature right now.
 	 * <p>

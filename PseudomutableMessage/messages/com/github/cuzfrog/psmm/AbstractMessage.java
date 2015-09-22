@@ -11,10 +11,6 @@ import java.util.Map;
  */
 abstract class AbstractMessage<K,V> implements Message<K,V> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	protected final Message<K,V> parent;
 	protected final Data data;
 	protected final int depth;

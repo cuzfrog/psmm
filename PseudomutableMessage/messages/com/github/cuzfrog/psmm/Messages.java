@@ -24,7 +24,6 @@ import com.github.cuzfrog.psmm.PsmmSystem;
  */
 public abstract class Messages implements MessageCommonInterface {
 
-	private static final long serialVersionUID = 1L;
 
 	// prohibit inheritance
 	private Messages() {

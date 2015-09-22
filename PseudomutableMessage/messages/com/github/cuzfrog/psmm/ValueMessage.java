@@ -4,7 +4,6 @@ import com.github.cuzfrog.psmm.Messages.Style;
 
 final class ValueMessage<K,T> extends AbstractMessage<K,T> {
 
-	private static final long serialVersionUID = -8983638298883345411L;
 	private volatile int hashCode;
 
 	protected ValueMessage(Style type, Message<K,T> parent, Data data) {
