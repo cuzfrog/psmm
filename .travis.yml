@@ -1,6 +1,6 @@
 before_install: cd PseudomutableMessage
 language: java
-
+install: mvn install -DskipTests=true -Dgpg.skip=true
 branches:
   only:
     - master
