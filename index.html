@@ -40,11 +40,13 @@
 <li>[x] Most coding work.</li>
 <li>[x] Javadoc.</li>
 <li>[x] Actor simulation test.</li>
-<li>[ ] Refining and test.</li>
+<li>[x] Refining and test.</li>
 <li>[x] Simple usage description.</li>
-<li>[ ] Detailed document.</li>
-<li>[ ] Performance description.</li>
-<li>[ ] Release.</li>
+<li>[x] Detailed document.</li>
+<li>[x] Performance description.</li>
+<li>[x] Release.</li>
+<li>[ ] More necessary description and additional doc.</li>
+<li>[ ] Next version.</li>
 </ul>
 
 <h2>
@@ -64,11 +66,11 @@
 <p>Creating a new message</p>
 
 <div class="highlight highlight-source-java"><pre>        <span class="pl-smi">UMessage</span> message <span class="pl-k">=</span> 
-                <span class="pl-smi">Messages</span><span class="pl-k">.</span>create() <span class="pl-c">//create a raw message</span>
+                <span class="pl-smi">Messages</span><span class="pl-k">.</span>builder() <span class="pl-c">//get builder</span>
                 .set(key1, value1) 
                 .set(key2, value2) <span class="pl-c">//add some data</span>
                 <span class="pl-c1">...</span>
-                .cook(); </pre></div>
+                .build(); </pre></div>
 
 <p>Modifying an existed one:</p>
 
@@ -77,26 +79,23 @@
                 .set(key1, value1) 
                 .set(key2, value2) <span class="pl-c">//add or reset some data</span>
                 <span class="pl-c1">...</span>
-                .cook(); </pre></div>
+                .build(); </pre></div>
 
 <p>Regressing a message:</p>
 
-<div class="highlight highlight-source-java"><pre>        <span class="pl-k">try</span> {
-            <span class="pl-smi">UMessage</span> message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
-        } <span class="pl-k">catch</span> (<span class="pl-smi">PsmmCannotRegressExeption</span> e) {
-            <span class="pl-c">//tell actor message only has one level</span>
-        }</pre></div>
+<div class="highlight highlight-source-java"><pre>        <span class="pl-smi">UMessage</span> message3 <span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();</pre></div>
 
 <p>Regression is very useful when actors work in pipeline, e.g. actor can simply check and regress a message to redo rather than resend one. </p>
 
 <p>Code example:</p>
 
-<div class="highlight highlight-source-java"><pre><span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.Messages</span>;
-<span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.PsmmSystem</span>;
-<span class="pl-k">import</span> <span class="pl-smi">cuz.my.psmm.UMessage</span>;
+<div class="highlight highlight-source-java"><pre><span class="pl-k">import</span> <span class="pl-smi">com.github.cuzfrog.psmm.Messages</span>;
+<span class="pl-k">import</span> <span class="pl-smi">com.github.cuzfrog.psmm.PsmmSystem</span>;
+<span class="pl-k">import</span> <span class="pl-smi">com.github.cuzfrog.psmm.UMessage</span>;
 
 <span class="pl-k">class</span> <span class="pl-en">SimpleTest</span> {
 
+    <span class="pl-k">@SuppressWarnings</span>(<span class="pl-s"><span class="pl-pds">"</span>boxing<span class="pl-pds">"</span></span>)
     <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">main</span>(<span class="pl-k">String</span>[] <span class="pl-v">args</span>) {
         <span class="pl-c">// TODO Auto-generated method stub</span>
 
@@ -108,11 +107,11 @@
         <span class="pl-smi">String</span> key2 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>int2<span class="pl-pds">"</span></span>;
         <span class="pl-smi">String</span> key3 <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>str1<span class="pl-pds">"</span></span>;
         <span class="pl-smi">UMessage</span> message1 <span class="pl-k">=</span> 
-                <span class="pl-smi">Messages</span><span class="pl-k">.</span>create() <span class="pl-c">//create a raw message</span>
+                <span class="pl-smi">Messages</span><span class="pl-k">.</span>builder() <span class="pl-c">//get builder</span>
                 .set(key1, <span class="pl-c1">2</span>)
                 .set(key2, <span class="pl-c1">122</span>)
                 .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is string<span class="pl-pds">"</span></span>) <span class="pl-c">//add some data</span>
-                .cook(); <span class="pl-c">//without cook() compile time error.</span>
+                .build(); <span class="pl-c">//without build() compile time error.</span>
         <span class="pl-c">//after passed to another actor, fetch data:</span>
         <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message1<span class="pl-k">.</span>get(key1) 
                 <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message1<span class="pl-k">.</span>get(key2) 
@@ -126,7 +125,7 @@
                 .set(key2, <span class="pl-c1">45</span>)
                 .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
                 .set(key4, <span class="pl-c1">568.3d</span>)
-                .cook();
+                .build();
         <span class="pl-c">//after passed to another actor, fetch data:</span>
         <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message2<span class="pl-k">.</span>get(key1) 
                 <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key2) 
@@ -134,41 +133,36 @@
                 <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message2<span class="pl-k">.</span>get(key4));
         <span class="pl-c">//result: 2|45|this is another string|568.3</span>
 
-        <span class="pl-smi">UMessage</span> message3 <span class="pl-k">=</span> <span class="pl-c1">null</span>;
-        <span class="pl-k">try</span> {
-            message3<span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
-        } <span class="pl-k">catch</span> (<span class="pl-smi">PsmmCannotRegressExeption</span> e) {
-            e<span class="pl-k">.</span>printStackTrace();
+        <span class="pl-smi">UMessage</span> message3 <span class="pl-k">=</span>message2<span class="pl-k">.</span>regress();
+        <span class="pl-k">if</span>(message3<span class="pl-k">!=</span><span class="pl-c1">null</span>){
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message3<span class="pl-k">.</span>get(key1) 
+                    <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key2) 
+                    <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key3)
+                    <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key4));
         }
-        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(message3<span class="pl-k">.</span>get(key1) 
-                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key2) 
-                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key3)
-                <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>|<span class="pl-pds">"</span></span> <span class="pl-k">+</span> message3<span class="pl-k">.</span>get(key4));
         <span class="pl-c">//result: 2|122|this is string|null</span>
     }
-
 }</pre></div>
 
 <p>Using typed message (others are the same):</p>
 
-<div class="highlight highlight-source-java"><pre>    <span class="pl-k">TMessage&lt;<span class="pl-smi">Integer</span>&gt;</span> message2<span class="pl-k">=</span>
-            <span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Integer</span><span class="pl-k">.</span>class)
-            .set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)
-            <span class="pl-c">//.set("key2", "string value") //compile time error</span>
-            .cook();</pre></div>
+<div class="highlight highlight-source-java"><pre>    <span class="pl-k">TBuilder&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Integer</span>&gt;</span> b2 <span class="pl-k">=</span> <span class="pl-smi">Messages</span><span class="pl-k">.</span>typedBuilder();
+    <span class="pl-k">TMessage&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Integer</span>&gt;</span> message2 <span class="pl-k">=</span> b2<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)
+                <span class="pl-c">// .set("key2", "string value") //compile time error</span>
+                .build();</pre></div>
 
 <p><em>NOTE:When use typed message, you must ensure type's immutability.</em></p>
 
 <p><strong>Anti-patterns:</strong> Be careful!</p>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-c">//now you received a message.</span>
-message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>cook();  <span class="pl-c">//you think you updated it.</span>
+message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>build();  <span class="pl-c">//you think you updated it.</span>
 <span class="pl-c">//then send the message. ERROR, the message you sent is not the new one</span>
 
 <span class="pl-c">//right version - must give a new reference:</span>
-<span class="pl-smi">UMessage</span> newMessage<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>cook(); 
+<span class="pl-smi">UMessage</span> newMessage<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>build(); 
 <span class="pl-c">//or use the old reference:</span>
-message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>cook(); </pre></div>
+message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>build(); </pre></div>
 
 <h2>
 <a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document</h2>
@@ -203,14 +197,14 @@ message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span cl
 
 <p>How to choose style:</p>
 
-<div class="highlight highlight-source-java"><pre><span class="pl-smi">Messages</span><span class="pl-k">.</span>create(<span class="pl-smi">Messages</span><span class="pl-k">.</span><span class="pl-smi">Style</span><span class="pl-c1"><span class="pl-k">.</span>FLAT_MAP</span>)</pre></div>
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Messages</span><span class="pl-k">.</span>builder(<span class="pl-smi">Messages</span><span class="pl-k">.</span><span class="pl-smi">Style</span><span class="pl-c1"><span class="pl-k">.</span>FLAT_MAP</span>)</pre></div>
 
 <h4>
-<a id="raw-message-and-factory-model" class="anchor" href="#raw-message-and-factory-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raw Message and Factory model</h4>
+<a id="builder-and-factory-model" class="anchor" href="#builder-and-factory-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Builder and Factory model</h4>
 
 <ul>
 <li>
-<strong>Raw Message</strong> is a concept helper class which is exposed to user instead of a factory, and to ensure message is actually created. It's a <a href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy</a> of a factory. Consider situation below:</li>
+<strong>Builder</strong>(Originally called raw message) is a concept helper class which is exposed to user instead of a factory, and to ensure message is actually created. It's a <a href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy</a> of a factory. Consider situation below:</li>
 </ul>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-smi">UMessage</span> message2 <span class="pl-k">=</span>
@@ -218,12 +212,9 @@ message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span cl
         .set(key2, <span class="pl-c1">45</span>)  <span class="pl-c">//when first call set(), it turns to a raw message</span>
         .set(key3, <span class="pl-s"><span class="pl-pds">"</span>this is another string<span class="pl-pds">"</span></span>)
         .set(key4, <span class="pl-c1">568.3d</span>)
-        <span class="pl-c">//.cook(); //no message is really created. Type mismatch, compile time error.</span></pre></div>
+        <span class="pl-c">//.build(); //no message is really created. Type mismatch, compile time error.</span></pre></div>
 
-<p>A raw message cannot evaluate to UMessage. Also, in concept, it's better than return a factory object.
-There are two interfaces of raw message: UntypedRawMessage, TypedRawMessage</p>
-
-<p><em>It's not necessary to grab a raw message's reference in most cases.</em></p>
+<p>A builder cannot evaluate to UMessage. Also, in concept, it's better than return a factory object.</p>
 
 <ul>
 <li>
