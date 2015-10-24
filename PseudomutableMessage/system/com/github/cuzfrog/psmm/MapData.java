@@ -25,6 +25,7 @@ final class MapData extends Data {
 		return (Map<K, T>) map;
 	}
 
+	@Deprecated
 	@Override
 	public byte[] getDataStream() throws IOException {
 		return Data.getDataStream(map);

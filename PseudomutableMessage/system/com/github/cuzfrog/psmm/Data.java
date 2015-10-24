@@ -36,7 +36,7 @@ abstract class Data {
 	public <K,T> Map<K, T> getAll() {
 		return null;
 	}
-
+    @Deprecated
 	public byte[] getDataStream() throws IOException {
 		return null;
 	}
@@ -65,6 +65,7 @@ abstract class Data {
 		MAP, SIMPLE
 	}
 
+	@Deprecated
 	public static byte[] getDataStream(Object data) throws IOException {
 		// TODO Auto-generated method stub
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
