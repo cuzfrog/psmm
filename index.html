@@ -40,7 +40,7 @@
 <h2>
 <a id="what-is-psmm" class="anchor" href="#what-is-psmm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Psmm?</h2>
 
-<p>Psmm is the abbreviation for PSeudo-Mutable Message. It's a java library for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a> that allows for creating and accessing immutable messages as if they were mutable ones.</p>
+<p>Psmm is the abbreviation for PSeudo-Mutable Message. It's a java library for <a href="https://en.wikipedia.org/wiki/Actor_model">actors</a> to easily create and access <strong>immutable</strong> messages as if they were mutable ones.</p>
 
 <p>Messages are passed on from actors to actors, thus probably shared by threads. <a href="http://akka.io/">Akka</a> document clearly states that messages must be immutable, otherwise Akka actors can't ensure eliminating evils of low level java concurrency. But for writing immutable object, you need to be careful about things. In this note, I wrote Psmm, so we can easily generate immutable message.</p>
 
