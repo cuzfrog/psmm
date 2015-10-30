@@ -149,7 +149,9 @@
 
 <p><em>NOTE:When use typed message, you must ensure type's immutability.</em></p>
 
-<p><strong>Anti-patterns:</strong> Be careful!</p>
+<p><strong>Anti-patterns:</strong> Be careful! </p>
+
+<p>[Java puzzles-56]</p>
 
 <div class="highlight highlight-source-java"><pre><span class="pl-c">//now you received a message.</span>
 message<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key1<span class="pl-pds">"</span></span>, <span class="pl-c1">583</span>)<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>key2<span class="pl-pds">"</span></span>, <span class="pl-c1">1773</span>)<span class="pl-k">.</span>build();  <span class="pl-c">//you think you updated it.</span>
