@@ -224,13 +224,13 @@ message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span cl
 
 <ul>
 <li>
-<strong>Module</strong> is factory's component class, does concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to reuse same Module instances. Modules are created once when PsmmSystem initiates and stored into an EnumMap. When needed, they are dynamically assembled into factory calling them. If a factory is about to create a second message with the same Style as the last one, module inside will not change which avoids module-map re-searching. Hence better performance with consistent Style throughout your application.</li>
+<strong>Module</strong> is factory's component class, doing concrete job inside factory. In this <a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy Pattern</a>, same factory can be used to create different styles of message. Modules are thread safe or state less, so several factories are able to reuse same Module instances. Modules are created once when PsmmSystem initiates and stored into an EnumMap. When needed, they are dynamically assembled into factory that are calling them. If a factory is about to create a second message with the same Style as the last one, module inside will not change which avoids module-map re-searching. Hence better performance with consistent Style throughout your application.</li>
 </ul>
 
 <p>There are three kinds of Modules:</p>
 
 <ol>
-<li><p>Creation: creates concrete message, like CachedMessage or UncachedMessage.</p></li>
+<li><p>Creation: creates concrete message, like ValueMessage or UniqueMessage.</p></li>
 <li><p>Data: designates Data implementation into factory, like HashMap.</p></li>
 <li><p>Structure: decides which style, like Flat or Linked.</p></li>
 </ol>
@@ -239,7 +239,7 @@ message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span cl
 
 <ul>
 <li><p><strong>Factory Pool</strong> stores created factories in it, which implements a ThreadLocal to attach a new factory instance to every thread.  When fetching factory, module is assembled into factory according to message's style. </p></li>
-<li><p><strong>Data</strong> class to encapsulate concrete data store strategy. Now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
+<li><p><strong>Data</strong> class to encapsulate concrete data-store strategy. For now, there's only MapData that implements HashMap. Factory has a Data inside, when create message, it give that Data to message and ditch the Data's reference.</p></li>
 </ul>
 
 <h4>
@@ -247,7 +247,7 @@ message<span class="pl-k">=</span>message<span class="pl-k">.</span>set(<span cl
 
 <ul>
 <li>
-<strong>PsmmSystem</strong> holds instances of factory pool, message pool and initiate Modules, internally provide static methods.  Instantiating Module at runtime gives more flexibility.</li>
+<strong>PsmmSystem</strong> holds instances of factory pool and initiates Modules, internally providing static methods.  Instantiating Module at runtime gives more flexibility.</li>
 <li>
 <strong>Messages</strong> provides factory methods to create message.</li>
 </ul>
